@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys
 import math
 import os
@@ -59,12 +60,12 @@ def plot_loc_grid(loc_grid, out_file_name):
     loc_file = tempfile.NamedTemporaryFile()
     min_pt_size = 0.15
     max_pt_size = 0.35
-    print >>loc_file, "# longitude latitude num_hits"
+    print("# longitude latitude num_hits", file=loc_file)
     # Reorder hits so they will be printed with larger circles on top
     for num_hits in reordered_hits:
         for loc in reordered_hits[num_hits]:
             size = (max_pt_size-min_pt_size)*math.log(num_hits)/math.log(max_hits_in_grid) + min_pt_size
-            print >>loc_file, loc[1], loc[0], size
+            print(loc[1], loc[0], size, file=loc_file)
     loc_file.flush()
 
     # Write the legend explaining circle size
@@ -75,7 +76,7 @@ def plot_loc_grid(loc_grid, out_file_name):
     max_circle_size = (max_pt_size-min_pt_size)*math.log(max_hits_in_grid)/math.log(max_hits_in_grid) + min_pt_size
     for i in range(num_steps):
         circle_size = (max_pt_size-min_pt_size)*math.log(num_dls)/math.log(max_hits_in_grid) + min_pt_size
-        print >>legend_file, "S "+str(max_circle_size/2)+" c "+str(circle_size)+" 255/255/0 - "+str(1.3*max_circle_size)+" "+str(int(num_dls))+" downloads"
+        print("S "+str(max_circle_size/2)+" c "+str(circle_size)+" 255/255/0 - "+str(1.3*max_circle_size)+" "+str(int(num_dls))+" downloads", file=legend_file)
         num_dls /= step_size
     legend_file.flush()
 
@@ -103,7 +104,7 @@ def plot_loc_grid(loc_grid, out_file_name):
 
 def main():
     if len(sys.argv) != 4:
-        print "syntax:", sys.argv[0], "HIT_DB_NAME LOCATION_DB_NAME PACKAGE_NAME"
+        print("syntax:", sys.argv[0], "HIT_DB_NAME LOCATION_DB_NAME PACKAGE_NAME")
         exit(1)
 
     HIT_DB_NAME = sys.argv[1]
@@ -112,21 +113,21 @@ def main():
 
     # Get the IP numbers associated with a given package
     ip_nums = lookup_hits(HIT_DB_NAME, PACKAGE_NAME)
-    print "Found", len(ip_nums), "hits associated with package", PACKAGE_NAME
+    print("Found", len(ip_nums), "hits associated with package", PACKAGE_NAME)
     if len(ip_nums) == 0:
-        print "Quitting..."
+        print("Quitting...")
         exit()
 
     # Find the corresponding lat/lon points
     locs = ip_nums_to_locations(LOCATION_DB_NAME, ip_nums)
-    print "Checked", len(ip_nums), "IPs, found", len(locs), "locations."
+    print("Checked", len(ip_nums), "IPs, found", len(locs), "locations.")
     if len(locs) == 0:
-        print "Quitting..."
+        print("Quitting...")
         exit()
 
     # Bin the locations into a grid
     loc_grid = bin_locs_into_grid(locs, 1)
-    print "Binned", len(locs), "locations into", len(loc_grid), "unique points."
+    print("Binned", len(locs), "locations into", len(loc_grid), "unique points.")
 
     # Create GMT plot of binned points
     plot_loc_grid(loc_grid, PACKAGE_NAME+".gif")

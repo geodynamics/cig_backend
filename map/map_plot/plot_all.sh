@@ -5,7 +5,7 @@ map_codes=( "cigma" "citcomcu" "citcoms" "conman" "ellipsis3d" "exchanger" "flex
 
 for code_name in "${map_codes[@]}"
 do
-    ./plot.py hit_database/hit_database ip_database/ip_lookup_db $code_name
+    ./plot.py ../hit_database/hit_database ../ip_database/ip_lookup_db $code_name
 done
 
 rsync --delete -zr *.gif emheien@geodynamics.org:public_html/maps/
