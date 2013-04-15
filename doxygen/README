@@ -1,0 +1,50 @@
+DESCRIPTION OF AUTOMATED DOXYGEN DOCUMENT GENERATION
+
+Written by Eric Heien on Apr 15, 2013
+
+This directory contains scripts to generate documentation for CIG codes using the
+Doxygen documentation system.
+
+generate_doxygen.sh
+    The main documentation generation script.
+	Usage: generate_doxygen.sh <method> <URL> <revision> <project name>
+
+	<method> specifies the method of retrieving a copy of the source, this can
+	be one of "svn, hg, git, url". The first three refer to developer
+	documentation, the last one to released source documentation.
+
+	<URL> specifies the URL to get the source from. The meaning and proper
+	format of this will depend on which method is used.
+
+	<revision> specifies either the revision number of the source to create
+	documentation for (for developer documentation) or the release number (for
+	release documentation). Again, the proper format of this will depend on
+	which method is used. For SVN and hg this must be a number, for git it
+	must be a hash and for url it must be a version number like X.XX.
+
+    <project name> specifies the name of the project which determines the directory
+    name the code will be put in.
+
+template.doxyfile
+    A doxyfile to specify how the documentation is generated. However, this doxyfile
+    is incomplete in that several parts consist of keywords which are replaced by
+    sed commands in generate_doxygen.sh to create a valid doxyfile.
+
+
+Directories which may exist:
+
+repos/
+    Contains checked out versions of the development source. Since checking out
+    the entire code may take a long time, the generate_doxygen.sh script checks
+    out the code once and updates it to the current revision. This drastically
+    improves speeds and avoids wasting bandwidth.
+
+tmp/####
+    Temporary directories (number specified by process ID) where the magic happens.
+    Used to hold temporary files, logs, etc. These should be deleted automatically
+    when the script finishes or is cancelled.
+
+doxygen/
+    Contains copies of the generated doxygen documentation.
+
+

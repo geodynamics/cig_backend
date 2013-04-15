@@ -1,0 +1,30 @@
+DESCRIPTION OF REFERENCE LIST MANAGEMENT
+
+Written by Eric Heien on Apr 15, 2013
+
+This directory contains databases and scripts to track publications written with
+the assistance of CIG codes.  Contents of the directory are described below.
+
+cig_endnote_library.xml
+    The raw XML output from EndNote. This must be manually exported.
+
+cig_pubs.xml
+    The default filename of the publication list after processing by
+    process_endnote_xml.py (see below).
+
+format_cig_pubs.xsl
+    The XSL script to format the processed XML reference database.
+
+process_endnote_xml.py
+    Requires at least Python 2.6, compatible with Python 3.3.
+
+    The XML database exported by EndNote is deficient in several ways that this
+    script corrects.  The script removes many extraneous tags and attributes which
+    greatly increase the filesize but are irrelevant for display. It also reformats
+    DOI related fields so they can be properly used by the XSL script.
+
+    In this directory, the other XML files are run through this script using the
+    following command:
+
+	./process_endnote_xml.py cig_endnote_library.xml cig_pubs.xml
+
