@@ -1,4 +1,6 @@
-DESCRIPTION OF BACKEND DATA Written by Eric Heien on Apr 15, 2013
+DESCRIPTION OF BACKEND DATA
+
+Written by Eric Heien on Apr 15, 2013
 
 This directory contains scripts and data related to the backend management of the
 CIG website. This includes things such as download hit records and map generation,
@@ -12,19 +14,24 @@ doxygen/
     Contains scripts to generate doxygen based documentation of the different CIG
     codes based either on released source or a repository checkout.  Relevant URL
     as of Apr 15, 2013
-    http://geodynamics.org/~emheien/doxygen/
+        http://geodynamics.org/~emheien/doxygen/
 
 map/
     Contains databases, scripts and related files for tracking downloads of software
     distributions from the website, and creating maps to display downloads.  Relevant
     URL as of Apr 15, 2013
-	http://geodynamics.org/~buildbot/maps/
+	    http://geodynamics.org/~buildbot/maps/
+
+queue/
+     Contains script to allow queueing of commands. This is primarily used for the
+     doxygen documentation where we want to avoid possible overwriting and
+     misordering.
 
 ref_list/
     Contains databases and scripts to record references to papers which used CIG
     codes, and generate a publicly viewable (and eventually searchable) web page
     of these papers.  Relevant URL as of Apr 15, 2013
-	http://geodynamics.org/cig/community/documents/reference
+	    http://geodynamics.org/cig/community/documents/reference
 
 TODO: add BaTLab directory
 
