@@ -1,5 +1,4 @@
 #!/bin/bash
-# TODO: use a lockfile to avoid different SVN revisions colliding
 
 # Example usage:
 # ./generate_doxygen.sh svn http://geodynamics.org/svn/cig/mc/3D/CitcomS/trunk 21629 CitcomS
@@ -20,21 +19,31 @@ REV="$3"
 NAME="$4"
 TOP_DIR="`pwd`"
 REPO_DIR="$TOP_DIR/repos"
-TMP_DIR="$TOP_DIR/tmp/$$"
+BASE_TMP_DIR="$TOP_DIR/tmp"
+TMP_DIR="$BASE_TMP_DIR/$$"
 DOXY_DIR="$TOP_DIR/doxygen"
 CODE_INPUT_DIR="$TMP_DIR/$NAME"
 
+LOCK_FILE="$BASE_TMP_DIR/doxy_lock"
 LOG_FILE="$TMP_DIR/tmp.log"
 
 function cleanUp() {
 	rm -rf $TMP_DIR
 }
 
+mkdir -p $BASE_TMP_DIR
+
 # Create a trap to remove the temp dir if the script is killed
 trap cleanUp EXIT INT TERM
 
 # Delete old temporary directory if it exists
 cleanUp
+
+exec 9>$LOCK_FILE
+if ! flock -n 9 ; then
+	echo "Another instance is running"
+	exit 1
+fi
 
 # Make the required directories
 mkdir -p $REPO_DIR
@@ -139,7 +148,7 @@ BLANK_DOXYFILE="$TOP_DIR/template.doxyfile"
 DOXYFILE="$TMP_DIR/$$.doxyfile"
 CODE_DOXY_DIR="$DOXY_DIR/$SUBDIR/$NAME"
 REMOTE_DOXY_HOST="emheien@geodynamics.org"
-REMOTE_DOXY_DIR="$REMOTE_DOXY_HOST:/home/emheien/public_html/doxygen/$SUBDIR"
+REMOTE_DOXY_DIR="$REMOTE_DOXY_HOST:/home/emheien/public_html/doxygen/$SUBDIR/$NAME/"
 
 # Create a sed command file to replace keywords in the template doxyfile specific to the code
 # Escape each of the replacement strings to properly work with sed
@@ -156,6 +165,6 @@ cd $TMP_DIR && doxygen $DOXYFILE >> $LOG_FILE 2>&1 && cd
 echo "done."
 
 echo -n "Making documentation public with rsync... "
-rsync -zr --delete $CODE_DOXY_DIR $REMOTE_DOXY_DIR
+rsync -zr --delete $CODE_DOXY_DIR/html/ $REMOTE_DOXY_DIR
 echo "done."
 
