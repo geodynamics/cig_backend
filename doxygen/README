@@ -47,4 +47,7 @@ tmp/####
 doxygen/
     Contains copies of the generated doxygen documentation.
 
+queue/
+    Contains queue related files including commands (formed as SUBMISSIONTIME_PID)
+    and lockfiles.
 
