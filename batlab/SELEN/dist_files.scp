@@ -1,0 +1,6 @@
+# $Id: dist_files.scp -1   $
+
+method = scp
+scp_file = ~/trunk/distributions/SELEN_2.9.10.4.tar.gz
+untar = true
+

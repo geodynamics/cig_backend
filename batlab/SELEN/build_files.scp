@@ -1,5 +1,5 @@
 # $Id: build_files.scp 21340 2013-02-07 07:36:36Z ericheien $
 
 method = scp
-scp_file = ~/trunk/SELEN/build.sh
+scp_file = ~/trunk/SELEN/build.sh ~/trunk/SELEN/fast_config.dat
 

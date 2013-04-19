@@ -1,0 +1,6 @@
+# $Id: dist_files.url -1   $
+
+method = url
+url = http://geodynamics.org/cig/software/selen/SELEN_2.9.10.4.tar.gz
+untar = true
+
