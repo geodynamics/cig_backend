@@ -1,0 +1,5 @@
+# $Id: repo_checkout.svn 21294 2013-01-25 07:52:42Z ericheien $
+
+method = svn
+url = --trust-server-cert --non-interactive https://svn.aspect.dealii.org/trunk/aspect aspect
+
