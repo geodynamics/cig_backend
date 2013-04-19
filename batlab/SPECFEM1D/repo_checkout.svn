@@ -1,0 +1,5 @@
+# $Id: repo_checkout.svn 21294 2013-01-25 07:52:42Z ericheien $
+
+method = svn
+url = http://geodynamics.org/svn/cig/seismo/1D/SPECFEM1D/trunk/ SPECFEM1D
+

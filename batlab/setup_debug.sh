@@ -4,13 +4,22 @@
 rm -rf distributions
 mkdir distributions
 cd distributions
-wget http://www.geodynamics.org/cig/software/relax/Relax-1_0_4.tgz
-wget http://www.geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz
-wget http://www.geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz
 wget http://www.geodynamics.org/cig/software/pylith/pylith-1.8.0.tgz
-wget http://www.geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz
-wget http://www.geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz
+wget http://www.geodynamics.org/cig/software/relax/Relax-1_0_4.tgz
 wget http://www.geodynamics.org/cig/software/selen/SELEN_2.9.10.4.tar.gz
+#wget http://www.geodynamics.org/cig/software/lithomop/lithomop3d-0.7.2.tar.gz
+
+#wget http://www.geodynamics.org/cig/software/citcomcu/CitcomCU-1.0.3.tar.gz
+wget http://www.geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz
+#wget http://www.geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz
+wget http://geodynamics.org/cig/software/ellipsis3d/Ellipsis3D-1.0.2.tar.gz
+
+wget http://www.geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz
+wget http://www.geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.3.tar.gz
+wget http://www.geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz
+
+wget http://www.geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz
+
 cd ..
 
 # Get support files/libraries needed by CIG codes
