@@ -1,0 +1,6 @@
+# $Id: gshhg-gmt-nc3-2.2.2.scp -1   $
+
+method = scp
+scp_file = ~/trunk/support/gshhg-gmt-nc3-2.2.2.tar.bz2
+untar = true
+

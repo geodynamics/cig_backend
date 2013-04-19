@@ -3,9 +3,9 @@
 project = CIG
 component = RELAX
 run_type = build
-inputs = build_files.scp, dist_files.scp, ../support/fftw-3.3.3.scp, ../support/gmt-4.5.8.scp, ../support/netcdf.scp, ../support/proj-4.8.0.scp, ../support/lib_scripts.scp
+inputs = build_files.scp, dist_files.scp, ../support/fftw-3.3.3.scp, ../support/gmt-4.5.9.scp, ../support/gshhg-gmt-nc4-2.2.2.scp, ../support/netcdf.scp, ../support/proj-4.8.0.scp, ../support/lib_scripts.scp
 remote_pre = build_support.sh
-remote_pre_args = build_fftw-3.3.3.sh build_proj-4.8.0.sh build_netcdf.sh build_gmt-4.5.8.sh
+remote_pre_args = build_fftw-3.3.3.sh build_proj-4.8.0.sh build_netcdf.sh build_gmt-4.5.9.sh
 
 remote_task = build.sh
 

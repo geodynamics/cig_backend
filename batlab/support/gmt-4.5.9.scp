@@ -1,0 +1,6 @@
+# $Id: gmt-4.5.9.scp -1   $
+
+method = scp
+scp_file = ~/trunk/support/gmt-4.5.9.tar.bz2
+untar = true
+
