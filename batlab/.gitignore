@@ -1,0 +1,5 @@
+distributions
+support/*.gz
+support/*.bz2
+support/*.tgz
+
