@@ -1,0 +1,5 @@
+# $Id: build_files.scp 21298 2013-01-26 08:19:04Z ericheien $
+
+method = scp
+scp_file = ~/cig_backend/batlab/Ellipsis3D/build.sh
+
