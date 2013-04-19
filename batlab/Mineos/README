@@ -1,0 +1,29 @@
+To run a test of the SVN repository code or distribution code call:
+
+nmi_submit ./repo_check.run-spec
+nmi_submit ./dist_check.run-spec
+
+Description of Files
+
+build.sh
+	Shell script containing build commands for SVN repository code.
+
+build_files.scp
+	Metronome input file describing build scripts/files needed for runs.
+	
+dist_check.run-spec
+	Metronome input file describing SVN repository based run.
+
+dist_files.scp
+	Metronome input file describing local location of distribution files, to allow for
+	faster debugging. These must be set up using the setup_debug.sh script.
+
+dist_files.url
+	Metronome input file describing location of distribution on CIG website.
+
+repo_check.run-spec
+	Metronome input file describing SVN repository based run.
+
+repo_checkout.svn
+	Metronome input file describing location of SVN repository.
+

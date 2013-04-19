@@ -1,0 +1,6 @@
+# $Id: spatialdata-1.9.0.scp 21320 2013-02-01 21:42:12Z ericheien $
+
+method = scp
+scp_file = ~/trunk/support/spatialdata-1.9.0.tgz
+untar = true
+

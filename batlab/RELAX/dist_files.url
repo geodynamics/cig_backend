@@ -1,0 +1,6 @@
+# $Id: dist_files.url 21295 2013-01-25 07:54:35Z ericheien $
+
+method = url
+url = http://www.geodynamics.org/cig/software/relax/Relax-1_0_4.tgz
+untar = true
+

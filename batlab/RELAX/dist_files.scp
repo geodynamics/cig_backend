@@ -1,0 +1,6 @@
+# $Id: dist_files.scp 21295 2013-01-25 07:54:35Z ericheien $
+
+method = scp
+scp_file = ~/trunk/distributions/Relax-1_0_4.tgz
+untar = true
+

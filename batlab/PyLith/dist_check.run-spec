@@ -1,0 +1,18 @@
+# $Id: dist_check.run-spec 21320 2013-02-01 21:42:12Z ericheien $
+
+project = CIG
+component = PyLith
+run_type = build
+inputs = build_files.scp, dist_files.scp, ../support/lib_scripts.scp, ../support/proj-4.8.0.scp, ../support/nemesis-1.0.2.scp, ../support/numpy-1.7.0rc1.scp, ../support/spatialdata-1.9.0.scp ../support/petsc-dev-pylith-1.8.0.scp
+remote_pre = build_support.sh
+remote_pre_args = build_proj-4.8.0.sh build_nemesis-1.0.2.sh build_numpy-1.7.0rc1.sh build_spatialdata-1.9.0.sh build_petsc-dev-pylith-1.8.0.sh
+remote_task = build.sh
+# No platforms have been confirmed to work yet
+platforms = x86_64_Ubuntu10
+#platforms = x86_64_Debian5, x86_64_Debian6, x86_64_Ubuntu10, x86_64_Ubuntu12, x86_Debian6
+# These platforms fail for various reasons (mostly a lack of MPI libraries)
+#platforms = x86_64_Fedora16, x86_64_Fedora17, x86_64_MacOSX7, x86_64_RedHat5, x86_64_RedHat6, x86_64_SL6, x86_64_Solaris11, x86_64_Windows7, x86_64_macos_10.7, x86_RedHat5, x86_RedHat6, x86_SL5, x86_WindowsXP
+#
+#platforms = x86_64_Debian5, x86_64_Debian6, x86_64_Ubuntu10, x86_64_Ubuntu12, x86_Debian6, x86_64_Fedora16, x86_64_Fedora17, x86_64_MacOSX7, x86_64_RedHat5, x86_64_RedHat6, x86_64_SL6, x86_64_Solaris11, x86_64_Windows7, x86_64_macos_10.7, x86_RedHat5, x86_RedHat6, x86_SL5, x86_WindowsXP
+
+notify = emheien@geodynamics.org

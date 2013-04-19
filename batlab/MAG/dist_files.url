@@ -1,0 +1,6 @@
+# $Id: dist_files.url 21301 2013-01-28 01:49:53Z ericheien $
+
+method = url
+url = http://www.geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz
+untar = true
+

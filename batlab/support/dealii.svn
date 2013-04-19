@@ -1,0 +1,5 @@
+# $Id: dealii.svn 21340 2013-02-07 07:36:36Z ericheien $
+
+method = svn
+url = --trust-server-cert --non-interactive https://svn.dealii.org/trunk/deal.II deal.II
+

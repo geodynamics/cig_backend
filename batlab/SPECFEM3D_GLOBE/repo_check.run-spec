@@ -1,0 +1,30 @@
+# $Id: repo_check.run-spec 21320 2013-02-01 21:42:12Z ericheien $
+
+project = CIG
+component = SPECFEM3D_GLOBE
+description = Build test of SPECFEM3D_GLOBE source repository
+run_type = build
+inputs = build_files.scp, repo_checkout.svn, ../support/openmpi-1.6.3.scp, ../support/lib_scripts.scp
+
+remote_pre = build_support.sh
+x86_64_Fedora16_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_Fedora17_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_MacOSX7_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_RedHat5_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_RedHat6_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_SL6_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_Solaris11_remote_pre_args = build_openmpi-1.6.3.sh
+x86_64_macos_10.7_remote_pre_args = build_openmpi-1.6.3.sh
+x86_RedHat5_remote_pre_args = build_openmpi-1.6.3.sh
+x86_RedHat6_remote_pre_args = build_openmpi-1.6.3.sh
+x86_SL5_remote_pre_args = build_openmpi-1.6.3.sh
+
+remote_task = build.sh
+
+# These platforms mostly work (still needs minor tweaks)
+platforms = x86_64_Debian5, x86_64_Debian6, x86_64_Ubuntu10, x86_64_Ubuntu12, x86_Debian6, x86_64_Fedora16, x86_64_Fedora17, x86_64_MacOSX7, x86_64_RedHat5, x86_64_RedHat6, x86_64_SL6, x86_64_Solaris11, x86_64_macos_10.7, x86_RedHat5, x86_RedHat6, x86_SL5
+# These platforms fail
+#platforms = x86_64_Windows7, x86_WindowsXP
+
+notify = emheien@geodynamics.org
+

@@ -1,0 +1,6 @@
+# $Id: proj-4.8.0.scp 21298 2013-01-26 08:19:04Z ericheien $
+
+method = scp
+scp_file = ~/trunk/support/proj-4.8.0.tar.gz
+untar = true
+

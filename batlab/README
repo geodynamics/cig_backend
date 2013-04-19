@@ -1,0 +1,135 @@
+Current Status of Build and Test
+
+Mineos Notes
+One test case is run for Mineos based on the example provided with the source (DEMO/DEMO3). The results of this run are compared with the baseline standard provided with the source (DEMO/DEMO2). This comparison calculates a normalized cross-correlation between each of the signals output in the Syndat_ASC directory. There are 30 signals generated in the simulation. Every signal must have a normalized cross-correlation coefficient within 1e-6 of 1 for the run to be considered correct.
+
+
+################################
+# Build and Test Results       #
+################################
+
+Build Status Codes
+B = Build works correctly
+F = Build fails
+
+Test Status Codes
+0 = No tests run
+# = # tests run
+S = Some tests work correctly
+A = All tests work correctly
+
+Program		Platform		Date Checked	Dist	Repo
+CitcomS		x86_64_Debian5		1/24/2013	B0	B0
+CitcomS		x86_64_Debian6		1/24/2013	B0	B0
+CitcomS		x86_64_Fedora16		1/24/2013	B0	B0
+CitcomS		x86_64_Fedora17		1/24/2013	B0	B0
+CitcomS		x86_64_MacOSX7		1/24/2013	B0	B0
+CitcomS		x86_64_RedHat5		1/24/2013	B0	B0
+CitcomS		x86_64_RedHat6		1/24/2013	B0	B0
+CitcomS		x86_64_SL6		1/24/2013	B0	B0
+CitcomS		x86_64_Ubuntu10		1/24/2013	B0	B0
+CitcomS		x86_64_Ubuntu12		1/24/2013	B0	B0
+CitcomS		x86_64_macos_10.7	1/24/2013	B0	B0
+CitcomS		x86_Debian6		1/24/2013	B0	B0
+CitcomS		x86_RedHat5		1/24/2013	B0	B0
+CitcomS		x86_RedHat6		1/24/2013	B0	B0
+CitcomS		x86_SL5			1/24/2013	B0	B0
+CitcomS		x86_64_Solaris11	1/24/2013	F0	F0
+CitcomS		x86_64_Windows7		1/24/2013	F0	F0
+CitcomS		x86_WindowsXP		1/24/2013	F0	F0
+
+SPECFEM3D_GLOBE	x86_64_Debian5		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_Debian6		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_Fedora16		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_Fedora17		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_MacOSX7		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_RedHat6		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_SL6		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_Solaris11	1/24/2013	B0	F0
+SPECFEM3D_GLOBE	x86_64_Ubuntu10		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_Ubuntu12		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_64_macos_10.7	1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_Debian6		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_RedHat6		1/24/2013	B0	B0
+SPECFEM3D_GLOBE	x86_RedHat5		1/24/2013	F0	F0
+SPECFEM3D_GLOBE	x86_SL5			1/24/2013	F0	F0
+SPECFEM3D_GLOBE	x86_64_RedHat5		1/24/2013	F0	F0
+SPECFEM3D_GLOBE	x86_64_Windows7		1/24/2013	F0	F0
+SPECFEM3D_GLOBE	x86_WindowsXP		1/24/2013	F0	F0
+
+RELAX		x86_64_Debian6		1/24/2013	B0	B0
+RELAX		x86_64_Fedora16		1/24/2013	B0	B0
+RELAX		x86_64_Fedora17		1/24/2013	B0	B0
+RELAX		x86_64_RedHat6		1/24/2013	B0	B0
+RELAX		x86_64_SL6		1/24/2013	B0	B0
+RELAX		x86_64_Ubuntu10		1/24/2013	B0	B0
+RELAX		x86_64_Ubuntu12		1/24/2013	B0	B0
+RELAX		x86_Debian6		1/24/2013	B0	B0
+RELAX		x86_RedHat6		1/24/2013	B0	B0
+RELAX		x86_SL5			1/24/2013	F0	F0
+RELAX		x86_WindowsXP		1/24/2013	F0	F0
+RELAX		x86_64_MacOSX7		1/24/2013	F0	F0
+RELAX		x86_64_Debian5		1/24/2013	F0	F0
+RELAX		x86_64_RedHat5		1/24/2013	0	0
+RELAX		x86_64_Solaris11	1/24/2013	F0	F0
+RELAX		x86_64_Windows7		1/24/2013	F0	F0
+RELAX		x86_64_macos_10.7	1/24/2013	F0	F0
+RELAX		x86_RedHat5		1/24/2013	F0	F0
+
+MAG		x86_64_Debian5		1/27/2013	B0	B0
+MAG		x86_64_Debian6		1/27/2013	B0	B0
+MAG		x86_64_Fedora16		1/27/2013	B0	B0
+MAG		x86_64_Fedora17		1/27/2013	B0	B0
+MAG		x86_64_MacOSX7		1/27/2013	F0	F0
+MAG		x86_64_RedHat5		1/27/2013	0	0
+MAG		x86_64_RedHat6		1/27/2013	B0	B0
+MAG		x86_64_SL6		1/27/2013	B0	B0
+MAG		x86_64_Solaris11	1/27/2013	F0	F0
+MAG		x86_64_Ubuntu10		1/27/2013	B0	B0
+MAG		x86_64_Ubuntu12		1/27/2013	B0	B0
+MAG		x86_64_macos_10.7	1/27/2013	F0	F0
+MAG		x86_Debian6		1/27/2013	B0	B0
+MAG		x86_RedHat5		1/27/2013	B0	B0
+MAG		x86_RedHat6		1/27/2013	B0	B0
+MAG		x86_SL5			1/27/2013	B0	B0
+MAG		x86_64_Windows7		1/27/2013	F0	F0
+MAG		x86_WindowsXP		1/27/2013	F0	F0
+
+Mineos		x86_64_Debian5		1/27/2013	B1A	B1A
+Mineos		x86_64_Debian6		1/27/2013	B1A	B1A
+Mineos		x86_64_Fedora16		1/27/2013	B1A	B1A
+Mineos		x86_64_Fedora17		1/27/2013	B1A	B1A
+Mineos		x86_64_MacOSX7		1/27/2013	B1A	F
+Mineos		x86_64_RedHat5		1/27/2013	F	F
+Mineos		x86_64_RedHat6		1/27/2013	B1A	B1A
+Mineos		x86_64_SL6		1/27/2013	B1A	B1A
+Mineos		x86_64_Solaris11	1/27/2013	F	F
+Mineos		x86_64_Ubuntu10		1/27/2013	B1A	B1A
+Mineos		x86_64_Ubuntu12		1/27/2013	B1A	B1A
+Mineos		x86_64_macos_10.7	1/27/2013	B1A	F
+Mineos		x86_Debian6		1/27/2013	B1A	B1A
+Mineos		x86_RedHat5		1/27/2013	F	F
+Mineos		x86_RedHat6		1/27/2013	B1A	B1A
+Mineos		x86_SL5			1/27/2013	F	F
+Mineos		x86_64_Windows7		1/27/2013	F	F
+Mineos		x86_WindowsXP		1/27/2013	F	F
+
+SELEN		x86_64_Debian5		2/08/2013	0	B0
+SELEN		x86_64_Debian6		2/08/2013	0	B0
+SELEN		x86_64_Fedora16		2/08/2013	0	B0
+SELEN		x86_64_Fedora17		2/08/2013	0	B0
+SELEN		x86_64_MacOSX7		2/08/2013	0	B0
+SELEN		x86_64_RedHat5		2/08/2013	0	B0
+SELEN		x86_64_RedHat6		2/08/2013	0	B0
+SELEN		x86_64_SL6		2/08/2013	0	B0
+SELEN		x86_64_Solaris11	2/08/2013	0	B0
+SELEN		x86_64_Ubuntu10		2/08/2013	0	B0
+SELEN		x86_64_Ubuntu12		2/08/2013	0	B0
+SELEN		x86_64_macos_10.7	2/08/2013	0	B0
+SELEN		x86_Debian6		2/08/2013	0	B0
+SELEN		x86_RedHat5		2/08/2013	0	B0
+SELEN		x86_RedHat6		2/08/2013	0	B0
+SELEN		x86_SL5			2/08/2013	0	B0
+SELEN		x86_64_Windows7		2/08/2013	0	F0
+SELEN		x86_WindowsXP		2/08/2013	0	F0
+

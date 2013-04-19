@@ -1,0 +1,5 @@
+# $Id: build_files.scp 21300 2013-01-26 09:01:04Z ericheien $
+
+method = scp
+scp_file = ~/trunk/RELAX/build.sh
+

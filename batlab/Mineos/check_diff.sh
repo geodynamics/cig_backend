@@ -1,0 +1,25 @@
+#!/bin/bash
+# $Id: check_diff.sh 21460 2013-03-07 04:30:52Z ericheien $
+
+
+SUFFIXES=( ALE.LHE.ASC ALE.LHN.ASC ALE.LHZ.ASC ANMO.LH1.ASC ANMO.LH2.ASC ANMO.LHZ.ASC BAK.BHE.ASC BAK.BHN.ASC BAK.BHZ.ASC BDFB.LHE.ASC BDFB.LHN.ASC BDFB.LHZ.ASC BILL.LHE.ASC BILL.LHN.ASC BILL.LHZ.ASC BJT.LHE.ASC BJT.LHN.ASC BJT.LHZ.ASC BRVK.LHE.ASC BRVK.LHN.ASC BRVK.LHZ.ASC CASY.LHE.ASC CASY.LHN.ASC CASY.LHZ.ASC CCM.LHE.ASC CCM.LHN.ASC CCM.LHZ.ASC TLY.LHE.ASC TLY.LHN.ASC TLY.LHZ.ASC )
+
+FAILED=
+
+for SUFF in "${SUFFIXES[@]}"
+do
+	tail -n +4 mineos*/DEMO/DEMO2/Syndat_ASC/*$SUFF > orig_$SUFF \
+	&& tail -n +4 mineos*/DEMO/DEMO3/Syndat_ASC/*$SUFF > test_$SUFF \
+	&& python cross_corr.py 7.5 orig_$SUFF test_$SUFF \
+	&& /bin/rm -f orig_$SUFF test_$SUFF
+	if [ $? -ne 0 ] ; then
+		FAILED=1
+	fi
+done
+
+if [ "$FAILED" ] ; then
+	exit 1
+fi
+
+exit 0
+
