@@ -276,6 +276,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="specfem2d"><h2>Specfem2D</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'SPECFEM2D')])"/> publications
+<h3> 2012 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'SPECFEM2D')]"/>
+</ul>
 <h3> 2010 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'SPECFEM2D')]"/>
@@ -408,3 +412,4 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 </xsl:template>
 
 </xsl:stylesheet>
+
