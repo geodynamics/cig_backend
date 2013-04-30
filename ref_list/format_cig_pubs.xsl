@@ -132,13 +132,25 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'CitcomS')]"/>
 </ul>
+<h3> 2007 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2007 and contains(custom3, 'CitcomS')]"/>
+</ul>
 <h3> 2006 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2006 and contains(custom3, 'CitcomS')]"/>
 </ul>
+<h3> 2003 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2003 and contains(custom3, 'CitcomS')]"/>
+</ul>
 
 <a id="citcomcu"><h2>CitcomCU</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'CitcomCU')])"/> publications
+<h3> 2013 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2013 and contains(custom3, 'CitcomCU')]"/>
+</ul>
 <h3> 2012 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'CitcomCU')]"/>
@@ -162,6 +174,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="conman"><h2>ConMan</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'ConMan')])"/> publications
+<h3> 2010 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'ConMan')]"/>
+</ul>
 
 <a id="ellipsis3d"><h2>Ellipsis3d</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Ellipsis3d')])"/> publications
