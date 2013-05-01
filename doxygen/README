@@ -1,6 +1,6 @@
 DESCRIPTION OF AUTOMATED DOXYGEN DOCUMENT GENERATION
 
-Written by Eric Heien on Apr 15, 2013
+Written by Eric Heien on May 1, 2013
 
 This directory contains scripts to generate documentation for CIG codes using the
 Doxygen documentation system.
@@ -24,6 +24,17 @@ generate_doxygen.sh
 
     <project name> specifies the name of the project which determines the directory
     name the code will be put in.
+
+queue_doxygen.py
+    Script to help automate queueing of doxygen generation requests.
+    Usage: queue_doxygen.py <code_name|all> <release|dev>
+
+    The first argument specifies whether to generate documentation for a particular
+    code or all codes. The list of codes is specified in the cig_codes.py module
+    in the parent directory.
+
+    The second argument specifies whether to generate documentation based on the
+    release code or repository development code.
 
 template.doxyfile
     A doxyfile to specify how the documentation is generated. However, this doxyfile
