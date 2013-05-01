@@ -8,3 +8,5 @@ map/hit_database/hit_database
 map/ip_database/GeoLiteCity-Blocks.csv
 
 map/map_plot/.gmtcommands
+
+*.pyc
