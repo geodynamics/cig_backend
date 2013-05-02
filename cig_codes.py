@@ -23,6 +23,9 @@ class CodeDB:
     def codes(self):
         return self.repo_url.keys()
 
+    def code_dir_names(self):
+        return [self.dir_name[x] for x in self.dir_name]
+
     def code_doxygen_release(self, code_name):
         return self.release_doxygen[code_name]
 
