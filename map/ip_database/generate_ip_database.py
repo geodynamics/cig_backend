@@ -12,7 +12,8 @@ CREATE TABLE `block` (
     `end_ip` INT default NULL,      -- Ending IP number of this block
     `loc_id` INT default NULL       -- Corresponding location ID
 );
-CREATE INDEX ip_loc_ind ON `block` (`start_ip`, `end_ip`);
+CREATE INDEX start_ip_loc_ind ON `block` (`start_ip`);
+CREATE INDEX end_ip_loc_ind ON `block` (`end_ip`);
 
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
