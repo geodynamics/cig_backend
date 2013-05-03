@@ -147,8 +147,7 @@ rm -rf $DOXY_DIR/$SUBDIR/$NAME
 BLANK_DOXYFILE="$TOP_DIR/template.doxyfile"
 DOXYFILE="$TMP_DIR/$$.doxyfile"
 CODE_DOXY_DIR="$DOXY_DIR/$SUBDIR/$NAME"
-REMOTE_DOXY_HOST="emheien@geodynamics.org"
-REMOTE_DOXY_DIR="$REMOTE_DOXY_HOST:/home/emheien/public_html/doxygen/$SUBDIR/$NAME/"
+REMOTE_DOXY_DIR="/home/backend/public_html/doxygen/$SUBDIR/$NAME/"
 
 # Create a sed command file to replace keywords in the template doxyfile specific to the code
 # Escape each of the replacement strings to properly work with sed

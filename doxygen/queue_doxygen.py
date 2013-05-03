@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# This script adds a set of doxygen creation commands to the queue system based
+# on the CIG codes described in the ../cig_codes.py module. It can create
+# documentation for release or repository code for single or all codes.
+
 from __future__ import print_function
 import sys
 sys.path.append("..")
@@ -12,12 +16,14 @@ def main():
         print("syntax:", sys.argv[0], "code_name|all release|dev")
         exit(1)
 
+    # Parse input arguments
     req_name = sys.argv[1]
     code_type = sys.argv[2]
     if code_type != "release" and code_type != "dev":
         print("Unknown type (must be release or dev)")
         exit(1)
 
+    # Go through all the recorded CIG codes
     for code_name in code_db.codes():
         if req_name != "all" and req_name != code_name: continue
         cmd_dict = {}
