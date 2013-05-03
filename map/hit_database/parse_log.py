@@ -15,12 +15,13 @@ def ip_addr_to_ip_num(ip_addr):
     ip_nums = [int(x) for x in ip_split]
     return ip_nums[0]*(1<<24)+ip_nums[1]*(1<<16)+ip_nums[2]*(1<<8)+ip_nums[3]
 
-def parse_apache_logfile(db_conn, logfile):
+def parse_apache_logfile(db_conn, logfile, start_date):
     # A list of extensions used to decide which files are counted as hits
     valid_extensions = [".tar.gz", ".dmg", ".exe", ".zip", ".tgz", ".tbz", ".bz2"]
     format = r'%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"'
     p = apachelog.parser(format)
     num_lines = 0
+    ignored_old_entries = 0
     next_progress = time.time()+3
     for line in logfile:
         if time.time() > next_progress:
@@ -47,9 +48,14 @@ def parse_apache_logfile(db_conn, logfile):
                         valid = True
                         break
 
-                # Now we have confirmed this hit is a valid download
-                # First ensure the corresponding filename and package are in the DB
-                if valid:
+                # Get the timestamp of the request
+                timestamp = data['%t'].split()[0]
+                parsed_ts = datetime.datetime.strptime(timestamp, "[%d/%b/%Y:%H:%M:%S")
+                if parsed_ts < start_date:
+                    ignored_old_entries += 1
+                elif valid:
+                    # Now we have confirmed this hit is a valid download
+                    # First ensure the corresponding filename and package are in the DB
                     add_file_package(db_conn, url_end, cig_code)
                     # First we have to convert the IP address to an IP number
                     host_name = data['%h']
@@ -59,11 +65,10 @@ def parse_apache_logfile(db_conn, logfile):
                         continue
                     # Get the IP address associated with the host name
                     ip_num = ip_addr_to_ip_num(ip_addr)
-                    # And get the timestamp of the request
-                    timestamp = data['%t'].split()[0]
-                    parsed_ts = datetime.datetime.strptime(timestamp, "[%d/%b/%Y:%H:%M:%S")
                     # Then add the hit in the database
                     add_hit(db_conn, url_end, cig_code, ip_num, parsed_ts)
+
+    return ignored_old_entries
 
 def count_hits(db_conn):
     c = db_conn.cursor()
@@ -79,20 +84,23 @@ def add_file_package(db_conn, file_name, package_name):
     db_conn.execute("INSERT OR IGNORE INTO dist_file (package_id, file_name) SELECT id, ? FROM package WHERE package.package_name=?;", (file_name, package_name,))
     db_conn.commit()
 
-def get_max_date(db_conn):
-    db_conn.execute("")
+def get_max_time(db_conn):
+    c = db_conn.cursor();
+    c.execute("SELECT MAX(time) from HIT;")
+    max_time = c.fetchone()[0]
+    return datetime.datetime.strptime(max_time, "%Y-%m-%d %H:%M:%S")
 
-def read_log_file(db_name, logfile_name):
-    conn = sqlite3.connect(db_name)
+def read_log_file(conn, logfile_name, max_time):
+    print("Reading logfile", logfile_name)
     print("Initial hit count in database:", count_hits(conn))
     if logfile_name.split(".")[-1] == "gz":
         logfile = gzip.open(logfile_name, mode='rb')
     else:
         logfile = open(logfile_name, mode='rb')
-    parse_apache_logfile(conn, logfile)
+    num_ignored = parse_apache_logfile(conn, logfile, max_time)
     logfile.close()
+    print("Ignored", num_ignored, "old entries")
     print("Final hit count in database:", count_hits(conn))
-    conn.close()
 
 def main():
     if len(sys.argv) != 3:
@@ -101,8 +109,11 @@ def main():
 
     db_name = sys.argv[1]
     logfile_path = sys.argv[2]
+    conn = sqlite3.connect(db_name)
+    max_time = get_max_time(conn)
     for logfile_name in glob.glob(logfile_path):
-        read_log_file(db_name, logfile_name)
+        read_log_file(conn, logfile_name, max_time)
+    conn.close()
 
 if __name__ == "__main__":
     main()
