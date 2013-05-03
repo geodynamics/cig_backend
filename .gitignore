@@ -10,3 +10,7 @@ map/ip_database/GeoLiteCity-Blocks.csv
 map/map_plot/.gmtcommands
 
 *.pyc
+
+*.csv
+
+*.zip
