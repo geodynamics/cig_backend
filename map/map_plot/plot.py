@@ -87,7 +87,7 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
             circle_size = (max_pt_size-min_pt_size)*math.log(num_dls)/math.log(max_hits_in_grid) + min_pt_size
         else:
             circle_size = min_pt_size
-        print("S "+str(max_circle_size/2)+" c "+str(circle_size)+" 255/255/0 - "+str(1.3*max_circle_size)+" "+str(int(num_dls))+" downloads", file=legend_file)
+        print("S "+str(max_circle_size/2)+" c "+str(circle_size)+" yellow black "+str(1.3*max_circle_size)+" "+str(int(num_dls))+" downloads", file=legend_file)
         num_dls /= step_size
     legend_file.flush()
 
@@ -104,10 +104,10 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
     )
 
     #os.system("{gmt_bin}gmtset PAPER_MEDIA=letter".format(**c))
-    os.system("{gmt_bin}psbasemap -R-179/179/-60/70 -JM6i -Ba60/a30/wesn -P -K -V > {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pscoast -R -JM  -Dl -A10000  -G0/150/0 -S0/0/150 -K -O -V >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pslegend -R -JM -F -G255/255/255 -Dx0i/0i/1.5i/0.9i/BL -K -O -V {legend_file_name} >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psxy -R -JM -Sc -O -V -G255/255/0 -W0 {loc_file_name} >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psbasemap -R-179/179/-60/70 -JM6i -Ba60/a30/wesn -P -K > {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast -R -JM  -Dl -A10000  -G0/150/0 -S0/0/150 -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pslegend -R -JM -F -Gwhite -Dx0i/0i/1.65i/0.95i/BL -UBR/6i/0 -K -O {legend_file_name} >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psxy -R -JM -Sc -O -Gyellow -Wthin {loc_file_name} >> {ps_file_name}".format(**c))
     os.system("mkdir -p {out_dir}".format(**c))
     os.system("convert -trim +repage -density {dpi} {ps_file_name} {gif_file}".format(**c))
 
@@ -131,7 +131,7 @@ def generate_plot(hit_db_name, loc_db_name, output_dir, code_name):
         exit()
 
     # Bin the locations into a grid
-    loc_grid = bin_locs_into_grid(locs, 1)
+    loc_grid = bin_locs_into_grid(locs, 0)
     print("Binned", len(locs), "locations into", len(loc_grid), "unique points.")
 
     # Create GMT plot of binned points
@@ -147,6 +147,7 @@ def main():
     OUTPUT_DIR = sys.argv[3]
     PACKAGE_NAME = sys.argv[4]
 
+    # For the command "all" generate maps for all codes listed in the code_db
     if PACKAGE_NAME == "all":
         for code_name in code_db.code_dir_names():
             generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, code_name)
