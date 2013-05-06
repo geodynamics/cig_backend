@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import apachelog
+import glob
+import gzip
 import sqlite3
 import datetime
 import time
@@ -12,14 +15,14 @@ def ip_addr_to_ip_num(ip_addr):
     ip_nums = [int(x) for x in ip_split]
     return ip_nums[0]*(1<<24)+ip_nums[1]*(1<<16)+ip_nums[2]*(1<<8)+ip_nums[3]
 
-def parse_apache_logfile(db_conn, logfile_name):
+def parse_apache_logfile(db_conn, logfile):
     # A list of extensions used to decide which files are counted as hits
     valid_extensions = [".tar.gz", ".dmg", ".exe", ".zip", ".tgz", ".tbz", ".bz2"]
     format = r'%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"'
     p = apachelog.parser(format)
     num_lines = 0
     next_progress = time.time()+3
-    for line in open(logfile_name):
+    for line in logfile:
         if time.time() > next_progress:
             next_progress = time.time()+3
             print("line", num_lines)
@@ -62,8 +65,6 @@ def parse_apache_logfile(db_conn, logfile_name):
                     # Then add the hit in the database
                     add_hit(db_conn, url_end, cig_code, ip_num, parsed_ts)
 
-# date -j -f "%d/%b/%Y:%H:%M:%S %z" "$DATE" +"%Y-%m-%d %H:%M:%S"
-
 def count_hits(db_conn):
     c = db_conn.cursor()
     c.execute("SELECT COUNT(*) FROM HIT;")
@@ -78,18 +79,30 @@ def add_file_package(db_conn, file_name, package_name):
     db_conn.execute("INSERT OR IGNORE INTO dist_file (package_id, file_name) SELECT id, ? FROM package WHERE package.package_name=?;", (file_name, package_name,))
     db_conn.commit()
 
+def get_max_date(db_conn):
+    db_conn.execute("")
+
+def read_log_file(db_name, logfile_name):
+    conn = sqlite3.connect(db_name)
+    print("Initial hit count in database:", count_hits(conn))
+    if logfile_name.split(".")[-1] == "gz":
+        logfile = gzip.open(logfile_name, mode='rb')
+    else:
+        logfile = open(logfile_name, mode='rb')
+    parse_apache_logfile(conn, logfile)
+    logfile.close()
+    print("Final hit count in database:", count_hits(conn))
+    conn.close()
+
 def main():
     if len(sys.argv) != 3:
         print("syntax:", sys.argv[0], "DB_NAME LOGFILE")
         exit(1)
 
     db_name = sys.argv[1]
-    logfile_name = sys.argv[2]
-    conn = sqlite3.connect(db_name)
-    print("Initial hit count in database:", count_hits(conn))
-    parse_apache_logfile(conn, logfile_name)
-    print("Final hit count in database:", count_hits(conn))
-    conn.close()
+    logfile_path = sys.argv[2]
+    for logfile_name in glob.glob(logfile_path):
+        read_log_file(db_name, logfile_name)
 
 if __name__ == "__main__":
     main()
