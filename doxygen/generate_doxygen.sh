@@ -1,22 +1,23 @@
 #!/bin/bash
 
 # Example usage:
-# ./generate_doxygen.sh svn http://geodynamics.org/svn/cig/mc/3D/CitcomS/trunk 21629 CitcomS
-# ./generate_doxygen.sh url http://geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz 3.2.0 CitcomS
+# ./generate_doxygen.sh svn http://geodynamics.org/svn/cig/mc/3D/CitcomS/trunk 21629 CitcomS citcoms
+# ./generate_doxygen.sh url http://geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz 3.2.0 CitcomS citcoms
 
 # Fail out if there are any errors
 set -e
 
-if [ $# -ne 4 ]
+if [ $# -ne 5 ]
 then
-	echo "Usage: $0 <method> <URL> <revision> <project name>"
+	echo "Usage: $0 <method> <URL> <revision> <project name> <short name>"
 	exit 1
 fi
 
 METHOD="$1"
 URL="$2"
 REV="$3"
-NAME="$4"
+FULL_NAME="$4"
+NAME="$5"
 TOP_DIR="`pwd`"
 REPO_DIR="$TOP_DIR/repos"
 BASE_TMP_DIR="$TOP_DIR/tmp"
@@ -152,7 +153,7 @@ REMOTE_DOXY_DIR="/home/backend/public_html/doxygen/$SUBDIR/$NAME/"
 # Create a sed command file to replace keywords in the template doxyfile specific to the code
 # Escape each of the replacement strings to properly work with sed
 SED_FILE="$TMP_DIR/sed_command"
-echo "s=CIG_PROJECT=$NAME=g" > $SED_FILE
+echo "s=CIG_PROJECT=$FULL_NAME=g" > $SED_FILE
 echo "s=CIG_CODE_DOXY_DIR=$CODE_DOXY_DIR=g" >> $SED_FILE
 echo "s=CIG_CODE_REVISION=$REV_TITLE=g" >> $SED_FILE
 echo "s=CIG_INPUT_DIR=$CODE_INPUT_DIR=g" >> $SED_FILE

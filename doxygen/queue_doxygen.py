@@ -29,10 +29,11 @@ def main():
         cmd_dict = {}
         cmd_dict["queue_cmd"] = "../queue/queue_daemon.sh doxygen_queue"
         cmd_dict["code_name"] = code_name
+        cmd_dict["full_name"] = code_db.full_name[code_name]
         if code_type == "release" and code_db.code_doxygen_release(code_name):
             cmd_dict["code_url"] = code_db.release_src[code_name]
             cmd_dict["code_version"] = code_db.release_version[code_name]
-            sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh url {code_url} {code_version} {code_name}\" &".format(**cmd_dict)
+            sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh url {code_url} {code_version} \\\"{full_name}\\\" {code_name}\" &".format(**cmd_dict)
             os.system(sys_cmd)
         elif code_type == "dev" and code_db.code_doxygen_dev(code_name):
             cmd_dict["repo_url"] = code_db.repo_url[code_name]
@@ -49,7 +50,7 @@ def main():
             else:
                 print("Unknown repository type for", code_name, "(must be svn, hg or git)")
                 exit(1)
-            sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh {repo_type} {repo_url} {repo_version} {code_name}\" &".format(**cmd_dict)
+            sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh {repo_type} {repo_url} {repo_version} \\\"{full_name}\\\" {code_name}\" &".format(**cmd_dict)
             os.system(sys_cmd)
 
 if __name__ == "__main__":
