@@ -9,6 +9,16 @@ map/ip_database/GeoLiteCity-Blocks.csv
 
 map/map_plot/.gmtcommands
 
+map/map_plot/.gmtcommands4
+
+doxygen/doxygen
+
+doxygen/queues
+
+doxygen/repos
+
+doxygen/tmp
+
 *.pyc
 
 *.csv
