@@ -8,6 +8,7 @@ import math
 import os
 import sqlite3
 import random
+import datetime
 import tempfile
 
 def find_ip_lat_lon(db_conn, ip_num):
@@ -28,11 +29,11 @@ def ip_nums_to_locations(db_name, ip_num_list):
 
     return result
 
-def lookup_hits(db_name, package_name):
+def lookup_hits(db_name, package_name, start_time, end_time):
     db_conn = sqlite3.connect(db_name)
     curs = db_conn.cursor()
     result = []
-    curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (package_name,))
+    curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (start_time, end_time, package_name,))
     while True:
         next_val = curs.fetchone()
         if next_val is None: break
@@ -115,9 +116,9 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
     ps_file.close()
     loc_file.close()
 
-def generate_plot(hit_db_name, loc_db_name, output_dir, code_name):
+def generate_plot(hit_db_name, loc_db_name, output_dir, code_name, start_time, end_time):
     # Get the IP numbers associated with a given package
-    ip_nums = lookup_hits(hit_db_name, code_name)
+    ip_nums = lookup_hits(hit_db_name, code_name, start_time, end_time)
     print("Found", len(ip_nums), "hits associated with package", code_name)
     if len(ip_nums) == 0:
         print("Quitting...")
@@ -138,21 +139,27 @@ def generate_plot(hit_db_name, loc_db_name, output_dir, code_name):
     plot_loc_grid(loc_grid, output_dir, code_name+".gif")
 
 def main():
-    if len(sys.argv) != 5:
-        print("syntax:", sys.argv[0], "HIT_DB_NAME LOCATION_DB_NAME OUTPUT_DIR PACKAGE_NAME")
+    if len(sys.argv) < 5 or len(sys.argv) > 7:
+        print("syntax:", sys.argv[0], "HIT_DB_NAME LOCATION_DB_NAME OUTPUT_DIR PACKAGE_NAME <START_TIME> <END_TIME>")
+        print("START_TIME and END_TIME must be in UNIX epoch format (seconds since Jan 1 1970)")
         exit(1)
 
     HIT_DB_NAME = sys.argv[1]
     LOCATION_DB_NAME = sys.argv[2]
     OUTPUT_DIR = sys.argv[3]
     PACKAGE_NAME = sys.argv[4]
+    if len(sys.argv) > 5: START_TIME = datetime.datetime.fromtimestamp(int(sys.argv[5]))
+    else: START_TIME = datetime.datetime.fromtimestamp(0)
+    if len(sys.argv) > 6: END_TIME = datetime.datetime.fromtimestamp(int(sys.argv[5]))
+    else: END_TIME = datetime.datetime.now()
+    print(START_TIME, END_TIME)
 
     # For the command "all" generate maps for all codes listed in the code_db
     if PACKAGE_NAME == "all":
         for code_name in code_db.codes():
-            generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, code_name)
+            generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, code_name, START_TIME, END_TIME)
     else:
-        generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, PACKAGE_NAME)
+        generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, PACKAGE_NAME, START_TIME, END_TIME)
 
 if __name__ == "__main__":
     main()
