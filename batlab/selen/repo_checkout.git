@@ -1,5 +1,5 @@
 # $Id: repo_checkout.git 21340 2013-02-07 07:36:36Z ericheien $
 
 method = git
-git_repo = git://github.com/eheien/selen.git
+git_repo = git://github.com/geodynamics/selen.git
 
