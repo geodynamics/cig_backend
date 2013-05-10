@@ -85,6 +85,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'LithoMop')]"/>
 </ul>
+<h3> 2007 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2007 and contains(custom3, 'LithoMop')]"/>
+</ul>
 
 <a id="gale"><h2>Gale</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Gale')])"/> publications
@@ -98,10 +102,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 </ul>
 
 <a id="plasti"><h2>Plasti</h2></a>
-<xsl:value-of select="count(xml/records/record[contains(custom3,'LithoMop')])"/> publications
+<xsl:value-of select="count(xml/records/record[contains(custom3,'Plasti')])"/> publications
 
 <a id="snac"><h2>SNAC</h2></a>
-<xsl:value-of select="count(xml/records/record[contains(custom3,'LithoMop')])"/> publications
+<xsl:value-of select="count(xml/records/record[contains(custom3,'SNAC')])"/> publications
 
 <a id="aspect"><h2>Aspect</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'ASPECT')])"/> publications
