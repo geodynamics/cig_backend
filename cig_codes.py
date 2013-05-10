@@ -10,8 +10,10 @@ class CodeDB:
         self.release_version = {}
         self.dev_doxygen = {}
         self.release_doxygen = {}
+        self.dev_batlab = {}
+        self.release_batlab = {}
 
-    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen):
+    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, dev_batlab, release_batlab):
         self.full_name[short_name] = full_name
         self.repo_url[short_name] = repo_url
         self.repo_type[short_name] = repo_type
@@ -19,12 +21,20 @@ class CodeDB:
         self.release_version[short_name] = release_version
         self.dev_doxygen[short_name] = dev_doxygen
         self.release_doxygen[short_name] = release_doxygen
+        self.dev_batlab[short_name] = dev_batlab
+        self.release_batlab[short_name] = release_batlab
 
     def codes(self):
         return self.repo_url.keys()
 
     def code_full_names(self):
         return [self.full_name[x] for x in self.full_name]
+
+    def code_batlab_release(self, code_name):
+        return self.release_batlab[code_name]
+
+    def code_batlab_dev(self, code_name):
+        return self.dev_batlab[code_name]
 
     def code_doxygen_release(self, code_name):
         return self.release_doxygen[code_name]
@@ -64,7 +74,9 @@ code_db.register(short_name="pylith",
                  release_src="http://geodynamics.org/cig/software/pylith/pylith-1.8.0.tgz",
                  release_version="1.8.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="relax",
                  full_name="RELAX",
@@ -73,7 +85,9 @@ code_db.register(short_name="relax",
                  release_src="http://geodynamics.org/cig/software/relax/Relax-1_0_4.tgz",
                  release_version="1.0.4",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="selen",
                  full_name="SELEN",
@@ -82,7 +96,9 @@ code_db.register(short_name="selen",
                  release_src="http://geodynamics.org/cig/software/selen/SELEN_2.9.10.4.tar.gz",
                  release_version="2.9.10.4",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="lithomop",
                  full_name="LithoMop",
@@ -91,7 +107,9 @@ code_db.register(short_name="lithomop",
                  release_src="http://geodynamics.org/cig/software/lithomop/lithomop3d-0.7.2.tar.gz",
                  release_version="0.7.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 #######################
 # Long-Term Tectonics #
@@ -103,7 +121,9 @@ code_db.register(short_name="gale",
                  release_src="http://geodynamics.org/cig/software/gale/Gale-2_0_1.tgz",
                  release_version="2.0.1",
                  dev_doxygen=False,
-                 release_doxygen=False)
+                 release_doxygen=False,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="plasti",
                  full_name="Plasti",
@@ -112,7 +132,9 @@ code_db.register(short_name="plasti",
                  release_src="http://geodynamics.org/cig/software/plasti/plasti-1.0.0.tar.gz",
                  release_version="1.0.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="snac",
                  full_name="SNAC",
@@ -121,7 +143,9 @@ code_db.register(short_name="snac",
                  release_src="http://geodynamics.org/cig/software/snac/SNAC-1.2.0.tar.gz",
                  release_version="1.2.0",
                  dev_doxygen=False,
-                 release_doxygen=False)
+                 release_doxygen=False,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 #####################
 # Mantle Convection #
@@ -133,7 +157,9 @@ code_db.register(short_name="citcomcu",
                  release_src="http://geodynamics.org/cig/software/citcomcu/CitcomCU-1.0.3.tar.gz",
                  release_version="1.0.3",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="citcoms",
                  full_name="CitcomS",
@@ -142,7 +168,9 @@ code_db.register(short_name="citcoms",
                  release_src="http://geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz",
                  release_version="3.2.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="conman",
                  full_name="ConMan",
@@ -151,7 +179,9 @@ code_db.register(short_name="conman",
                  release_src="http://geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz",
                  release_version="2.0.0",
                  dev_doxygen=False,
-                 release_doxygen=False)
+                 release_doxygen=False,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="ellipsis3d",
                  full_name="Ellipsis3D",
@@ -160,7 +190,9 @@ code_db.register(short_name="ellipsis3d",
                  release_src="http://geodynamics.org/cig/software/ellipsis3d/Ellipsis3D-1.0.2.tar.gz",
                  release_version="1.0.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="hc",
                  full_name="HC",
@@ -169,7 +201,9 @@ code_db.register(short_name="hc",
                  release_src="http://geodynamics.org/cig/software/hc/HC-1_0.tgz",
                  release_version="1.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 ##############
 # Seismology #
@@ -181,7 +215,9 @@ code_db.register(short_name="specfem3d",
                  release_src="http://geodynamics.org/cig/software/specfem3d/SPECFEM3D_Cartesian_V2.0.2.tar.gz",
                  release_version="2.0.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="specfem3d-globe",
                  full_name="SPECFEM3D GLOBE",
@@ -190,7 +226,9 @@ code_db.register(short_name="specfem3d-globe",
                  release_src="http://geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz",
                  release_version="5.1.5",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="specfem3d-geotech",
                  full_name="SPECFEM3D GEOTECH",
@@ -199,7 +237,9 @@ code_db.register(short_name="specfem3d-geotech",
                  release_src="http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz",
                  release_version="1.1b",
                  dev_doxygen=False,
-                 release_doxygen=False)
+                 release_doxygen=False,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="specfem2d",
                  full_name="SPECFEM2D",
@@ -208,7 +248,9 @@ code_db.register(short_name="specfem2d",
                  release_src="http://geodynamics.org/cig/software/specfem2d/SPECFEM2D-7.0.0.tar.gz",
                  release_version="7.0.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="specfem1d",
                  full_name="SPECFEM1D",
@@ -217,7 +259,9 @@ code_db.register(short_name="specfem1d",
                  release_src="http://geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.3.tar.gz",
                  release_version="1.0.3",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="mineos",
                  full_name="Mineos",
@@ -226,7 +270,9 @@ code_db.register(short_name="mineos",
                  release_src="http://geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz",
                  release_version="1.0.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="flexwin",
                  full_name="Flexwin",
@@ -235,7 +281,9 @@ code_db.register(short_name="flexwin",
                  release_src="http://geodynamics.org/cig/software/flexwin/FLEXWIN-1.0.1.tar.gz",
                  release_version="1.0.1",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="seismic_cpml",
                  full_name="SEISMIC_CPML",
@@ -244,7 +292,9 @@ code_db.register(short_name="seismic_cpml",
                  release_src="http://geodynamics.org/cig/software/seismic_cpml/SEISMIC_CPML_1.2.tar.gz",
                  release_version="1.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 #############
 # Geodynamo #
@@ -256,7 +306,9 @@ code_db.register(short_name="mag",
                  release_src="http://geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz",
                  release_version="1.0.2",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 #########################
 # Computational Science #
@@ -268,7 +320,9 @@ code_db.register(short_name="cigma",
                  release_src="http://geodynamics.org/cig/software/cigma/cigma-1.0.0.tar.gz",
                  release_version="1.0.0",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="exchanger",
                  full_name="Exchanger",
@@ -277,7 +331,9 @@ code_db.register(short_name="exchanger",
                  release_src="http://geodynamics.org/cig/software/exchanger/Exchanger-1.0.1.tar.gz",
                  release_version="1.0.1",
                  dev_doxygen=True,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
 code_db.register(short_name="pythia",
                  full_name="Pythia",
@@ -286,5 +342,7 @@ code_db.register(short_name="pythia",
                  release_src="http://geodynamics.org/cig/software/pythia/pythia-0.8.1.15.tar.gz",
                  release_version="0.8.1.15",
                  dev_doxygen=False,
-                 release_doxygen=True)
+                 release_doxygen=True,
+                 dev_batlab=False,
+                 release_batlab=False)
 
