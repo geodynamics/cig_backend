@@ -114,6 +114,8 @@ code_db.register(short_name="lithomop",
 #######################
 # Long-Term Tectonics #
 #######################
+# Gale and SNAC use the St Germain framework which chokes doxygen,
+# so we currently don't run doxygen for them
 code_db.register(short_name="gale",
                  full_name="Gale",
                  repo_url="http://geodynamics.org/hg/long/3D/gale",
@@ -178,7 +180,7 @@ code_db.register(short_name="conman",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz",
                  release_version="2.0.0",
-                 dev_doxygen=False,
+                 dev_doxygen=True,
                  release_doxygen=False,
                  dev_batlab=False,
                  release_batlab=False)
@@ -236,8 +238,8 @@ code_db.register(short_name="specfem3d-geotech",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz",
                  release_version="1.1b",
-                 dev_doxygen=False,
-                 release_doxygen=False,
+                 dev_doxygen=True,
+                 release_doxygen=True,
                  dev_batlab=False,
                  release_batlab=False)
 
@@ -337,11 +339,11 @@ code_db.register(short_name="exchanger",
 
 code_db.register(short_name="pythia",
                  full_name="Pythia",
-                 repo_url="",
-                 repo_type="none",
+                 repo_url="http://geodynamics.org/svn/cig/cs/pythia/trunk",
+                 repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/pythia/pythia-0.8.1.15.tar.gz",
                  release_version="0.8.1.15",
-                 dev_doxygen=False,
+                 dev_doxygen=True,
                  release_doxygen=True,
                  dev_batlab=False,
                  release_batlab=False)
