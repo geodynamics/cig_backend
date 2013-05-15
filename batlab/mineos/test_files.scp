@@ -1,5 +1,0 @@
-# $Id: test_files.scp 21460 2013-03-07 04:30:52Z ericheien $
-
-method = scp
-scp_file = ~/trunk/Mineos/check_diff.sh ~/trunk/Mineos/cross_corr.py
-

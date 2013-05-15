@@ -5,13 +5,13 @@
 # Point to any additional installed libraries
 source ./build_common.sh
 
-# Builds CitcomS
-cd CitcomS*
-
+# Build CitcomS
 if [ "$1" == "repo" ]
 then
+    cd citcoms
 	autoreconf -i && ./configure --without-pyre && make
 else
+    cd CitcomS*
 	./configure --without-pyre && make
 fi
 

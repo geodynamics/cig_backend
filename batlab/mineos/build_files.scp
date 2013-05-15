@@ -1,5 +1,0 @@
-# $Id: build_files.scp 21302 2013-01-28 05:50:00Z ericheien $
-
-method = scp
-scp_file = ~/trunk/Mineos/build.sh
-

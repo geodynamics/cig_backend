@@ -1,6 +1,0 @@
-# $Id: dist_files.url 21320 2013-02-01 21:42:12Z ericheien $
-
-method = url
-url = http://www.geodynamics.org/cig/software/pylith/pylith-1.8.0.tgz
-untar = true
-

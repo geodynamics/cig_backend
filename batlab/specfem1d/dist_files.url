@@ -1,6 +1,0 @@
-# $Id: dist_files.url 21294 2013-01-25 07:52:42Z ericheien $
-
-method = url
-url = http://www.geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.3.tar.gz
-untar = true
-

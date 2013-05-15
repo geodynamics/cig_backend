@@ -1,5 +1,0 @@
-# $Id: build_files.scp 21301 2013-01-28 01:49:53Z ericheien $
-
-method = scp
-scp_file = ~/trunk/MAG/build.sh
-

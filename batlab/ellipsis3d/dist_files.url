@@ -1,6 +1,0 @@
-# $Id: dist_files.url 21294 2013-01-25 07:52:42Z ericheien $
-
-method = url
-url = http://www.geodynamics.org/cig/software/ellipsis3d/Ellipsis3D-1.0.2.tar.gz
-untar = true
-

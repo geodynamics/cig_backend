@@ -1,5 +1,0 @@
-# $Id: repo_checkout.svn 21320 2013-02-01 21:42:12Z ericheien $
-
-method = svn
-url = http://geodynamics.org/svn/cig/short/3D/PyLith/trunk/ pylith
-
