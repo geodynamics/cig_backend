@@ -164,6 +164,14 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2006 and contains(custom3, 'CitcomS')]"/>
 </ul>
+<h3> 2005 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2005 and contains(custom3, 'CitcomS')]"/>
+</ul>
+<h3> 2004 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2004 and contains(custom3, 'CitcomS')]"/>
+</ul>
 <h3> 2003 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2003 and contains(custom3, 'CitcomS')]"/>
