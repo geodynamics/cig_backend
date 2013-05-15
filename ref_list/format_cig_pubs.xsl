@@ -176,6 +176,14 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2003 and contains(custom3, 'CitcomS')]"/>
 </ul>
+<h3> 2002 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2002 and contains(custom3, 'CitcomS')]"/>
+</ul>
+<h3> 2000 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2000 and contains(custom3, 'CitcomS')]"/>
+</ul>
 
 <a id="citcomcu"><h2>CitcomCU</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'CitcomCU')])"/> publications
