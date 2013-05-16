@@ -58,6 +58,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="selen"><h2>SELEN</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'SELEN')])"/> publications
+<h3> 2013 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2013 and contains(custom3, 'SELEN')]"/>
+</ul>
 <h3> 2012 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'SELEN')]"/>
@@ -73,6 +77,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <h3> 2009 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'SELEN')]"/>
+</ul>
+<h3> 2008 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'SELEN')]"/>
 </ul>
 <h3> 2007 </h3>
 <ul>
@@ -156,9 +164,25 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2006 and contains(custom3, 'CitcomS')]"/>
 </ul>
+<h3> 2005 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2005 and contains(custom3, 'CitcomS')]"/>
+</ul>
+<h3> 2004 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2004 and contains(custom3, 'CitcomS')]"/>
+</ul>
 <h3> 2003 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2003 and contains(custom3, 'CitcomS')]"/>
+</ul>
+<h3> 2002 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2002 and contains(custom3, 'CitcomS')]"/>
+</ul>
+<h3> 2000 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2000 and contains(custom3, 'CitcomS')]"/>
 </ul>
 
 <a id="citcomcu"><h2>CitcomCU</h2></a>
@@ -186,6 +210,14 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <h3> 2008 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'CitcomCU')]"/>
+</ul>
+<h3> 2007 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2007 and contains(custom3, 'CitcomCU')]"/>
+</ul>
+<h3> 2006 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2006 and contains(custom3, 'CitcomCU')]"/>
 </ul>
 
 <a id="conman"><h2>ConMan</h2></a>

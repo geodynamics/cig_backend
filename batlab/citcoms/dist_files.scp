@@ -1,6 +1,0 @@
-# $Id: dist_files.scp 21294 2013-01-25 07:52:42Z ericheien $
-
-method = scp
-scp_file = ~/trunk/distributions/CitcomS-3.2.0.tar.gz
-untar = true
-

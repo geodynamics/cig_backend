@@ -1,6 +1,0 @@
-# $Id: repo_checkout.hg 21300 2013-01-26 09:01:04Z ericheien $
-
-method = hg
-url = http://geodynamics.org/hg/short/3D/relax
-path = Relax
-

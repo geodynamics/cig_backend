@@ -1,6 +1,0 @@
-# $Id: dist_files.scp 21294 2013-01-25 07:52:42Z ericheien $
-
-method = scp
-scp_file = ~/cig_backend/batlab/distributions/SPECFEM1D-1.0.3.tar.gz
-untar = true
-

@@ -1,6 +1,0 @@
-# $Id: dist_files.url 21295 2013-01-25 07:54:35Z ericheien $
-
-method = url
-url = http://www.geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz
-untar = true
-

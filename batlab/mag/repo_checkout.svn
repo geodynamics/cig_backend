@@ -1,5 +1,0 @@
-# $Id: repo_checkout.svn 21301 2013-01-28 01:49:53Z ericheien $
-
-method = svn
-url = http://geodynamics.org/svn/cig/geodyn/3D/MAG/trunk MAG
-

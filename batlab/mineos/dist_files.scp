@@ -1,6 +1,0 @@
-# $Id: dist_files.scp 21302 2013-01-28 05:50:00Z ericheien $
-
-method = scp
-scp_file = ~/trunk/distributions/mineos-1.0.2.tgz
-untar = true
-
