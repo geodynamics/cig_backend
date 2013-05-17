@@ -222,10 +222,6 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="conman"><h2>ConMan</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'ConMan')])"/> publications
-<h3> 2013 </h3>
-<ul>
-<xsl:apply-templates select="xml/records/record[dates/year=2013 and contains(custom3, 'ConMan')]"/>
-</ul>
 <h3> 2012 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'ConMan')]"/>
