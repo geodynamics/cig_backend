@@ -31,7 +31,7 @@ class CodeDB:
         self.batlab_extra_files = {}
         self.batlab_support_libs = {}
 
-    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms, batlab_extra_files=[], batlab_support_libs=[]):
+    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_extra_files=[], batlab_support_libs=[]):
         self.full_name[short_name] = full_name
         self.repo_url[short_name] = repo_url
         self.repo_type[short_name] = repo_type
@@ -100,7 +100,7 @@ code_db.register(short_name="pylith",
                  release_version="1.8.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
+                 #batlab_platforms=standard_batlab_platforms,
                  batlab_support_libs=["proj-4.8.0", "nemesis-1.0.2", "numpy-1.7.0rc1", "spatialdata-1.9.0", "petsc-dev-pylith-1.8.0"])
 
 code_db.register(short_name="relax",
@@ -111,7 +111,7 @@ code_db.register(short_name="relax",
                  release_version="1.0.4",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
+                 #batlab_platforms=standard_batlab_platforms,
                  batlab_support_libs=["fftw-3.3.3", "proj-4.8.0", "netcdf", "gmt-4.5.9", "gshhg-gmt-nc4-2.2.2"])
 
 code_db.register(short_name="selen",
@@ -134,7 +134,8 @@ code_db.register(short_name="lithomop",
                  release_version="0.7.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 #######################
 # Long-Term Tectonics #
@@ -149,7 +150,8 @@ code_db.register(short_name="gale",
                  release_version="2.0.1",
                  dev_doxygen=False,
                  release_doxygen=False,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="plasti",
                  full_name="Plasti",
@@ -159,7 +161,8 @@ code_db.register(short_name="plasti",
                  release_version="1.0.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="snac",
                  full_name="SNAC",
@@ -169,7 +172,8 @@ code_db.register(short_name="snac",
                  release_version="1.2.0",
                  dev_doxygen=False,
                  release_doxygen=False,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 #####################
 # Mantle Convection #
@@ -182,7 +186,8 @@ code_db.register(short_name="citcomcu",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="citcoms",
                  full_name="CitcomS",
@@ -203,7 +208,8 @@ code_db.register(short_name="conman",
                  release_version="2.0.0",
                  dev_doxygen=True,
                  release_doxygen=False,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="ellipsis3d",
                  full_name="Ellipsis3D",
@@ -213,7 +219,8 @@ code_db.register(short_name="ellipsis3d",
                  release_version="1.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="hc",
                  full_name="HC",
@@ -223,7 +230,8 @@ code_db.register(short_name="hc",
                  release_version="1.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 ##############
 # Seismology #
@@ -236,7 +244,8 @@ code_db.register(short_name="specfem3d",
                  release_version="2.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="specfem3d-globe",
                  full_name="SPECFEM3D GLOBE",
@@ -246,7 +255,7 @@ code_db.register(short_name="specfem3d-globe",
                  release_version="5.1.5",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
+                 #batlab_platforms=standard_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="specfem3d-geotech",
@@ -257,7 +266,8 @@ code_db.register(short_name="specfem3d-geotech",
                  release_version="1.1b",
                  dev_doxygen=False,
                  release_doxygen=False,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="specfem2d",
                  full_name="SPECFEM2D",
@@ -267,7 +277,8 @@ code_db.register(short_name="specfem2d",
                  release_version="7.0.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="specfem1d",
                  full_name="SPECFEM1D",
@@ -277,7 +288,8 @@ code_db.register(short_name="specfem1d",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="mineos",
                  full_name="Mineos",
@@ -288,7 +300,8 @@ code_db.register(short_name="mineos",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_extra_files=["check_diff.sh", "cross_corr.py"],
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="flexwin",
                  full_name="Flexwin",
@@ -298,7 +311,8 @@ code_db.register(short_name="flexwin",
                  release_version="1.0.1",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="seismic_cpml",
                  full_name="SEISMIC_CPML",
@@ -308,7 +322,8 @@ code_db.register(short_name="seismic_cpml",
                  release_version="1.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 #############
 # Geodynamo #
@@ -321,7 +336,8 @@ code_db.register(short_name="mag",
                  release_version="1.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 #########################
 # Computational Science #
@@ -334,7 +350,8 @@ code_db.register(short_name="cigma",
                  release_version="1.0.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="exchanger",
                  full_name="Exchanger",
@@ -344,7 +361,8 @@ code_db.register(short_name="exchanger",
                  release_version="1.0.1",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 
 code_db.register(short_name="pythia",
                  full_name="Pythia",
@@ -354,5 +372,6 @@ code_db.register(short_name="pythia",
                  release_version="0.8.1.15",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms)
+                 #batlab_platforms=standard_batlab_platforms
+                 )
 

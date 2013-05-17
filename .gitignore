@@ -15,9 +15,11 @@ doxygen/doxygen
 
 doxygen/queues
 
-doxygen/repos
+repos
 
 doxygen/tmp
+
+hooks/revs*
 
 *.pyc
 
