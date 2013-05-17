@@ -255,16 +255,9 @@ code_db.register(short_name="specfem3d-geotech",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz",
                  release_version="1.1b",
-<<<<<<< HEAD
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 dev_batlab=False,
-                 release_batlab=False)
-=======
                  dev_doxygen=False,
                  release_doxygen=False,
                  batlab_platforms=standard_batlab_platforms)
->>>>>>> 136ccd5a93b1df858c868c504a83ecccb31058b8
 
 code_db.register(short_name="specfem2d",
                  full_name="SPECFEM2D",
