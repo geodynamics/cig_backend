@@ -51,6 +51,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2011 and contains(custom3, 'RELAX')]"/>
 </ul>
+<h3> 2010 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'RELAX')]"/>
+</ul>
 <h3> 2009 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'RELAX')]"/>
