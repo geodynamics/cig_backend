@@ -9,8 +9,12 @@ import tempfile
 import shutil
 import subprocess
 
+# The base directory where build scripts, support files, etc are located
 BASE_DIR="/home/eheien/cig_backend/batlab"
+# Email address to use for notifications
+NOTIFY_EMAIL="emheien@geodynamics.org"
 
+# Create a test setup and submit to BaTLab for the specified revision of the specifiec code
 def test_code(cig_code, revision):
     use_repo = True
 
@@ -23,7 +27,7 @@ def test_code(cig_code, revision):
         if code_db.repo_type[cig_code] is "svn":
             print("method = svn", file=src_input_desc)
             code_url = code_db.repo_url[cig_code]
-            if revision: code_url += "@"+revision
+            if revision: code_url += " -r "+revision
             print("url =", code_url, cig_code, file=src_input_desc)
         elif code_db.repo_type[cig_code] is "hg":
             print("method = hg", file=src_input_desc)
@@ -34,7 +38,9 @@ def test_code(cig_code, revision):
         elif code_db.repo_type[cig_code] is "git":
             print("method = git", file=src_input_desc)
             print("git_repo =", code_db.repo_url[cig_code], file=src_input_desc)
+            # TODO: specify revision for Git
         else:
+            print("Error: unknown repository type", code_db.repo_type[cig_code])
             exit(1)
         print(file=src_input_desc)
     else:
@@ -59,6 +65,7 @@ def test_code(cig_code, revision):
     run_spec = open(run_spec_file_name, 'w')
     print("project = CIG", file=run_spec)
     print("component =", code_db.full_name[cig_code], file=run_spec)
+    print("component_version =", revision, file=run_spec)
     if use_repo: print("description = Build", code_db.repo_type[cig_code], "revision", revision, file=run_spec)
     else: print("description = Build", code_db.repo_type[cig_code], " release", file=run_spec)
     print("run_type = build", file=run_spec)
@@ -94,7 +101,7 @@ def test_code(cig_code, revision):
         platform_list += platform
 
     print("platforms =", platform_list, file=run_spec)
-    print("notify = emheien@geodynamics.org", file=run_spec)
+    print("notify =", NOTIFY_EMAIL, file=run_spec)
 
     run_spec.close()
 
