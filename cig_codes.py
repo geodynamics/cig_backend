@@ -264,8 +264,8 @@ code_db.register(short_name="specfem3d-geotech",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz",
                  release_version="1.1b",
-                 dev_doxygen=False,
-                 release_doxygen=False,
+                 dev_doxygen=True,
+                 release_doxygen=True,
                  #batlab_platforms=standard_batlab_platforms
                  )
 
@@ -288,7 +288,7 @@ code_db.register(short_name="specfem1d",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=standard_batlab_platforms
+                 batlab_platforms=standard_batlab_platforms
                  )
 
 code_db.register(short_name="mineos",
@@ -300,7 +300,7 @@ code_db.register(short_name="mineos",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_extra_files=["check_diff.sh", "cross_corr.py"],
-                 #batlab_platforms=standard_batlab_platforms
+                 batlab_platforms=standard_batlab_platforms
                  )
 
 code_db.register(short_name="flexwin",
