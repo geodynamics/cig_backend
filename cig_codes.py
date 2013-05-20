@@ -255,7 +255,7 @@ code_db.register(short_name="specfem3d-globe",
                  release_version="5.1.5",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=test_batlab_platforms,
+                 #batlab_platforms=test_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="specfem3d-geotech",
