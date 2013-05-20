@@ -74,8 +74,8 @@ def process_code_revisions(cig_code, revs):
             batlab_cmd = "cd /home/eheien/cig_backend/batlab/ ; ./run_batlab.py "+cig_code+" "+rev
             rcp_cmd = "ssh "+batlab_login+" \\\""+batlab_cmd+"\\\""
             #print("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue "+rcp_cmd+" &")
-            os.system("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue \""+rcp_cmd+"\" &")
-            batlab_rev_shelve[cig_code].append(rev)
+            #os.system("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue \""+rcp_cmd+"\" &")
+            #batlab_rev_shelve[cig_code].append(rev)
 
     # Add the revisions to the shelve and close it
     batlab_rev_shelve.close()
