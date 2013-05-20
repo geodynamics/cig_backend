@@ -19,7 +19,7 @@ repos
 
 doxygen/tmp
 
-hooks/revs*
+poll/revs*
 
 *.pyc
 
