@@ -75,7 +75,7 @@ then
 	cd $SVN_REPO_DIR
 	svn update -r "$REV" >> $LOG_FILE 2>&1
 	cp -r $SVN_REPO_DIR $CODE_INPUT_DIR
-	REV_TITLE="SVN Revision $3"
+	REV_TITLE="SVN Revision $REV"
 	SUBDIR="dev"
 elif [ $METHOD = "hg" ]
 then
@@ -99,7 +99,7 @@ then
 	cd $HG_REPO_DIR
 	hg update -r "$REV" >> $LOG_FILE 2>&1
 	cp -r $HG_REPO_DIR $CODE_INPUT_DIR
-	REV_TITLE="Mercurial Revision $3"
+	REV_TITLE="Mercurial Revision $REV"
 	SUBDIR="dev"
 elif [ $METHOD = "git" ]
 then
@@ -120,7 +120,7 @@ then
 	cd $GIT_REPO_DIR
 	git reset --hard $REV
 	cp -r $GIT_REPO_DIR $CODE_INPUT_DIR
-	REV_TITLE="Git Revision $3"
+	REV_TITLE="Git Revision $REV"
 	SUBDIR="dev"
 elif [ $METHOD = "url" ]
 then
@@ -136,7 +136,7 @@ then
 	rm -f $DLED_FILE_NAME
 	cd $TOP_DIR
 	SUBDIR="release"
-	REV_TITLE="Version $3"
+	REV_TITLE="Version $REV"
 else
 	echo "ERROR: method must be one of: svn, hg, git, url"
 	exit 1

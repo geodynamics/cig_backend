@@ -27,7 +27,7 @@ def main():
     for code_name in code_db.codes():
         if req_name != "all" and req_name != code_name: continue
         cmd_dict = {}
-        cmd_dict["queue_cmd"] = "../queue/queue_daemon.sh doxygen_queue"
+        cmd_dict["queue_cmd"] = "../queue/queue_daemon.sh backend_queue"
         cmd_dict["code_name"] = code_name
         cmd_dict["full_name"] = code_db.full_name[code_name]
         if code_type == "release" and code_db.code_doxygen_release(code_name):

@@ -13,13 +13,13 @@ map/map_plot/.gmtcommands4
 
 doxygen/doxygen
 
-doxygen/queues
+queues
 
 repos
 
 doxygen/tmp
 
-hooks/revs*
+poll/revs*
 
 *.pyc
 

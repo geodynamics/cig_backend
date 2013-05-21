@@ -13,7 +13,7 @@ fi
 trap "" 1
 
 # Get the queue directory
-QUEUE_LOC="`pwd`/queues/$1"
+QUEUE_LOC="/home/backend/cig_backend/queues/$1"
 mkdir -p $QUEUE_LOC
 
 # If a command was specified, add it to the queue
