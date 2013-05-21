@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+import sys
+
 # A class to keep the current set of CIG codes and related information for use in backend operations
 class CodeDB:
     support_libs = {
@@ -255,7 +258,7 @@ code_db.register(short_name="specfem3d-globe",
                  release_version="5.1.5",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=test_batlab_platforms,
+                 #batlab_platforms=test_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="specfem3d-geotech",
@@ -374,4 +377,14 @@ code_db.register(short_name="pythia",
                  release_doxygen=True,
                  #batlab_platforms=test_batlab_platforms
                  )
+
+# Provide a way for other programs (especially non-Python programs) to query the code_db
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("syntax:", sys.argv[0], "[--list]")
+        exit()
+
+    if sys.argv[1] == "--list":
+        for cig_code in code_db.full_name.keys():
+            print(cig_code)
 
