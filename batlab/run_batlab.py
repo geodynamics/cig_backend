@@ -64,11 +64,12 @@ def test_code(cig_code, revision):
     run_spec_file_name = tmp_dir+"/run_spec"
     run_spec = open(run_spec_file_name, 'w')
     print("project = CIG", file=run_spec)
-    print("component =", code_db.full_name[cig_code], file=run_spec)
+    print("component =", cig_code, file=run_spec)
     print("component_version =", revision, file=run_spec)
     if use_repo: print("description = Build", code_db.repo_type[cig_code], "revision", revision, file=run_spec)
     else: print("description = Build", code_db.repo_type[cig_code], " release", file=run_spec)
     print("run_type = build", file=run_spec)
+    print("platform_job_timeout = 10", file=run_spec)
 
     # Get the list of support libraries needed as input for this code
     input_support_files = BASE_DIR+"/support/lib_scripts.scp"
