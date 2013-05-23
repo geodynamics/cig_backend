@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+import sys
+
 # A class to keep the current set of CIG codes and related information for use in backend operations
 class CodeDB:
     support_libs = {
@@ -202,8 +205,8 @@ code_db.register(short_name="citcoms",
 
 code_db.register(short_name="conman",
                  full_name="ConMan",
-                 repo_url="http://geodynamics.org/svn/cig/mc/2D/ConMan/trunk",
-                 repo_type="svn",
+                 repo_url="https://github.com/geodynamics/conman",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz",
                  release_version="2.0.0",
                  dev_doxygen=True,
@@ -293,7 +296,7 @@ code_db.register(short_name="specfem1d",
 
 code_db.register(short_name="mineos",
                  full_name="Mineos",
-                 repo_url="https://github.com/geodynamics/mineos.git",
+                 repo_url="https://github.com/geodynamics/mineos",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz",
                  release_version="1.0.2",
@@ -330,8 +333,8 @@ code_db.register(short_name="seismic_cpml",
 #############
 code_db.register(short_name="mag",
                  full_name="MAG",
-                 repo_url="http://geodynamics.org/svn/cig/geodyn/3D/MAG/trunk",
-                 repo_type="svn",
+                 repo_url="https://github.com/geodynamics/mag",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz",
                  release_version="1.0.2",
                  dev_doxygen=True,
@@ -344,7 +347,7 @@ code_db.register(short_name="mag",
 #########################
 code_db.register(short_name="cigma",
                  full_name="Cigma",
-                 repo_url="https://github.com/geodynamics/cigma.git",
+                 repo_url="https://github.com/geodynamics/cigma",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/cigma/cigma-1.0.0.tar.gz",
                  release_version="1.0.0",
@@ -374,4 +377,14 @@ code_db.register(short_name="pythia",
                  release_doxygen=True,
                  #batlab_platforms=test_batlab_platforms
                  )
+
+# Provide a way for other programs (especially non-Python programs) to query the code_db
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("syntax:", sys.argv[0], "[--list]")
+        exit()
+
+    if sys.argv[1] == "--list":
+        for cig_code in code_db.full_name.keys():
+            print(cig_code)
 
