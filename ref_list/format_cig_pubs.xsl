@@ -348,6 +348,58 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="hc"><h2>HC</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'HC')])"/> publications
+<h3> 2013 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2013 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2012 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2011 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2011 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2010 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2009 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2008 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2007 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2007 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2006 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2006 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2005 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2005 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2004 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2004 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2003 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2003 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2002 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2002 and contains(custom3, 'HC')]"/>
+</ul>
+<h3> 2001 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2001 and contains(custom3, 'HC')]"/>
+</ul>
 
 <a id="specfem3d"><h2>Specfem3D</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'SPECFEM3D_Cart')])"/> publications
