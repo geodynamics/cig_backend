@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# $Id: build.sh 21301 2013-01-28 01:49:53Z ericheien $
 
 # Builds multiple variants of MAG
 cd MAG* || cd mag*

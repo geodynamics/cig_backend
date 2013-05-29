@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# $Id: build.sh 21298 2013-01-26 08:19:04Z ericheien $
 
 # Builds Aspect
 source ./build_common.sh \

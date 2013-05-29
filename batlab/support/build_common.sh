@@ -1,4 +1,4 @@
-# $Id: build_common.sh 21340 2013-02-07 07:36:36Z ericheien $
+#!/bin/bash
 
 # Set up common paths, flags needed for all builds
 export PATH=$PATH:$HOME/local/bin/ &&

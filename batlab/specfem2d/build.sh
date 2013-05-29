@@ -4,13 +4,7 @@
 source ./build_common.sh
 
 # Build SPECFEM1D
-if [ "$1" == "repo" ]
-then
-    cd specfem2d
-else
-    cd SPECFEM2D
-fi
-
+cd specfem2d || cd SPECFEM2D*
 ./configure && make
 
 exit $?

@@ -1,12 +1,11 @@
 #!/bin/bash
-#
-# $Id: build.sh 21460 2013-03-07 04:30:52Z ericheien $
 
+cd mineos*
 if [ "$1" == "repo" ]
 then
-	cd mineos && autoreconf -i && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
+	autoreconf -i && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
 else
-	cd mineos-1.0.2 && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
+	./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
 fi
 
 if [ $? -ne 0 ] ; then

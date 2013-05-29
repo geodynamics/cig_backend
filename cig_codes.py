@@ -115,7 +115,7 @@ code_db.register(short_name="relax",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=test_batlab_platforms,
-                 batlab_support_libs=["fftw-3.3.3", "proj-4.8.0", "netcdf", "gmt-4.5.9", "gshhg-gmt-nc4-2.2.2"])
+                 batlab_support_libs=["fftw-3.3.3", "proj-4.8.0", "netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"])
 
 code_db.register(short_name="selen",
                  full_name="SELEN",
@@ -125,7 +125,7 @@ code_db.register(short_name="selen",
                  release_version="2.9.10.4",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
+                 batlab_platforms=test_batlab_platforms,
                  batlab_extra_files=["fast_config.dat"],
                  batlab_support_libs=["netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"])
 
@@ -189,8 +189,8 @@ code_db.register(short_name="citcomcu",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
-                 )
+                 batlab_platforms=test_batlab_platforms,
+                 batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="citcoms",
                  full_name="CitcomS",
@@ -200,7 +200,7 @@ code_db.register(short_name="citcoms",
                  release_version="3.2.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
+                 batlab_platforms=test_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="conman",
@@ -222,7 +222,7 @@ code_db.register(short_name="ellipsis3d",
                  release_version="1.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=test_batlab_platforms
                  )
 
 code_db.register(short_name="hc",
@@ -233,7 +233,8 @@ code_db.register(short_name="hc",
                  release_version="1.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=test_batlab_platforms,
+                 batlab_support_libs=["netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"]
                  )
 
 ##############
@@ -247,8 +248,8 @@ code_db.register(short_name="specfem3d",
                  release_version="2.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
-                 )
+                 batlab_platforms=test_batlab_platforms,
+                 batlab_support_libs=["openmpi-1.6.3"])
 
 code_db.register(short_name="specfem3d-globe",
                  full_name="SPECFEM3D GLOBE",
@@ -258,9 +259,10 @@ code_db.register(short_name="specfem3d-globe",
                  release_version="5.1.5",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms,
+                 batlab_platforms=test_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"])
 
+# Requires CMake
 code_db.register(short_name="specfem3d-geotech",
                  full_name="SPECFEM3D GEOTECH",
                  repo_url="http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GEOTECH/trunk",
@@ -269,7 +271,7 @@ code_db.register(short_name="specfem3d-geotech",
                  release_version="1.1b",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=standard_batlab_platforms
+                 #batlab_platforms=test_batlab_platforms
                  )
 
 code_db.register(short_name="specfem2d",
@@ -280,7 +282,7 @@ code_db.register(short_name="specfem2d",
                  release_version="7.0.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=test_batlab_platforms
                  )
 
 code_db.register(short_name="specfem1d",
@@ -291,7 +293,7 @@ code_db.register(short_name="specfem1d",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms
+                 batlab_platforms=test_batlab_platforms
                  )
 
 code_db.register(short_name="mineos",
@@ -303,7 +305,7 @@ code_db.register(short_name="mineos",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_extra_files=["check_diff.sh", "cross_corr.py"],
-                 batlab_platforms=standard_batlab_platforms
+                 batlab_platforms=test_batlab_platforms
                  )
 
 code_db.register(short_name="flexwin",
@@ -339,7 +341,7 @@ code_db.register(short_name="mag",
                  release_version="1.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms
+                 batlab_platforms=test_batlab_platforms
                  )
 
 #########################

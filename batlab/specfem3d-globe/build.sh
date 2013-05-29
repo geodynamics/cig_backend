@@ -1,12 +1,11 @@
 #!/bin/bash
-#
-# $Id: build.sh 21340 2013-02-07 07:36:36Z ericheien $
 
 # Point to any additional installed libraries
-source ./build_common.sh \
-    && cd SPECFEM* \
-    && ./configure \
-    && make all
+source ./build_common.sh
+
+# Build SPECFEM3D Globe
+cd SPECFEM3D* || cd specfem3d*
+./configure && make all
 
 exit $?
 

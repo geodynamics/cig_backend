@@ -4,13 +4,7 @@
 source ./build_common.sh
 
 # Build CitcomS
-if [ "$1" == "repo" ]
-then
-    cd citcomcu
-else
-    cd CitcomCU*
-fi
-
+cd citcomcu || cd CitcomCU*
 make
 
 exit $?

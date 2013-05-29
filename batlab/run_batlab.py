@@ -66,10 +66,15 @@ def test_code(cig_code, revision):
     print("project = CIG", file=run_spec)
     print("component =", cig_code, file=run_spec)
     print("component_version =", revision, file=run_spec)
-    if use_repo: print("description = Build", code_db.repo_type[cig_code], "revision", revision, file=run_spec)
-    else: print("description = Build", code_db.repo_type[cig_code], " release", file=run_spec)
+    if use_repo:
+        if revision:
+            print("description = Build", code_db.repo_type[cig_code], "revision", revision, file=run_spec)
+        else:
+            print("description = Build", code_db.repo_type[cig_code], "latest revision", file=run_spec)
+    else:
+        print("description = Build", code_db.repo_type[cig_code], " release", file=run_spec)
     print("run_type = build", file=run_spec)
-    print("platform_job_timeout = 10", file=run_spec)
+    print("platform_job_timeout = 30", file=run_spec)
 
     # Get the list of support libraries needed as input for this code
     input_support_files = BASE_DIR+"/support/lib_scripts.scp"
