@@ -181,6 +181,17 @@ code_db.register(short_name="snac",
 #####################
 # Mantle Convection #
 #####################
+code_db.register(short_name="aspect",
+                 full_name="Aspect",
+                 repo_url="https://svn.aspect.dealii.org/trunk/aspect",
+                 repo_type="svn",
+                 release_src="http://aspect.dealii.org/download/aspect-0.2.tar.gz",
+                 release_version="0.2",
+                 dev_doxygen=False,
+                 release_doxygen=False,
+                 #batlab_platforms=test_batlab_platforms
+                 )
+
 code_db.register(short_name="citcomcu",
                  full_name="CitcomCU",
                  repo_url="http://geodynamics.org/svn/cig/mc/3D/CitcomCU/trunk",
