@@ -50,6 +50,23 @@ def test_code(cig_code, revision):
         print(file=src_input_desc)
     src_input_desc.close()
 
+    # Create the support library input specifications
+    for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
+        support_lib_input_file_name = tmp_dir+"/"+support_file+".scp"
+        support_lib_desc = open(support_lib_input_file_name, 'w')
+        print("method = scp", file=support_lib_desc)
+        if code_db.support_libs[support_file][0] != "":
+            tarball_file = BASE_DIR+"/support/"+code_db.support_libs[support_file][0]
+        else:
+            tarball_file = ""
+        if code_db.support_libs[support_file][1] != "":
+            build_script_file = BASE_DIR+"/support/"+code_db.support_libs[support_file][1]
+        else:
+            build_script_file = ""
+        print("scp_file =", tarball_file, build_script_file, file=support_lib_desc)
+        print("untar = true", file=support_lib_desc)
+        support_lib_desc.close()
+
     # Create the input build files specification
     build_input_file_name = tmp_dir+"/build_input_desc"
     build_input_desc = open(build_input_file_name, 'w')
@@ -78,8 +95,8 @@ def test_code(cig_code, revision):
 
     # Get the list of support libraries needed as input for this code
     input_support_files = BASE_DIR+"/support/lib_scripts.scp"
-    for i, support_file in enumerate(code_db.support_lib_inputs(cig_code)):
-        input_support_files += ", "+BASE_DIR+"/support/"+support_file
+    for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
+        input_support_files += ", "+tmp_dir+"/"+support_file+".scp"
 
     print("inputs =", src_input_file_name, ",", build_input_file_name, ",", input_support_files, file=run_spec)
     print(file=run_spec)

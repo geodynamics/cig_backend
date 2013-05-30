@@ -7,19 +7,19 @@ import sys
 class CodeDB:
     support_libs = {
                 "dealii": ["dealii.svn", "build_dealii_svn.sh"],
-                "fftw-3.3.3": ["fftw-3.3.3.scp", "build_fftw-3.3.3.sh"],
-                "gmt-4.5.8": ["gmt-4.5.8.scp", "build_gmt-4.5.8.sh"],
-                "gmt-4.5.9": ["gmt-4.5.9.scp", "build_gmt-4.5.9.sh"],
-                "gshhg-gmt-nc3-2.2.2": ["gshhg-gmt-nc3-2.2.2.scp", ""],
-                "nemesis-1.0.2": ["nemesis-1.0.2.scp", "build_nemesis-1.0.2.sh"],
-                "netcdf": ["netcdf.scp", "build_netcdf.sh"],
-                "numdiff-5.6.1": ["numdiff-5.6.1.scp", "build_numdiff-5.6.1.sh"],
-                "numpy-1.7.0rc1": ["numpy-1.7.0rc1.scp", "build_numpy-1.7.0rc1.sh"],
-                "openmpi-1.6.3": ["openmpi-1.6.3.scp", "build_openmpi-1.6.3.sh"],
-                "petsc-dev-pylith-1.8.0": ["petsc-dev-pylith-1.8.0.scp", "build_petsc-dev-pylith-1.8.0.sh"],
-                "proj-4.8.0": ["proj-4.8.0.scp", "build_proj-4.8.0.sh"],
-                "spatialdata-1.9.0": ["spatialdata-1.9.0.scp", "build_spatialdata-1.9.0.sh"],
-                "trilinos-11.0.3": ["trilinos-11.0.3-Source.scp", "build_trilinos-11.0.3.sh"]
+                "fftw-3.3.3": ["fftw-3.3.3.tar.gz", "build_fftw-3.3.3.sh"],
+                "gmt-4.5.8": ["gmt-4.5.8.tar.bz2", "build_gmt-4.5.8.sh"],
+                "gmt-4.5.9": ["gmt-4.5.9.tar.bz2", "build_gmt-4.5.9.sh"],
+                "gshhg-gmt-nc3-2.2.2": ["gshhg-gmt-nc3-2.2.2.tar.bz2", ""],
+                "nemesis-1.0.2": ["nemesis-1.0.2.tar.gz", "build_nemesis-1.0.2.sh"],
+                "netcdf": ["netcdf.tar.gz", "build_netcdf.sh"],
+                "numdiff-5.6.1": ["numdiff-5.6.1.tar.gz", "build_numdiff-5.6.1.sh"],
+                "numpy-1.7.0rc1": ["numpy-1.7.0rc1.tar.gz", "build_numpy-1.7.0rc1.sh"],
+                "openmpi-1.6.3": ["openmpi-1.6.3.tar.bz2", "build_openmpi-1.6.3.sh"],
+                "petsc-dev-pylith-1.8.0": ["petsc-dev-pylith-1.8.0.tgz", "build_petsc-dev-pylith-1.8.0.sh"],
+                "proj-4.8.0": ["proj-4.8.0.tar.gz", "build_proj-4.8.0.sh"],
+                "spatialdata-1.9.0": ["spatialdata-1.9.0.tgz", "build_spatialdata-1.9.0.sh"],
+                "trilinos-11.0.3": ["trilinos-11.0.3-Source.tar.bz2", "build_trilinos-11.0.3.sh"]
                 }
 
     def __init__(self):

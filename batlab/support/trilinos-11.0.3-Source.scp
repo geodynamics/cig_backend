@@ -1,6 +1,0 @@
-# $Id: trilinos-11.0.3-Source.scp 21340 2013-02-07 07:36:36Z ericheien $
-
-method = scp
-scp_file = ~/cig_backend/batlab/support/trilinos-11.0.3-Source.tar.bz2
-untar = true
-
