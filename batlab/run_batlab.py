@@ -63,7 +63,7 @@ def test_code(cig_code, revision):
             build_script_file = BASE_DIR+"/support/"+code_db.support_libs[support_file][1]
         else:
             build_script_file = ""
-        print("scp_file =", tarball_file, build_script_file, file=support_lib_desc)
+        print("scp_file =", build_script_file, tarball_file, file=support_lib_desc)
         print("untar = true", file=support_lib_desc)
         support_lib_desc.close()
 
@@ -143,11 +143,15 @@ def main():
     if len(sys.argv) > 2: revision = sys.argv[2]
     else: revision = None
 
-    if cig_code not in code_db.codes():
-        print("unknown code:", cig_code)
-        exit(1)
+    if cig_code is "all": code_list = code_db.codes()
+    else: code_list = [cig_code]
 
-    test_code(cig_code, revision)
+    for check_code in code_list:
+        if check_code not in code_db.codes():
+            print("unknown code:", check_code)
+            exit(1)
+
+        test_code(check_code, revision)
 
 if __name__ == "__main__":
     main()

@@ -55,9 +55,6 @@ class CodeDB:
     def code_batlab_release(self, code_name):
         return self.release_batlab[code_name]
 
-    def support_lib_inputs(self, code_name):
-        return [self.support_libs[lib][0] for lib in self.batlab_support_libs[code_name]]
-
     def support_lib_scripts(self, code_name):
         return [self.support_libs[lib][1] for lib in self.batlab_support_libs[code_name]]
 
