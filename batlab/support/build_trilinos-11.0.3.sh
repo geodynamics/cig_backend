@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# $Id: build_trilinos-11.0.3.sh 21340 2013-02-07 07:36:36Z ericheien $
 
 # Builds and installs spatialdata library
 source ./build_common.sh \

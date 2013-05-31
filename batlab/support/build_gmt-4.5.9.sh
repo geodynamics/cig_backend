@@ -1,6 +1,4 @@
 #!/bin/bash
-#
-# $Id: build_gmt-4.5.9.sh -1   $
 
 source ./build_common.sh \
     && mv gshhg-gmt-nc3-2.2.2 $HOME/local/ \
