@@ -118,6 +118,14 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="snac"><h2>SNAC</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'SNAC')])"/> publications
+<h3> 2011 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2011 and contains(custom3, 'SNAC')]"/>
+</ul>
+<h3> 2008 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'SNAC')]"/>
+</ul>
 
 <a id="aspect"><h2>Aspect</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'ASPECT')])"/> publications
