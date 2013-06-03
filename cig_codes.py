@@ -33,8 +33,9 @@ class CodeDB:
         self.batlab_platforms = {}
         self.batlab_extra_files = {}
         self.batlab_support_libs = {}
+        self.batlab_tests = {}
 
-    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_extra_files=[], batlab_support_libs=[]):
+    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_extra_files=[], batlab_support_libs=[], batlab_tests=[]):
         self.full_name[short_name] = full_name
         self.repo_url[short_name] = repo_url
         self.repo_type[short_name] = repo_type
@@ -45,6 +46,7 @@ class CodeDB:
         self.batlab_platforms[short_name] = batlab_platforms
         self.batlab_extra_files[short_name] = batlab_extra_files
         self.batlab_support_libs[short_name] = batlab_support_libs
+        self.batlab_tests[short_name] = batlab_tests
 
     def codes(self):
         return self.repo_url.keys()
@@ -209,7 +211,8 @@ code_db.register(short_name="citcoms",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=test_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"])
+                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_tests=["regional"])
 
 code_db.register(short_name="conman",
                  full_name="ConMan",
@@ -301,7 +304,8 @@ code_db.register(short_name="specfem1d",
                  release_version="1.0.3",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=test_batlab_platforms
+                 batlab_platforms=test_batlab_platforms,
+                 batlab_tests=["test"]
                  )
 
 code_db.register(short_name="mineos",

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Set up common paths, flags needed for all builds
+mkdir -p $HOME/local/ &&
 export PATH=$PATH:$HOME/local/bin/ &&
 export LDFLAGS=-L$HOME/local/lib/ &&
 export CFLAGS=-I$HOME/local/include/ &&
