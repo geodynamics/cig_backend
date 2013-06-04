@@ -305,7 +305,8 @@ code_db.register(short_name="specfem1d",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=test_batlab_platforms,
-                 batlab_tests=["test"]
+                 batlab_extra_files=["baseline.tar.gz", "check_diff.py"],
+                 batlab_tests=["basic"]
                  )
 
 code_db.register(short_name="mineos",
@@ -316,7 +317,7 @@ code_db.register(short_name="mineos",
                  release_version="1.0.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_extra_files=["check_diff.sh", "cross_corr.py"],
+                 batlab_extra_files=["check_diff.sh"],
                  batlab_platforms=test_batlab_platforms
                  )
 

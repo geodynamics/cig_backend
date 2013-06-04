@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Howdy howdy"
+source ./build_common.sh && tar -xzf baseline.tar.gz && cd specfem1d && ./xwave && cd .. && ./check_diff.py baseline specfem1d
 
-exit 0
+exit $?
 

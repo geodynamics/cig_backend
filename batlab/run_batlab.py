@@ -77,19 +77,22 @@ def test_code(cig_code, revision, dry_run):
     print("scp_file =", local_build_files, file=build_input_desc)
     build_input_desc.close()
 
+    # Create a text string describing the revision
+    if use_repo:
+        if revision:
+            rev_desc = code_db.repo_type[cig_code]+" revision "+revision
+        else:
+            rev_desc = code_db.repo_type[cig_code]+" latest revision"
+    else:
+        rev_desc = code_db.repo_type[cig_code]+" release"
+
     # Create the run specification
     build_run_spec_file_name = tmp_dir+"/build_run_spec"
     build_run_spec = open(build_run_spec_file_name, 'w')
     print("project = CIG", file=build_run_spec)
     print("component =", cig_code, file=build_run_spec)
     print("component_version =", revision, file=build_run_spec)
-    if use_repo:
-        if revision:
-            print("description = Build", code_db.repo_type[cig_code], "revision", revision, file=build_run_spec)
-        else:
-            print("description = Build", code_db.repo_type[cig_code], "latest revision", file=build_run_spec)
-    else:
-        print("description = Build", code_db.repo_type[cig_code], " release", file=build_run_spec)
+    print("description = Build", rev_desc, file=build_run_spec)
     print("run_type = build", file=build_run_spec)
     print("platform_job_timeout = 30", file=build_run_spec)
 
@@ -170,56 +173,53 @@ def test_code(cig_code, revision, dry_run):
         print("scp_file =", local_build_files, file=test_input_desc)
         test_input_desc.close()
 
-        # Set up the test run description file
-        test_run_spec_file_name = tmp_dir+"/test_run_spec"
-        test_run_spec = open(test_run_spec_file_name, 'w')
-        print("project = CIG", file=test_run_spec)
-        print("component =", cig_code, file=test_run_spec)
-        print("component_version =", revision, file=test_run_spec)
-        if use_repo:
-            if revision:
-                print("description = Test", code_db.repo_type[cig_code], "revision", revision, file=test_run_spec)
-            else:
-                print("description = Test", code_db.repo_type[cig_code], "latest revision", file=test_run_spec)
-        else:
-            print("description = Test", code_db.repo_type[cig_code], " release", file=test_run_spec)
-        print("run_type = test", file=test_run_spec)
-        print("platform_job_timeout = 30", file=test_run_spec)
+        # Set up a test run description file for each test
+        test_run_spec_file_names = [tmp_dir+"/test_"+test_name+"_run_spec" for test_name in code_db.batlab_tests[cig_code]]
+        for i in range(len(test_run_spec_file_names)):
+            test_run_spec = open(test_run_spec_file_names[i], 'w')
+            print("project = CIG", file=test_run_spec)
+            print("component =", cig_code, file=test_run_spec)
+            print("component_version =", revision, file=test_run_spec)
+            print("description = Test", rev_desc, file=test_run_spec)
+            print("run_type = test", file=test_run_spec)
+            print("platform_job_timeout = 30", file=test_run_spec)
 
-        # Get the list of support libraries needed as input for this code
-        input_support_files = BASE_DIR+"/support/lib_scripts.scp"
-        for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
-            if i==0: comma = ""
-            else: comma = ", "
-            input_support_files += comma+tmp_dir+"/"+support_file+".scp"
+            # Get the list of support libraries needed as input for this code
+            input_support_files = BASE_DIR+"/support/lib_scripts.scp"
+            for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
+                if i==0: comma = ""
+                else: comma = ", "
+                input_support_files += comma+tmp_dir+"/"+support_file+".scp"
 
-        print("inputs =", test_input_desc_filename, ",", test_script_file_name, file=test_run_spec)
-        print(file=test_run_spec)
+            print("inputs =", test_input_desc_filename, ",", test_script_file_name, ",", input_support_files, file=test_run_spec)
+            print(file=test_run_spec)
 
-        # To build the code, use the build.sh script
-        print("remote_task = test.sh", file=test_run_spec)
-        # TODO: add arguments
-        print(file=test_run_spec)
+            # To test the code, use the test.sh script
+            print("remote_task = test.sh", file=test_run_spec)
+            print("remote_task_args =", code_db.batlab_tests[cig_code][i], file=test_run_spec)
+            print(file=test_run_spec)
 
-        platform_list = ""
-        for i, platform in enumerate(code_db.batlab_platforms[cig_code]):
-            if i is not 0: platform_list += ", "
-            platform_list += platform
+            platform_list = ""
+            for i, platform in enumerate(code_db.batlab_platforms[cig_code]):
+                if i is not 0: platform_list += ", "
+                platform_list += platform
 
-        print("platforms =", platform_list, file=test_run_spec)
-        print("notify =", NOTIFY_EMAIL, file=test_run_spec)
+            print("platforms =", platform_list, file=test_run_spec)
+            print("notify =", NOTIFY_EMAIL, file=test_run_spec)
 
-        test_run_spec.close()
+            test_run_spec.close()
+
+            # Submit the newly created test script
+            if not dry_run:
+                submit_proc = subprocess.Popen(["nmi_submit", "--machine", test_run_spec_file_names[i]], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                submit_stdout, submit_stderr = submit_proc.communicate()
 
     # Once it's in the system, wipe everything we just created
-    if not dry_run:
-        submit_proc = subprocess.Popen(["nmi_submit", "--machine", test_run_spec_file_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        submit_stdout, submit_stderr = submit_proc.communicate()
-
-        shutil.rmtree(tmp_dir)
-    else:
+    if dry_run:
         print("Files are in", tmp_dir)
         print("Please delete when you are finished.")
+    else:
+        shutil.rmtree(tmp_dir)
 
 def main():
     arg_error = False
