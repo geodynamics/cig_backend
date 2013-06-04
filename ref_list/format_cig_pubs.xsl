@@ -112,6 +112,18 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'Gale')]"/>
 </ul>
+<h3> 2011 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2011 and contains(custom3, 'Gale')]"/>
+</ul>
+<h3> 2010 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'Gale')]"/>
+</ul>
+<h3> 2008 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'Gale')]"/>
+</ul>
 
 <a id="plasti"><h2>Plasti</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Plasti')])"/> publications
@@ -415,6 +427,10 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="specfem3d"><h2>Specfem3D</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'SPECFEM3D_Cart')])"/> publications
+<h3> 2013 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2013 and contains(custom3, 'SPECFEM3D_Cart')]"/>
+</ul>
 <h3> 2012 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'SPECFEM3D_Cart')]"/>
