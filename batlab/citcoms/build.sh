@@ -4,13 +4,13 @@
 source ./build_common.sh
 
 # Build CitcomS
-cd citcoms || cd CitcomS*
+mv CitcomS* citcoms > /dev/null 2>&1
 
 if [ "$1" == "repo" ]
 then
-    autoreconf -i && ./configure --without-pyre && make
+    cd citcoms && autoreconf -i && ./configure --without-pyre && make
 else
-    ./configure --without-pyre && make
+    cd citcoms && ./configure --without-pyre && make
 fi
 
 exit $?

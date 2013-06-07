@@ -99,9 +99,7 @@ def test_code(cig_code, revision, dry_run):
     # Get the list of support libraries needed as input for this code
     input_support_files = BASE_DIR+"/support/lib_scripts.scp"
     for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
-        if i==0: comma = ""
-        else: comma = ", "
-        input_support_files += comma+tmp_dir+"/"+support_file+".scp"
+        input_support_files += ", "+tmp_dir+"/"+support_file+".scp"
 
     print("inputs =", src_input_file_name, ",", build_input_file_name, ",", input_support_files, file=build_run_spec)
     print(file=build_run_spec)
@@ -143,6 +141,8 @@ def test_code(cig_code, revision, dry_run):
             line_data = line.split()
             if len(line_data) > 2 and line_data[0] == "gid":
                 gid = line_data[2]
+            elif len(line_data) > 1 and line_data[0] == "FAILURE:":
+                gid = None
                 break
 
         if not gid:
@@ -211,8 +211,9 @@ def test_code(cig_code, revision, dry_run):
 
             # Submit the newly created test script
             if not dry_run:
-                submit_proc = subprocess.Popen(["nmi_submit", "--machine", test_run_spec_file_names[i]], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                submit_stdout, submit_stderr = submit_proc.communicate()
+                for test_run_spec in test_run_spec_file_names:
+                    submit_proc = subprocess.Popen(["nmi_submit", "--machine", test_run_spec], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    submit_stdout, submit_stderr = submit_proc.communicate()
 
     # Once it's in the system, wipe everything we just created
     if dry_run:

@@ -9,7 +9,6 @@ dirs = [sys.argv[1], sys.argv[2]]
 final_res = 0
 
 acceptable_nines = 7.5
-acceptable_nines = 15
 
 res = cross_corr.cross_corr_calc(acceptable_nines, [dirs[0]+"/seismogram", dirs[1]+"/seismogram"])
 if res is not 0: final_res = 1

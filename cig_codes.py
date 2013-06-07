@@ -212,7 +212,7 @@ code_db.register(short_name="citcoms",
                  release_doxygen=True,
                  batlab_platforms=test_batlab_platforms,
                  batlab_support_libs=["openmpi-1.6.3"],
-                 batlab_tests=["regional"])
+                 batlab_tests=["regional1proc"])
 
 code_db.register(short_name="conman",
                  full_name="ConMan",
@@ -304,7 +304,7 @@ code_db.register(short_name="specfem1d",
                  release_version="1.0.4",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 batlab_platforms=test_batlab_platforms,
+                 batlab_platforms=standard_batlab_platforms,
                  batlab_extra_files=["baseline.tar.gz", "check_diff.py"],
                  batlab_tests=["basic"]
                  )
