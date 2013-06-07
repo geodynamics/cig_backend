@@ -523,7 +523,7 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 </ul>
 
 <a id="seismic_cpml"><h2>Seismic CPML</h2></a>
-<xsl:value-of select="count(xml/records/record[contains(custom3,'Seismic_CPML')])"/> publications
+<xsl:value-of select="count(xml/records/record[contains(custom3,'SEISMIC_CPML')])"/> publications
 <h3> 2009 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'SEISMIC_CPML')]"/>
