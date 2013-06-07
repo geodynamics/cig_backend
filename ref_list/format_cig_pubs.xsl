@@ -498,12 +498,24 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="mineos"><h2>Mineos</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Mineos')])"/> publications
+<h3> 2012 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'Mineos')]"/>
+</ul>
 
 <a id="flexwin"><h2>Flexwin</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Flexwin')])"/> publications
 <h3> 2012 </h3>
 <ul>
 <xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'Flexwin')]"/>
+</ul>
+<h3> 2011 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2011 and contains(custom3, 'Flexwin')]"/>
+</ul>
+<h3> 2010 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2010 and contains(custom3, 'Flexwin')]"/>
 </ul>
 <h3> 2009 </h3>
 <ul>
@@ -512,6 +524,18 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 
 <a id="seismic_cpml"><h2>Seismic CPML</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Seismic_CPML')])"/> publications
+<h3> 2009 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'SEISMIC_CPML')]"/>
+</ul>
+<h3> 2008 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2008 and contains(custom3, 'SEISMIC_CPML')]"/>
+</ul>
+<h3> 2007 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2007 and contains(custom3, 'SEISMIC_CPML')]"/>
+</ul>
 
 <a id="mag"><h2>Mag</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Mag')])"/> publications
