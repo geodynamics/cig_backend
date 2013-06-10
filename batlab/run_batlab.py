@@ -160,6 +160,7 @@ def test_code(cig_code, revision, dry_run):
         test_input_desc = open(test_input_desc_filename, "w")
         print("method = nmi", file=test_input_desc)
         print("block_until_exists = true", file=test_input_desc)
+        print("ignore_missing_platforms = true", file=test_input_desc)
         print("input_runids =", gid, file=test_input_desc)
         test_input_desc.close()
 
