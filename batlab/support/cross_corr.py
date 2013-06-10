@@ -20,8 +20,8 @@ def cross_corr_calc(acceptable_corr_nines, files):
 
     # Ensure that times are equivalent
     for i in range(len(data_set[0])):
-        if time_set[0][i] != time_set[1][i]:
-            print "Time mismatch between files"
+        if math.fabs(time_set[0][i] - time_set[1][i]) > 1e-5:
+            print("Time mismatch between files:", time_set[0][i], time_set[1][i])
             return -1
 
     mean_val = {}
