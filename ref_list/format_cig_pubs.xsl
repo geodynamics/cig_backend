@@ -538,7 +538,15 @@ Total of <xsl:value-of select="count(xml/records/record)"/> publications
 </ul>
 
 <a id="mag"><h2>Mag</h2></a>
-<xsl:value-of select="count(xml/records/record[contains(custom3,'Mag')])"/> publications
+<xsl:value-of select="count(xml/records/record[contains(custom3,'MAG')])"/> publications
+<h3> 2012 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2012 and contains(custom3, 'MAG')]"/>
+</ul>
+<h3> 2009 </h3>
+<ul>
+<xsl:apply-templates select="xml/records/record[dates/year=2009 and contains(custom3, 'MAG')]"/>
+</ul>
 
 <a id="cigma"><h2>Cigma</h2></a>
 <xsl:value-of select="count(xml/records/record[contains(custom3,'Cigma')])"/> publications
