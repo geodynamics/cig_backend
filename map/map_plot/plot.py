@@ -33,7 +33,8 @@ def lookup_hits(db_name, package_name, start_time, end_time):
     db_conn = sqlite3.connect(db_name)
     curs = db_conn.cursor()
     result = []
-    curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (start_time, end_time, package_name,))
+    if package_name == "comprehensive": curs.execute("SELECT hit.ip_num FROM hit WHERE hit.time >= ? AND hit.time <= ?;", (start_time, end_time,))
+    else: curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (start_time, end_time, package_name,))
     while True:
         next_val = curs.fetchone()
         if next_val is None: break
