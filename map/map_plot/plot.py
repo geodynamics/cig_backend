@@ -151,7 +151,7 @@ def main():
     PACKAGE_NAME = sys.argv[4]
     if len(sys.argv) > 5: START_TIME = datetime.datetime.fromtimestamp(int(sys.argv[5]))
     else: START_TIME = datetime.datetime.fromtimestamp(0)
-    if len(sys.argv) > 6: END_TIME = datetime.datetime.fromtimestamp(int(sys.argv[5]))
+    if len(sys.argv) > 6: END_TIME = datetime.datetime.fromtimestamp(int(sys.argv[6]))
     else: END_TIME = datetime.datetime.now()
     print(START_TIME, END_TIME)
 
