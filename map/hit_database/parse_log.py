@@ -28,9 +28,12 @@ def parse_apache_logfile(db_conn, logfile, start_date):
             next_progress = time.time()+3
             print("line", num_lines)
         num_lines += 1
-        data = p.parse(line)
+        try:
+            data = p.parse(line)
+            code = int(data['%>s'])
+        except:
+            code = -1
         # Get the code, if it's not 200 (success) we ignore it
-        code = int(data['%>s'])
         if code == 200:
             # Break the request URL into / separated pieces
             request_url = data['%r'].split()[1]
