@@ -23,7 +23,7 @@ wget http://geodynamics.org/cig/software/specfem3d/SPECFEM3D_Cartesian_V2.0.2.ta
 wget http://geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz
 wget http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz
 wget http://geodynamics.org/cig/software/specfem2d/SPECFEM2D-7.0.0.tar.gz
-wget http://geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.3.tar.gz
+wget http://geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.4.tar.gz
 wget http://geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz
 wget http://geodynamics.org/cig/software/flexwin/FLEXWIN-1.0.1.tar.gz
 wget http://geodynamics.org/cig/software/seismic_cpml/SEISMIC_CPML_1.2.tar.gz
