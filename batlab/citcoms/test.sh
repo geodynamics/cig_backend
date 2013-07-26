@@ -7,7 +7,6 @@ source ./build_common.sh
 cd citcoms
 
 # Move the Regional example
-
 if [ "$1" == "regional1proc" ]
 then
     cd examples/Regional/ &&

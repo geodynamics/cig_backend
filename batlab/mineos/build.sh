@@ -1,18 +1,15 @@
 #!/bin/bash
 
-cd mineos*
+# Ensure we have a common naming scheme
+mv mineos* mineos > /dev/null 2>&1
+
+# Build Mineos
 if [ "$1" == "repo" ]
 then
-	autoreconf -i && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
+	cd mineos && autoreconf -i && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac && cd .. && tar -czf results.tar.gz mineos $HOME/local/
 else
-	./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac
+	cd mineos && ./configure && make minos_bran syndat green eigcon endi eigen2asc simpledit cucss2sac && cd .. && tar -czf results.tar.gz mineos $HOME/local/
 fi
-
-if [ $? -ne 0 ] ; then
-	exit 1
-fi
-
-PATH=$PATH:`pwd` && cd DEMO/DEMO3 && ./RUN_MINEOS.sh prem_noocean && cucss2sac -a Syndat Syndat_ASC && cd ../../.. && ./check_diff.sh
 
 exit $?
 
