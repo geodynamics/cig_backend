@@ -7,7 +7,10 @@ source ./build_common.sh
 cd citcoms
 
 # Move the Regional example
-if [ "$1" == "regional1proc" ]
+if [ "$1" == "null" ]
+then
+    echo "Null test"
+elif [ "$1" == "regional1proc" ]
 then
     cd examples/Regional/ &&
     cat input.sample | sed '/datadir/c\

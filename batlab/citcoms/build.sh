@@ -4,7 +4,7 @@
 source ./build_common.sh
 
 # Ensure we have a common naming scheme
-mv CitcomS* citcoms > /dev/null 2>&1
+mv CitcomS*/ citcoms > /dev/null 2>&1
 
 # Build CitcomS
 if [ "$1" == "repo" ]
