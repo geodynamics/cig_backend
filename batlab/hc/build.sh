@@ -2,11 +2,11 @@
 
 source ./build_common.sh
 
-# To handle different names for distribution vs. repo
-cd HC* || cd hc*
+# Ensure we have a common naming scheme
+mv HC*/ hc > /dev/null 2>&1
 
 # Build HC
-export GMTHOME=$HOME/local/ && export NETCDFHOME=$HOME/local/ && make
+export GMTHOME=$HOME/local/ && export NETCDFHOME=$HOME/local/ && cd hc && make
 
 exit $?
 
