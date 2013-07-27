@@ -3,9 +3,11 @@
 # Point to any additional installed libraries
 source ./build_common.sh
 
-# Build CitcomS
-cd citcomcu || cd CitcomCU*
-make
+# Ensure we have a common naming scheme
+mv CitcomCU*/ citcomcu > /dev/null 2>&1
+
+# Build CitcomCU
+cd citcomcu && make && cd .. && tar -czf results.tar.gz citcomcu $HOME/local/
 
 exit $?
 
