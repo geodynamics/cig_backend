@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Point to any additional installed libraries
+source ./build_common.sh
+
 # Ensure we have a common naming scheme
-mv mineos* mineos > /dev/null 2>&1
+mv mineos*/ mineos > /dev/null 2>&1
 
 # Build Mineos
 if [ "$1" == "repo" ]
