@@ -30,6 +30,8 @@ wget http://geodynamics.org/cig/software/seismic_cpml/SEISMIC_CPML_1.2.tar.gz
 
 wget http://geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz
 
+wget http://geodynamics.org/cig/software/cigma/cigma-1.0.0.tar.gz
+
 cd ..
 
 # Get support files/libraries needed by CIG codes
@@ -46,5 +48,6 @@ rm -f petsc-dev-pylith-1.8.0.tgz ; wget http://www.geodynamics.org/cig/software/
 rm -f proj-4.8.0.tar.gz ; wget http://download.osgeo.org/proj/proj-4.8.0.tar.gz
 rm -f spatialdata-1.9.0.tgz ; wget http://www.geodynamics.org/cig/software/pylith/spatialdata-1.9.0.tgz
 rm -f trilinos-11.0.3-Source.tar.bz2 ; wget http://trilinos.sandia.gov/download/files/trilinos-11.0.3-Source.tar.bz2
+rm -f cmake-2.8.11.2.tar.gz ; wget http://www.cmake.org/files/v2.8/cmake-2.8.11.2.tar.gz
 cd ..
 

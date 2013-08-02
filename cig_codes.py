@@ -6,6 +6,7 @@ import sys
 # A class to keep the current set of CIG codes and related information for use in backend operations
 class CodeDB:
     support_libs = {
+                "cmake-2.8.11.2": ["cmake-2.8.11.2.tar.gz", "build_cmake-2.8.11.2.sh"],
                 "dealii": ["dealii.svn", "build_dealii_svn.sh"],
                 "fftw-3.3.3": ["fftw-3.3.3.tar.gz", "build_fftw-3.3.3.sh"],
                 "gmt-4.5.8": ["gmt-4.5.8.tar.bz2", "build_gmt-4.5.8.sh"],
@@ -289,7 +290,6 @@ code_db.register(short_name="specfem3d-globe",
                  batlab_tests=["null"],
                  )
 
-# Requires CMake
 code_db.register(short_name="specfem3d-geotech",
                  full_name="SPECFEM3D GEOTECH",
                  repo_url="http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GEOTECH/trunk",
@@ -298,7 +298,9 @@ code_db.register(short_name="specfem3d-geotech",
                  release_version="1.1b",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=standard_batlab_platforms,
+                 batlab_support_libs=["cmake-2.8.11.2"],
+                 batlab_tests=["null"],
                  )
 
 code_db.register(short_name="specfem2d",
@@ -361,7 +363,9 @@ code_db.register(short_name="seismic_cpml",
                  release_version="1.2",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=standard_batlab_platforms,
+                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_tests=["null"],
                  )
 
 #############
