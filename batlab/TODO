@@ -1,3 +1,4 @@
+Add testing for PyLith, LithoMop, Gale, SNAC, Aspect, ConMan, FlexWin, Cigma
 Change scp directories to be relative rather than based on home directory
 Add Greens function comparison for Mineos
 
