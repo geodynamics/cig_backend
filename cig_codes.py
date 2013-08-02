@@ -167,7 +167,8 @@ code_db.register(short_name="plasti",
                  release_version="1.0.0",
                  dev_doxygen=True,
                  release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 batlab_platforms=standard_batlab_platforms,
+                 batlab_tests=["null"],
                  )
 
 code_db.register(short_name="snac",
