@@ -9,17 +9,15 @@ import tempfile
 import shutil
 import subprocess
 
+NMI_SUBMIT="/usr/local/nmi/bin/nmi_submit"
+#NMI_SUBMIT="/home/tlmiller/nmi-on-stampede/bin/nmi_submit"
+
 # The base directory where build scripts, support files, etc are located
 BASE_DIR="/home/eheien/cig_backend/batlab"
 # Email address to use for notifications
 NOTIFY_EMAIL="emheien@geodynamics.org"
 
-# Create a test setup and submit to BaTLab for the specified revision of the specifiec code
-def test_code(cig_code, revision, dry_run):
-    use_repo = True
-
-    tmp_dir = tempfile.mkdtemp()
-
+def create_source_input_file(cig_code, tmp_dir, use_repo, revision):
     # Create the input source specification
     src_input_file_name = tmp_dir+"/source_input_desc"
     src_input_desc = open(src_input_file_name, 'w')
@@ -44,11 +42,39 @@ def test_code(cig_code, revision, dry_run):
             exit(1)
         print(file=src_input_desc)
     else:
-        print("method = url", file=src_input_desc)
-        print("url =", code_db.release_src[cig_code], file=src_input_desc)
+        #print("method = url", file=src_input_desc)
+        #print("url =", code_db.release_src[cig_code], file=src_input_desc)
+        print("method = scp", file=src_input_desc)
+        code_file_name = code_db.release_src[cig_code].split("/")[-1]
+        print("scp_file = /home/eheien/cig_backend/batlab/distributions/"+code_file_name, file=src_input_desc)
         print("untar = true", file=src_input_desc)
         print(file=src_input_desc)
     src_input_desc.close()
+    return src_input_file_name
+
+def gid_from_stdout(stdout_text):
+    gid = None
+    for line in stdout_text.split("\n"):
+        line_data = line.split()
+        if len(line_data) > 2 and line_data[0] == "gid":
+            gid = line_data[2]
+        elif len(line_data) > 1 and line_data[0] == "FAILURE:":
+            gid = None
+            break
+    return gid
+
+# Create a test setup and submit to BaTLab for the specified revision of the specifiec code
+def test_code(cig_code, revision, dry_run, use_repo):
+    build_error = False
+
+    # Check that this code supports BaTLab testing first
+    if len(code_db.batlab_platforms[cig_code]) == 0: return
+
+    # Create a temporary directory to store the files in
+    tmp_dir = tempfile.mkdtemp()
+
+    # Create a source input file for this code
+    src_input_file_name = create_source_input_file(cig_code, tmp_dir, use_repo, revision)
 
     # Create the support library input specifications
     for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
@@ -104,6 +130,9 @@ def test_code(cig_code, revision, dry_run):
     print("inputs =", src_input_file_name, ",", build_input_file_name, ",", input_support_files, file=build_run_spec)
     print(file=build_run_spec)
 
+    # If we're using a grid resource, declare it in the file
+    #print("use_grid_resource = gt5 login5.stampede.tacc.utexas.edu:2119/jobmanager-fork", file=build_run_spec)
+
     # Get the list of support library compilation scripts needed
     input_support_scripts = ""
     for i, support_script in enumerate(code_db.support_lib_scripts(cig_code)):
@@ -134,27 +163,23 @@ def test_code(cig_code, revision, dry_run):
 
     # Submit the generated run specification and get the output
     if not dry_run:
-        submit_proc = subprocess.Popen(["nmi_submit", "--machine", build_run_spec_file_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        print("Submitting "+build_run_spec_file_name.split("/")[-1]+" for "+cig_code+"... ", end="")
+        sys.stdout.flush()
+        submit_proc = subprocess.Popen([NMI_SUBMIT, "--machine", build_run_spec_file_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         submit_stdout, submit_stderr = submit_proc.communicate()
-        gid = None
-        for line in submit_stdout.split("\n"):
-            line_data = line.split()
-            if len(line_data) > 2 and line_data[0] == "gid":
-                gid = line_data[2]
-            elif len(line_data) > 1 and line_data[0] == "FAILURE:":
-                gid = None
-                break
+        gid = gid_from_stdout(submit_stdout)
 
         if not gid:
             print("ERROR")
             print(submit_stdout)
+            build_error = True
         else:
-            print("Success:", gid)
+            print("success:", gid)
     else:
         gid = "dry_run_gid"
 
     # Now that we have the build running, set up the test(s) if necessary
-    if len(code_db.batlab_tests[cig_code]) > 0:
+    if not build_error and len(code_db.batlab_tests[cig_code]) > 0:
         # Set up the input file
         test_input_desc_filename = tmp_dir+"/test_input"
         test_input_desc = open(test_input_desc_filename, "w")
@@ -185,12 +210,12 @@ def test_code(cig_code, revision, dry_run):
             print("run_type = test", file=test_run_spec)
             print("platform_job_timeout = 30", file=test_run_spec)
 
+            #print("use_grid_resource = gt5 login5.stampede.tacc.utexas.edu:2119/jobmanager-fork", file=test_run_spec)
+
             # Get the list of support libraries needed as input for this code
             input_support_files = BASE_DIR+"/support/lib_scripts.scp"
-            for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
-                if i==0: comma = ""
-                else: comma = ", "
-                input_support_files += comma+tmp_dir+"/"+support_file+".scp"
+            for support_file in code_db.batlab_support_libs[cig_code]:
+                input_support_files += ", "+tmp_dir+"/"+support_file+".scp"
 
             print("inputs =", test_input_desc_filename, ",", test_script_file_name, ",", input_support_files, file=test_run_spec)
             print(file=test_run_spec)
@@ -201,8 +226,8 @@ def test_code(cig_code, revision, dry_run):
             print(file=test_run_spec)
 
             platform_list = ""
-            for i, platform in enumerate(code_db.batlab_platforms[cig_code]):
-                if i is not 0: platform_list += ", "
+            for n, platform in enumerate(code_db.batlab_platforms[cig_code]):
+                if n is not 0: platform_list += ", "
                 platform_list += platform
 
             print("platforms =", platform_list, file=test_run_spec)
@@ -213,8 +238,16 @@ def test_code(cig_code, revision, dry_run):
             # Submit the newly created test script
             if not dry_run:
                 for test_run_spec in test_run_spec_file_names:
-                    submit_proc = subprocess.Popen(["nmi_submit", "--machine", test_run_spec], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                    print("Submitting "+test_run_spec.split("/")[-1]+" for "+cig_code+"... ", end="")
+                    sys.stdout.flush()
+                    submit_proc = subprocess.Popen([NMI_SUBMIT, "--machine", test_run_spec], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                     submit_stdout, submit_stderr = submit_proc.communicate()
+                    gid = gid_from_stdout(submit_stdout)
+                    if gid:
+                        print("success:", gid)
+                    else:
+                        print ("error.")
+                        print (submit_stdout, submit_stderr)
 
     # Once it's in the system, wipe everything we just created
     if dry_run:
@@ -227,6 +260,7 @@ def main():
     arg_error = False
     revision = None
     dry_run = False
+    use_repo = False
 
     if len(sys.argv) < 2: arg_error = True
     else: cig_code = sys.argv[1]
@@ -234,6 +268,7 @@ def main():
     for arg_num in range(2, len(sys.argv)):
         if sys.argv[arg_num] == "--revision":
             revision = sys.argv[arg_num+1]
+            use_repo = True
         elif sys.argv[arg_num] == "--dry_run":
             dry_run = True
 
@@ -241,7 +276,7 @@ def main():
         print("syntax:", sys.argv[0], "<code_name> [--revision rev_num] [--dry_run]")
         exit(1)
 
-    if cig_code is "all": code_list = code_db.codes()
+    if cig_code == "all": code_list = code_db.codes()
     else: code_list = [cig_code]
 
     for check_code in code_list:
@@ -249,7 +284,7 @@ def main():
             print("unknown code:", check_code)
             exit(1)
 
-        test_code(check_code, revision, dry_run)
+        test_code(check_code, revision, dry_run, use_repo)
 
 if __name__ == "__main__":
     main()
