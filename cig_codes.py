@@ -3,25 +3,42 @@
 from __future__ import print_function
 import sys
 
+#test_batlab_platforms = ["x86_64_Debian6"]
+test_batlab_platforms = ["x86_64_RedHat5"]
+standard_batlab_platforms = ["x86_64_Debian5", "x86_64_Debian6", "x86_64_Debian7", "x86_Debian6", "x86_64_Ubuntu10", "x86_64_Ubuntu12", "x86_64_Fedora16", "x86_64_Fedora17", "x86_64_Fedora18", "x86_64_MacOSX7", "x86_64_MacOSX8", "x86_64_RedHat5", "x86_64_RedHat6", "x86_64_SL6", "x86_RedHat5", "x86_RedHat6"]
+unused_platforms = ["x86_64_Solaris11", "x86_64_Windows7", "x86_64_Windows8", "x86_WindowsXP"]
+
 # A class to keep the current set of CIG codes and related information for use in backend operations
 class CodeDB:
     support_libs = {
                 "cmake-2.8.11.2": ["cmake-2.8.11.2.tar.gz", "build_cmake-2.8.11.2.sh"],
-                "dealii": ["dealii.svn", "build_dealii_svn.sh"],
                 "fftw-3.3.3": ["fftw-3.3.3.tar.gz", "build_fftw-3.3.3.sh"],
-                "gmt-4.5.8": ["gmt-4.5.8.tar.bz2", "build_gmt-4.5.8.sh"],
                 "gmt-4.5.9": ["gmt-4.5.9.tar.bz2", "build_gmt-4.5.9.sh"],
                 "gshhg-gmt-nc3-2.2.2": ["gshhg-gmt-nc3-2.2.2.tar.bz2", ""],
                 "nemesis-1.0.2": ["nemesis-1.0.2.tar.gz", "build_nemesis-1.0.2.sh"],
                 "netcdf": ["netcdf.tar.gz", "build_netcdf.sh"],
-                "numdiff-5.6.1": ["numdiff-5.6.1.tar.gz", "build_numdiff-5.6.1.sh"],
                 "numpy-1.7.0rc1": ["numpy-1.7.0rc1.tar.gz", "build_numpy-1.7.0rc1.sh"],
                 "openmpi-1.6.3": ["openmpi-1.6.3.tar.bz2", "build_openmpi-1.6.3.sh"],
                 "petsc-dev-pylith-1.8.0": ["petsc-dev-pylith-1.8.0.tgz", "build_petsc-dev-pylith-1.8.0.sh"],
                 "proj-4.8.0": ["proj-4.8.0.tar.gz", "build_proj-4.8.0.sh"],
                 "spatialdata-1.9.0": ["spatialdata-1.9.0.tgz", "build_spatialdata-1.9.0.sh"],
-                "trilinos-11.0.3": ["trilinos-11.0.3-Source.tar.bz2", "build_trilinos-11.0.3.sh"]
+                "trilinos-11.0.3": ["trilinos-11.0.3-Source.tar.bz2", "build_trilinos-11.0.3.sh"],
                 }
+    bundles = {
+            "cmake": ["cmake-2.8.11.2"],
+            "fftw": ["fftw-3.3.3"],
+            "openmpi": ["openmpi-1.6.3"],
+            "proj_netcdf_gmt": ["proj-4.8.0", "gshhg-gmt-nc3-2.2.2", "netcdf", "gmt-4.5.9"],
+            "numpy": ["numpy-1.7.0rc1"]
+            }
+    #bundles = { "a": ["cmake-2.8.11.2", "fftw-3.3.3", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2", "nemesis-1.0.2", "netcdf", "numpy-1.7.0rc1", "openmpi-1.6.3", "petsc-dev-pylith-1.8.0", "proj-4.8.0", "spatialdata-1.9.0", "trilinos-11.0.3"] }
+    bundle_platforms = {
+            "cmake": standard_batlab_platforms,
+            "fftw": standard_batlab_platforms,
+            "openmpi": standard_batlab_platforms,
+            "proj_netcdf_gmt": standard_batlab_platforms,
+            "numpy": standard_batlab_platforms
+            }
 
     def __init__(self):
         self.full_name = {}
@@ -33,10 +50,10 @@ class CodeDB:
         self.release_doxygen = {}
         self.batlab_platforms = {}
         self.batlab_extra_files = {}
-        self.batlab_support_libs = {}
+        self.batlab_support_bundles = {}
         self.batlab_tests = {}
 
-    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_extra_files=[], batlab_support_libs=[], batlab_tests=[]):
+    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_support_bundles=[], batlab_extra_files=[], batlab_tests=[]):
         self.full_name[short_name] = full_name
         self.repo_url[short_name] = repo_url
         self.repo_type[short_name] = repo_type
@@ -45,8 +62,8 @@ class CodeDB:
         self.dev_doxygen[short_name] = dev_doxygen
         self.release_doxygen[short_name] = release_doxygen
         self.batlab_platforms[short_name] = batlab_platforms
+        self.batlab_support_bundles[short_name] = batlab_support_bundles
         self.batlab_extra_files[short_name] = batlab_extra_files
-        self.batlab_support_libs[short_name] = batlab_support_libs
         self.batlab_tests[short_name] = batlab_tests
 
     def codes(self):
@@ -58,8 +75,8 @@ class CodeDB:
     def code_batlab_release(self, code_name):
         return self.release_batlab[code_name]
 
-    def support_lib_scripts(self, code_name):
-        return [self.support_libs[lib][1] for lib in self.batlab_support_libs[code_name]]
+    def support_lib_scripts(self, bundle):
+        return [self.support_libs[lib][1] for lib in self.bundles[bundle]]
 
     def code_doxygen_release(self, code_name):
         return self.release_doxygen[code_name]
@@ -76,9 +93,6 @@ class CodeDB:
 # Declare the current set of CIG codes
 
 code_db = CodeDB()
-test_batlab_platforms = ["x86_64_Debian6"]
-standard_batlab_platforms = ["x86_64_Debian5", "x86_64_Debian6", "x86_64_Ubuntu10", "x86_64_Ubuntu12", "x86_Debian6", "x86_64_Fedora16", "x86_64_Fedora17", "x86_64_MacOSX7", "x86_64_RedHat5", "x86_64_RedHat6", "x86_64_SL6", "x86_64_Solaris11", "x86_64_macos_10.7", "x86_RedHat5", "x86_RedHat6", "x86_SL5"]
-unused_platforms = ["x86_64_Windows7, x86_WindowsXP"]
 
 ###############################
 # Description of each argument to register()
@@ -104,7 +118,8 @@ code_db.register(short_name="pylith",
                  dev_doxygen=True,
                  release_doxygen=True,
                  #batlab_platforms=test_batlab_platforms,
-                 batlab_support_libs=["proj-4.8.0", "nemesis-1.0.2", "numpy-1.7.0rc1", "spatialdata-1.9.0", "petsc-dev-pylith-1.8.0"])
+                 batlab_support_bundles=["openmpi"],
+                 )
 
 code_db.register(short_name="relax",
                  full_name="RELAX",
@@ -115,7 +130,7 @@ code_db.register(short_name="relax",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["fftw-3.3.3", "proj-4.8.0", "netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"],
+                 batlab_support_bundles=["proj_netcdf_gmt", "fftw"],
                  batlab_tests=["null"],
                  )
 
@@ -129,7 +144,7 @@ code_db.register(short_name="selen",
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
                  batlab_extra_files=["fast_config.dat"],
-                 batlab_support_libs=["netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"],
+                 batlab_support_bundles=["proj_netcdf_gmt"],
                  batlab_tests=["null"],
                  )
 
@@ -206,7 +221,7 @@ code_db.register(short_name="citcomcu",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_support_bundles=["openmpi"],
                  batlab_tests=["null"],
                  )
 
@@ -219,7 +234,7 @@ code_db.register(short_name="citcoms",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_support_bundles=["openmpi"],
                  batlab_tests=["null"],
                  #batlab_tests=["regional1proc"]
                  )
@@ -257,7 +272,7 @@ code_db.register(short_name="hc",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["netcdf", "gmt-4.5.9", "gshhg-gmt-nc3-2.2.2"],
+                 batlab_support_bundles=["proj_netcdf_gmt"],
                  batlab_tests=["null"],
                  )
 
@@ -273,7 +288,7 @@ code_db.register(short_name="specfem3d",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_support_bundles=["openmpi"],
                  batlab_tests=["null"],
                  )
 
@@ -286,7 +301,7 @@ code_db.register(short_name="specfem3d-globe",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_support_bundles=["openmpi"],
                  batlab_tests=["null"],
                  )
 
@@ -299,7 +314,7 @@ code_db.register(short_name="specfem3d-geotech",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["cmake-2.8.11.2"],
+                 batlab_support_bundles=["openmpi", "cmake"],
                  batlab_tests=["null"],
                  )
 
@@ -364,7 +379,7 @@ code_db.register(short_name="seismic_cpml",
                  dev_doxygen=True,
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
-                 batlab_support_libs=["openmpi-1.6.3"],
+                 batlab_support_bundles=["openmpi"],
                  batlab_tests=["null"],
                  )
 
