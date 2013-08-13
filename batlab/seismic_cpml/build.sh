@@ -7,7 +7,7 @@ source ./build_common.sh
 mv SEISMIC*/ seismic_cpml > /dev/null 2>&1
 
 # Build SPECFEM1D
-cd seismic_cpml && make && cd .. && tar -czf results.tar.gz seismic_cpml $HOME/local/
+cd seismic_cpml && make && cd .. && tar -czf results.tar.gz seismic_cpml $CURDIR/local/
 
 exit $?
 

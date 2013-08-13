@@ -6,7 +6,7 @@ source ./build_common.sh
 mv HC*/ hc > /dev/null 2>&1
 
 # Build HC
-export GMTHOME=$HOME/local/ && export NETCDFHOME=$HOME/local/ && cd hc && make
+export GMTHOME=$CURDIR/local/ && export NETCDFHOME=$CURDIR/local/ && cd hc && make
 
 exit $?
 
