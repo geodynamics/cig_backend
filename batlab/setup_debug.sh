@@ -38,7 +38,7 @@ cd ..
 cd support
 rm -f deal.offlinedoc-7.3.0.tar.gz ; wget https://dealii.googlecode.com/files/deal.offlinedoc-7.3.0.tar.gz
 rm -f fftw-3.3.3.tar.gz ; wget http://www.fftw.org/fftw-3.3.3.tar.gz
-rm -f gmt-4.5.8.tar.bz2 ; wget ftp://ftp.iris.washington.edu/pub/gmt/gmt-4.5.8.tar.bz2
+rm -f gmt-4.5.9.tar.bz2 ; wget ftp://ftp.iris.washington.edu/pub/gmt/gmt-4.5.9.tar.bz2
 rm -f nemesis-1.0.2.tar.gz ; wget http://www.geodynamics.org/cig/software/pythia/nemesis-1.0.2.tar.gz
 rm -f netcdf.tar.gz ; wget ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf.tar.gz
 rm -f numdiff-5.6.1.tar.gz ; wget http://gnu.mirrors.pair.com/savannah/savannah/numdiff/numdiff-5.6.1.tar.gz
