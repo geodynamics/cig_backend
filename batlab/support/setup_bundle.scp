@@ -1,0 +1,3 @@
+method = scp
+scp_file = ~/cig_backend/batlab/support/build_setup_bundle.sh
+
