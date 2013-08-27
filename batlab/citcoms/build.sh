@@ -9,9 +9,9 @@ mv CitcomS*/ citcoms > /dev/null 2>&1
 # Build CitcomS
 if [ "$1" == "repo" ]
 then
-    cd citcoms && autoreconf -i && ./configure --without-pyre && make && cd .. && tar -czf results.tar.gz citcoms $HOME/local/
+    cd citcoms && autoreconf -i && ./configure --without-pyre && make && cd .. && tar -czf results.tar.gz citcoms $CURDIR/local/
 else
-    cd citcoms && ./configure --without-pyre && make && cd .. && tar -czf results.tar.gz citcoms $HOME/local/
+    cd citcoms && ./configure --without-pyre && make && cd .. && tar -czf results.tar.gz citcoms $CURDIR/local/
 fi
 
 exit $?

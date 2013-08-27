@@ -76,23 +76,6 @@ def test_code(cig_code, revision, dry_run, use_repo):
     # Create a source input file for this code
     src_input_file_name = create_source_input_file(cig_code, tmp_dir, use_repo, revision)
 
-    # Create the support library input specifications
-    for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
-        support_lib_input_file_name = tmp_dir+"/"+support_file+".scp"
-        support_lib_desc = open(support_lib_input_file_name, 'w')
-        print("method = scp", file=support_lib_desc)
-        if code_db.support_libs[support_file][0] != "":
-            tarball_file = BASE_DIR+"/support/"+code_db.support_libs[support_file][0]
-        else:
-            tarball_file = ""
-        if code_db.support_libs[support_file][1] != "":
-            build_script_file = BASE_DIR+"/support/"+code_db.support_libs[support_file][1]
-        else:
-            build_script_file = ""
-        print("scp_file =", build_script_file, tarball_file, file=support_lib_desc)
-        print("untar = true", file=support_lib_desc)
-        support_lib_desc.close()
-
     # Create the input build files specification
     build_input_file_name = tmp_dir+"/build_input_desc"
     build_input_desc = open(build_input_file_name, 'w')
@@ -123,24 +106,18 @@ def test_code(cig_code, revision, dry_run, use_repo):
     print("platform_job_timeout = 30", file=build_run_spec)
 
     # Get the list of support libraries needed as input for this code
-    input_support_files = BASE_DIR+"/support/lib_scripts.scp"
-    for i, support_file in enumerate(code_db.batlab_support_libs[cig_code]):
-        input_support_files += ", "+tmp_dir+"/"+support_file+".scp"
-
+    input_support_files = BASE_DIR+"/support/setup_bundle.scp , "+BASE_DIR+"/support/lib_scripts.scp"
     print("inputs =", src_input_file_name, ",", build_input_file_name, ",", input_support_files, file=build_run_spec)
     print(file=build_run_spec)
 
     # If we're using a grid resource, declare it in the file
     #print("use_grid_resource = gt5 login5.stampede.tacc.utexas.edu:2119/jobmanager-fork", file=build_run_spec)
 
-    # Get the list of support library compilation scripts needed
-    input_support_scripts = ""
-    for i, support_script in enumerate(code_db.support_lib_scripts(cig_code)):
-        input_support_scripts += support_script+" "
-
-    if input_support_scripts is not "":
-        print("remote_pre = build_support.sh", file=build_run_spec)
-        print("remote_pre_args =", input_support_scripts, file=build_run_spec)
+    # Set up the script to copy precompiled libraries over
+    if code_db.batlab_support_bundles[cig_code] is not None:
+        bundle_names = " ".join(code_db.batlab_support_bundles[cig_code])
+        print("platform_pre = build_setup_bundle.sh", file=build_run_spec)
+        print("platform_pre_args =", bundle_names, file=build_run_spec)
         print(file=build_run_spec)
 
     # To build the code, use the build.sh script
@@ -214,8 +191,6 @@ def test_code(cig_code, revision, dry_run, use_repo):
 
             # Get the list of support libraries needed as input for this code
             input_support_files = BASE_DIR+"/support/lib_scripts.scp"
-            for support_file in code_db.batlab_support_libs[cig_code]:
-                input_support_files += ", "+tmp_dir+"/"+support_file+".scp"
 
             print("inputs =", test_input_desc_filename, ",", test_script_file_name, ",", input_support_files, file=test_run_spec)
             print(file=test_run_spec)

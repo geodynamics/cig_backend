@@ -7,7 +7,7 @@ source ./build_common.sh
 mv CitcomCU*/ citcomcu > /dev/null 2>&1
 
 # Build CitcomCU
-cd citcomcu && make && cd .. && tar -czf results.tar.gz citcomcu $HOME/local/
+cd citcomcu && make && cd .. && tar -czf results.tar.gz citcomcu $CURDIR/local/
 
 exit $?
 
