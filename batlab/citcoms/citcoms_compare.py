@@ -14,12 +14,12 @@ file_descs = [
         ]
 if len(sys.argv) < 4:
     print "args: dir_1 dir_2 nprocs max_step"
-    exit(1)
+    sys.exit(1)
 
 compare_dirs = [sys.argv[1], sys.argv[2]]
 nprocs = int(sys.argv[3])
 max_step = int(sys.argv[4])
-directories = [dir+"/examples/Regional/scratch" for dir in compare_dirs]
+directories = [dir+"/scratch" for dir in compare_dirs]
 compare_functions = [cig_compare.MaxMagDiffRenormed]
 
 print "FILE VAR ORIG TOL"
@@ -47,7 +47,7 @@ for desc in file_descs:
 
 print "END: Passed %d/%d tests" % (num_passed, total_tests)
 if num_passed == total_tests:
-    exit(0)
+    sys.exit(0)
 else:
-    exit(1)
+    sys.exit(1)
 
