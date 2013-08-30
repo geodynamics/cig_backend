@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import numpy
-import itertools
 
 class ResultData:
     def __init__(self, num_header_lines, file_format):
@@ -9,11 +8,12 @@ class ResultData:
         self.file_format = file_format
 
     def read_file_ascii(self, filename):
-        with open(filename, 'r') as fp:
-            # Read header lines
-            for i in xrange(self.num_header_lines): fp.readline()
-            # Read data lines
-            self.data = numpy.array([[float(v) for v in line.split()] for line in fp])
+        fp = open(filename, 'r')
+        # Read header lines
+        for i in xrange(self.num_header_lines): fp.readline()
+        # Read data lines
+        self.data = numpy.array([[float(v) for v in line.split()] for line in fp])
+        fp.close()
 
 # Calculate the maximum magnitude among all vectors in the data sets
 def MaxMagnitude(ds):
@@ -75,7 +75,8 @@ def compare(compare_set, compare_functions):
     result = {}
     for w in compare_set[0].file_format:
         data_subset = [compare_set[i].data[:,pos:pos+w] for i in xrange(len(compare_set))]
-        for t in itertools.combinations(range(len(compare_set)), 2):
+        combos = [(i, n) for i in range(len(compare_set)) for n in range(i+1,len(compare_set))]
+        for t in combos:
             # Get the two datasets to compare
             ds = [data_subset[t[i]] for i in range(2)]
             # Record the results
