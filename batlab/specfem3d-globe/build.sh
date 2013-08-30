@@ -7,7 +7,7 @@ source ./build_common.sh
 mv SPECFEM3D*/ specfem3d_globe > /dev/null 2>&1
 
 # Build SPECFEM3D Globe
-cd specfem3d_globe && ./configure && make all && cd .. && tar -czf results.tar.gz specfem3d_globe $CURDIR/local/
+cd specfem3d_globe && ./configure && make all && cd .. && tar -czf results.tar.gz specfem3d_globe local
 
 exit $?
 

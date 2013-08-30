@@ -20,7 +20,7 @@ do
 	ln -sf param$PARAM.f param.f && make && mv magx ../magx$PARAM && make clean
 done
 
-cd ../.. && tar -czf results.tar.gz mag $CURDIR/local/
+cd ../.. && tar -czf results.tar.gz mag local
 
 exit $?
 

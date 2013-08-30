@@ -7,7 +7,7 @@ source ./build_common.sh
 mv plasti*/ plasti > /dev/null 2>&1
 
 # Build SPECFEM1D
-cd plasti && make && cd .. && tar -czf results.tar.gz plasti $CURDIR/local/
+cd plasti && make && cd .. && tar -czf results.tar.gz plasti local
 
 exit $?
 

@@ -7,7 +7,7 @@ source ./build_common.sh
 mv SPECFEM2D*/ specfem2d > /dev/null 2>&1
 
 # Build SPECFEM1D
-cd specfem2d && ./configure && make && cd .. && tar -czf results.tar.gz specfem2d $CURDIR/local/
+cd specfem2d && ./configure && make && cd .. && tar -czf results.tar.gz specfem2d local
 
 exit $?
 

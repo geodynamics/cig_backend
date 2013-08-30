@@ -7,7 +7,7 @@ source ./build_common.sh
 mv SPECFEM3D*/ specfem3d_geotech > /dev/null 2>&1
 
 # Build SPECFEM3D GEOTECH
-cd specfem3d_geotech && mkdir build && cd build && cmake .. && make && cd ../.. && tar -czf results.tar.gz specfem3d_geotech $CURDIR/local/
+cd specfem3d_geotech && mkdir build && cd build && cmake .. && make && cd ../.. && tar -czf results.tar.gz specfem3d_geotech local
 
 exit $?
 
