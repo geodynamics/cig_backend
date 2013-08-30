@@ -17,6 +17,20 @@ BASE_DIR="/home/eheien/cig_backend/batlab"
 # Email address to use for notifications
 NOTIFY_EMAIL="emheien@geodynamics.org"
 
+def submit_run(run_name, code_name, run_spec_loc):
+    print("Submitting "+run_name+" for "+code_name+"... ", end="")
+    sys.stdout.flush()
+    submit_proc = subprocess.Popen([NMI_SUBMIT, "--machine", run_spec_loc], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    submit_stdout, submit_stderr = submit_proc.communicate()
+    gid = gid_from_stdout(submit_stdout)
+    if gid:
+        print("success:", gid)
+        return gid
+    else:
+        print ("error.")
+        print (submit_stdout, submit_stderr)
+        return None
+
 def create_source_input_file(cig_code, tmp_dir, use_repo, revision):
     # Create the input source specification
     src_input_file_name = tmp_dir+"/source_input_desc"
@@ -140,18 +154,8 @@ def test_code(cig_code, revision, dry_run, use_repo):
 
     # Submit the generated run specification and get the output
     if not dry_run:
-        print("Submitting "+build_run_spec_file_name.split("/")[-1]+" for "+cig_code+"... ", end="")
-        sys.stdout.flush()
-        submit_proc = subprocess.Popen([NMI_SUBMIT, "--machine", build_run_spec_file_name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        submit_stdout, submit_stderr = submit_proc.communicate()
-        gid = gid_from_stdout(submit_stdout)
-
-        if not gid:
-            print("ERROR")
-            print(submit_stdout)
-            build_error = True
-        else:
-            print("success:", gid)
+        gid = submit_run(build_run_spec_file_name.split("/")[-1], cig_code, build_run_spec_file_name)
+        if not gid: build_error = True
     else:
         gid = "dry_run_gid"
 
@@ -183,7 +187,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
             print("project = CIG", file=test_run_spec)
             print("component =", cig_code, file=test_run_spec)
             print("component_version =", revision, file=test_run_spec)
-            print("description = Test", rev_desc, file=test_run_spec)
+            print("description =", rev_desc, "test", test_name, file=test_run_spec)
             print("run_type = test", file=test_run_spec)
             print("platform_job_timeout = 30", file=test_run_spec)
 
@@ -212,17 +216,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
 
             # Submit the newly created test script
             if not dry_run:
-                for test_run_spec in test_run_spec_file_names:
-                    print("Submitting "+test_run_spec.split("/")[-1]+" for "+cig_code+"... ", end="")
-                    sys.stdout.flush()
-                    submit_proc = subprocess.Popen([NMI_SUBMIT, "--machine", test_run_spec], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                    submit_stdout, submit_stderr = submit_proc.communicate()
-                    gid = gid_from_stdout(submit_stdout)
-                    if gid:
-                        print("success:", gid)
-                    else:
-                        print ("error.")
-                        print (submit_stdout, submit_stderr)
+                submit_run(test_run_spec_file_names[i].split("/")[-1], cig_code, test_run_spec_file_names[i])
 
     # Once it's in the system, wipe everything we just created
     if dry_run:
