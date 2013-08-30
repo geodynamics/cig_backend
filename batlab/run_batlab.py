@@ -187,7 +187,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
             print("project = CIG", file=test_run_spec)
             print("component =", cig_code, file=test_run_spec)
             print("component_version =", revision, file=test_run_spec)
-            print("description =", rev_desc, "test", test_name, file=test_run_spec)
+            print("description =", rev_desc, "test", code_db.batlab_tests[cig_code][i], file=test_run_spec)
             print("run_type = test", file=test_run_spec)
             print("platform_job_timeout = 30", file=test_run_spec)
 
