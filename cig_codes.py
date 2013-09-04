@@ -205,10 +205,10 @@ code_db.register(short_name="aspect",
                  full_name="Aspect",
                  repo_url="https://svn.aspect.dealii.org/trunk/aspect",
                  repo_type="svn",
-                 release_src="http://aspect.dealii.org/download/aspect-0.2.tar.gz",
-                 release_version="0.2",
-                 dev_doxygen=False,
-                 release_doxygen=False,
+                 release_src="http://aspect.dealii.org/download/aspect-0.3.tar.gz",
+                 release_version="0.3",
+                 dev_doxygen=True,
+                 release_doxygen=True,
                  #batlab_platforms=test_batlab_platforms
                  )
 
@@ -396,6 +396,18 @@ code_db.register(short_name="mag",
                  release_doxygen=True,
                  batlab_platforms=standard_batlab_platforms,
                  batlab_tests=["null"],
+                 )
+
+code_db.register(short_name="calypso",
+                 full_name="Calypso",
+                 repo_url="https://github.com/geodynamics/calypso",
+                 repo_type="git",
+                 release_src="http://geodynamics.org/cig/software/calypso/calypso-1.0.0.tar.gz",
+                 release_version="1.0.0",
+                 dev_doxygen=True,
+                 release_doxygen=True,
+                 #batlab_platforms=standard_batlab_platforms,
+                 #batlab_tests=["null"],
                  )
 
 #########################
