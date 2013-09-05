@@ -157,6 +157,7 @@ echo "s=CIG_PROJECT=$FULL_NAME=g" > $SED_FILE
 echo "s=CIG_CODE_DOXY_DIR=$CODE_DOXY_DIR=g" >> $SED_FILE
 echo "s=CIG_CODE_REVISION=$REV_TITLE=g" >> $SED_FILE
 echo "s=CIG_INPUT_DIR=$CODE_INPUT_DIR=g" >> $SED_FILE
+echo "s=CIG_PROJECT_LOGO=$CODE_LOGO=g" >> $SED_FILE
 sed -f $SED_FILE $BLANK_DOXYFILE > $DOXYFILE
 
 # Create the documentation based on the generated doxyfile

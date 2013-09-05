@@ -8,6 +8,19 @@ test_batlab_platforms = ["x86_64_RedHat5"]
 standard_batlab_platforms = ["x86_64_Debian5", "x86_64_Debian6", "x86_64_Debian7", "x86_Debian6", "x86_64_Ubuntu10", "x86_64_Ubuntu12", "x86_64_Fedora16", "x86_64_Fedora17", "x86_64_Fedora18", "x86_64_MacOSX7", "x86_64_MacOSX8", "x86_64_RedHat5", "x86_64_RedHat6", "x86_64_SL6", "x86_RedHat5", "x86_RedHat6"]
 unused_platforms = ["x86_64_Solaris11", "x86_64_Windows7", "x86_64_Windows8", "x86_WindowsXP"]
 
+class BatlabParameters:
+    def __init__(self, platforms=[], support_bundles=[], extra_files=[], tests=[]):
+        self.platforms = platforms
+        self.support_bundles = support_bundles
+        self.extra_files = extra_files
+        self.tests = tests
+
+class DoxygenParameters:
+    def __init__(self, release_dox=False, dev_dox=False, logo=None):
+        self.release_dox = release_dox
+        self.dev_dox = dev_dox
+        self.logo = logo
+
 # A class to keep the current set of CIG codes and related information for use in backend operations
 class CodeDB:
     support_libs = {
@@ -46,25 +59,17 @@ class CodeDB:
         self.repo_type = {}
         self.release_src = {}
         self.release_version = {}
-        self.dev_doxygen = {}
-        self.release_doxygen = {}
-        self.batlab_platforms = {}
-        self.batlab_extra_files = {}
-        self.batlab_support_bundles = {}
-        self.batlab_tests = {}
+        self.doxygen_params = {}
+        self.batlab_params = {}
 
-    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, dev_doxygen, release_doxygen, batlab_platforms=[], batlab_support_bundles=[], batlab_extra_files=[], batlab_tests=[]):
+    def register(self, short_name, full_name, repo_url, repo_type, release_src, release_version, doxygen_params, batlab_params):
         self.full_name[short_name] = full_name
         self.repo_url[short_name] = repo_url
         self.repo_type[short_name] = repo_type
         self.release_src[short_name] = release_src
         self.release_version[short_name] = release_version
-        self.dev_doxygen[short_name] = dev_doxygen
-        self.release_doxygen[short_name] = release_doxygen
-        self.batlab_platforms[short_name] = batlab_platforms
-        self.batlab_support_bundles[short_name] = batlab_support_bundles
-        self.batlab_extra_files[short_name] = batlab_extra_files
-        self.batlab_tests[short_name] = batlab_tests
+        self.doxygen_params[short_name] = doxygen_params
+        self.batlab_params[short_name] = batlab_params
 
     def codes(self):
         return self.repo_url.keys()
@@ -72,17 +77,8 @@ class CodeDB:
     def code_full_names(self):
         return [self.full_name[x] for x in self.full_name]
 
-    def code_batlab_release(self, code_name):
-        return self.release_batlab[code_name]
-
     def support_lib_scripts(self, bundle):
         return [self.support_libs[lib][1] for lib in self.bundles[bundle]]
-
-    def code_doxygen_release(self, code_name):
-        return self.release_doxygen[code_name]
-
-    def code_doxygen_dev(self, code_name):
-        return self.dev_doxygen[code_name]
 
     def check_url(self, url):
         for code_name in self.repo_url:
@@ -102,8 +98,7 @@ code_db = CodeDB()
 # repo_type: The source control system for the repository, one of svn, hg, or git
 # release_src: The tarball containing the source of the release version, used to generate doxygen docs
 # release_version: The version number of the released source, used to generate doxygen docs
-# dev_doxygen: Whether to create doxygen docs based on the development repository
-# release_doxygen: Whether to create doxygen docs based on the release tarball
+# doxygen_params: Doxygen related parameters for the code (see DoxygenParameters class)
 ###############################
 
 ###############################
@@ -115,10 +110,8 @@ code_db.register(short_name="pylith",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/pylith/pylith-1.8.0.tgz",
                  release_version="1.8.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(support_bundles=["openmpi"]),
                  )
 
 code_db.register(short_name="relax",
@@ -127,11 +120,12 @@ code_db.register(short_name="relax",
                  repo_type="hg",
                  release_src="http://geodynamics.org/cig/software/relax/Relax-1_0_4.tgz",
                  release_version="1.0.4",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["proj_netcdf_gmt", "fftw"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["proj_netcdf_gmt", "fftw"],
+                     tests=["null"]
+                     ),
                  )
 
 code_db.register(short_name="selen",
@@ -140,12 +134,13 @@ code_db.register(short_name="selen",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/selen/SELEN_2.9.10.4.tar.gz",
                  release_version="2.9.10.4",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_extra_files=["fast_config.dat"],
-                 batlab_support_bundles=["proj_netcdf_gmt"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     extra_files=["fast_config.dat"],
+                     support_bundles=["proj_netcdf_gmt"],
+                     tests=["null"]
+                     ),
                  )
 
 code_db.register(short_name="lithomop",
@@ -154,9 +149,8 @@ code_db.register(short_name="lithomop",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/lithomop/lithomop3d-0.7.2.tar.gz",
                  release_version="0.7.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 #######################
@@ -170,9 +164,8 @@ code_db.register(short_name="gale",
                  repo_type="hg",
                  release_src="http://geodynamics.org/cig/software/gale/Gale-2_0_1.tgz",
                  release_version="2.0.1",
-                 dev_doxygen=False,
-                 release_doxygen=False,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="plasti",
@@ -181,10 +174,11 @@ code_db.register(short_name="plasti",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/plasti/plasti-1.0.0.tar.gz",
                  release_version="1.0.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     tests=["null"]
+                     ),
                  )
 
 code_db.register(short_name="snac",
@@ -193,9 +187,8 @@ code_db.register(short_name="snac",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/snac/SNAC-1.2.0.tar.gz",
                  release_version="1.2.0",
-                 dev_doxygen=False,
-                 release_doxygen=False,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 #####################
@@ -207,9 +200,8 @@ code_db.register(short_name="aspect",
                  repo_type="svn",
                  release_src="http://aspect.dealii.org/download/aspect-0.3.tar.gz",
                  release_version="0.3",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="citcomcu",
@@ -218,11 +210,12 @@ code_db.register(short_name="citcomcu",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/citcomcu/CitcomCU-1.0.3.tar.gz",
                  release_version="1.0.3",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi"],
+                     tests=["null"]
+                     ),
                  )
 
 code_db.register(short_name="citcoms",
@@ -231,12 +224,13 @@ code_db.register(short_name="citcoms",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/citcoms/CitcomS-3.2.0.tar.gz",
                  release_version="3.2.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
-                 batlab_tests=["null"],
-                 #batlab_tests=["regional1proc"]
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi"],
+                     tests=["null"],
+                     #tests=["regional1proc"]
+                     ),
                  )
 
 code_db.register(short_name="conman",
@@ -245,9 +239,8 @@ code_db.register(short_name="conman",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz",
                  release_version="2.0.0",
-                 dev_doxygen=True,
-                 release_doxygen=False,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="ellipsis3d",
@@ -256,11 +249,12 @@ code_db.register(short_name="ellipsis3d",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/ellipsis3d/Ellipsis3D-1.0.2.tar.gz",
                  release_version="1.0.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_tests=["null"],
-                 #batlab_tests=["chemical_plume", "iso-test", "oblique_subduction", "plate_flex", "two_layered_crustal_extension"]
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     tests=["null"],
+                     #tests=["chemical_plume", "iso-test", "oblique_subduction", "plate_flex", "two_layered_crustal_extension"]
+                     ),
                  )
 
 code_db.register(short_name="hc",
@@ -269,11 +263,12 @@ code_db.register(short_name="hc",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/hc/HC-1_0.tgz",
                  release_version="1.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["proj_netcdf_gmt"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["proj_netcdf_gmt"],
+                     tests=["null"],
+                     ),
                  )
 
 ##############
@@ -285,11 +280,12 @@ code_db.register(short_name="specfem3d",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d/SPECFEM3D_Cartesian_V2.0.2.tar.gz",
                  release_version="2.0.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi"],
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="specfem3d-globe",
@@ -298,11 +294,12 @@ code_db.register(short_name="specfem3d-globe",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d-globe/SPECFEM3D_GLOBE_V5.1.5.tar.gz",
                  release_version="5.1.5",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi"],
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="specfem3d-geotech",
@@ -311,11 +308,12 @@ code_db.register(short_name="specfem3d-geotech",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem3d-geotech/SPECFEM3D_GEOTECH_V1.1b.tar.gz",
                  release_version="1.1b",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi", "cmake"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi", "cmake"],
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="specfem2d",
@@ -324,12 +322,12 @@ code_db.register(short_name="specfem2d",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem2d/SPECFEM2D-7.0.0.tar.gz",
                  release_version="7.0.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_extra_files=["baseline.tar.gz", "check_diff.py"],
-                 batlab_tests=["null"],
-                 #batlab_tests=["basic"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     extra_files=["baseline.tar.gz", "check_diff.py"],
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="specfem1d",
@@ -338,12 +336,12 @@ code_db.register(short_name="specfem1d",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/specfem1d/SPECFEM1D-1.0.4.tar.gz",
                  release_version="1.0.4",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_extra_files=["baseline.tar.gz", "check_diff.py"],
-                 #batlab_tests=["basic"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     extra_files=["baseline.tar.gz", "check_diff.py"],
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="mineos",
@@ -352,11 +350,12 @@ code_db.register(short_name="mineos",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz",
                  release_version="1.0.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_extra_files=["check_diff.py"],
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     extra_files=["check_diff.py"],
+                     platforms=standard_batlab_platforms,
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="flexwin",
@@ -365,9 +364,8 @@ code_db.register(short_name="flexwin",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/flexwin/FLEXWIN-1.0.1.tar.gz",
                  release_version="1.0.1",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="seismic_cpml",
@@ -376,11 +374,12 @@ code_db.register(short_name="seismic_cpml",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/seismic_cpml/SEISMIC_CPML_1.2.tar.gz",
                  release_version="1.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_support_bundles=["openmpi"],
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     support_bundles=["openmpi"],
+                     tests=["null"],
+                     ),
                  )
 
 #############
@@ -392,10 +391,11 @@ code_db.register(short_name="mag",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz",
                  release_version="1.0.2",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 batlab_platforms=standard_batlab_platforms,
-                 batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(
+                     platforms=standard_batlab_platforms,
+                     tests=["null"],
+                     ),
                  )
 
 code_db.register(short_name="calypso",
@@ -404,10 +404,8 @@ code_db.register(short_name="calypso",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/calypso/calypso-1.0.0.tar.gz",
                  release_version="1.0.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=standard_batlab_platforms,
-                 #batlab_tests=["null"],
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 #########################
@@ -419,9 +417,8 @@ code_db.register(short_name="cigma",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/cigma/cigma-1.0.0.tar.gz",
                  release_version="1.0.0",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="exchanger",
@@ -430,9 +427,8 @@ code_db.register(short_name="exchanger",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/exchanger/Exchanger-1.0.1.tar.gz",
                  release_version="1.0.1",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 code_db.register(short_name="pythia",
@@ -441,9 +437,8 @@ code_db.register(short_name="pythia",
                  repo_type="svn",
                  release_src="http://geodynamics.org/cig/software/pythia/pythia-0.8.1.15.tar.gz",
                  release_version="0.8.1.15",
-                 dev_doxygen=True,
-                 release_doxygen=True,
-                 #batlab_platforms=test_batlab_platforms
+                 doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
+                 batlab_params=BatlabParameters(),
                  )
 
 # Provide a way for other programs (especially non-Python programs) to query the code_db
