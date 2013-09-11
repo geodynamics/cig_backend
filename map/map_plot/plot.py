@@ -11,6 +11,12 @@ import random
 import datetime
 import tempfile
 
+# IP numbers to filter
+filter_ips = [
+        "2155411043", # shell.geodynamics.org, automatically downloads packages for documentation
+        "1368427042", # crawl-81-144-138-34.wotbox.com, crawler
+        ]
+
 def find_ip_lat_lon(db_conn, ip_num):
     curs = db_conn.cursor()
     curs.execute("SELECT location.latitude, location.longitude FROM location, block WHERE block.loc_id = location.loc_id AND ? BETWEEN block.start_ip AND block.end_ip limit 1;", (ip_num,))
@@ -33,8 +39,9 @@ def lookup_hits(db_name, package_name, start_time, end_time):
     db_conn = sqlite3.connect(db_name)
     curs = db_conn.cursor()
     result = []
-    if package_name == "comprehensive": curs.execute("SELECT hit.ip_num FROM hit WHERE hit.time >= ? AND hit.time <= ?;", (start_time, end_time,))
-    else: curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (start_time, end_time, package_name,))
+    ip_filter_clause = ",".join(filter_ips)
+    if package_name == "comprehensive": curs.execute("SELECT hit.ip_num FROM hit WHERE hit.time >= ? AND hit.time <= ? AND hit.ip_num NOT IN (?);", (start_time, end_time, ip_filter_clause,))
+    else: curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ? AND hit.ip_num NOT IN (?);", (start_time, end_time, package_name, ip_filter_clause,))
     while True:
         next_val = curs.fetchone()
         if next_val is None: break
@@ -122,15 +129,15 @@ def generate_plot(hit_db_name, loc_db_name, output_dir, code_name, start_time, e
     ip_nums = lookup_hits(hit_db_name, code_name, start_time, end_time)
     print("Found", len(ip_nums), "hits associated with package", code_name)
     if len(ip_nums) == 0:
-        print("Quitting...")
-        exit()
+        print("Cannot generate plot for", code_name)
+        return
 
     # Find the corresponding lat/lon points
     locs = ip_nums_to_locations(loc_db_name, ip_nums)
     print("Checked", len(ip_nums), "IPs, found", len(locs), "locations.")
     if len(locs) == 0:
-        print("Quitting...")
-        exit()
+        print("Cannot generate plot for", code_name)
+        return
 
     # Bin the locations into a grid
     loc_grid = bin_locs_into_grid(locs, 0)
