@@ -95,7 +95,7 @@ code_db = CodeDB()
 # name: A unique short non-capitalized non-whitespace name for each code, must correspond to directory name
 # full_name: The full name of the code - may include whitespace, caps, etc
 # repo_url: The URL to the development repository of the code, used to generate doxygen docs
-# repo_type: The source control system for the repository, one of svn, hg, or git
+# repo_type: The source control system for the repository, either svn or git
 # release_src: The tarball containing the source of the release version, used to generate doxygen docs
 # release_version: The version number of the released source, used to generate doxygen docs
 # doxygen_params: Doxygen related parameters for the code (see DoxygenParameters class)
@@ -106,18 +106,18 @@ code_db = CodeDB()
 ###############################
 code_db.register(short_name="pylith",
                  full_name="PyLith",
-                 repo_url="http://geodynamics.org/svn/cig/short/3D/PyLith/trunk",
-                 repo_type="svn",
-                 release_src="http://geodynamics.org/cig/software/pylith/pylith-1.8.0.tgz",
-                 release_version="1.8.0",
+                 repo_url="https://github.com/geodynamics/pylith.git",
+                 repo_type="git",
+                 release_src="http://geodynamics.org/cig/software/pylith/pylith-1.9.0.tgz",
+                 release_version="1.9.0",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
                  batlab_params=BatlabParameters(support_bundles=["openmpi"]),
                  )
 
 code_db.register(short_name="relax",
                  full_name="RELAX",
-                 repo_url="http://geodynamics.org/hg/short/3D/relax",
-                 repo_type="hg",
+                 repo_url="https://github.com/geodynamics/relax.git",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/relax/Relax-1_0_4.tgz",
                  release_version="1.0.4",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
@@ -130,7 +130,7 @@ code_db.register(short_name="relax",
 
 code_db.register(short_name="selen",
                  full_name="SELEN",
-                 repo_url="https://github.com/geodynamics/selen",
+                 repo_url="https://github.com/geodynamics/selen.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/selen/SELEN_2.9.10.4.tar.gz",
                  release_version="2.9.10.4",
@@ -145,8 +145,8 @@ code_db.register(short_name="selen",
 
 code_db.register(short_name="lithomop",
                  full_name="LithoMop",
-                 repo_url="http://geodynamics.org/svn/cig/short/3D/lithomop/trunk/",
-                 repo_type="svn",
+                 repo_url="https://github.com/geodynamics/lithomop.git",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/lithomop/lithomop3d-0.7.2.tar.gz",
                  release_version="0.7.2",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
@@ -170,7 +170,7 @@ code_db.register(short_name="gale",
 
 code_db.register(short_name="plasti",
                  full_name="Plasti",
-                 repo_url="https://github.com/geodynamics/plasti",
+                 repo_url="https://github.com/geodynamics/plasti.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/plasti/plasti-1.0.0.tar.gz",
                  release_version="1.0.0",
@@ -183,8 +183,8 @@ code_db.register(short_name="plasti",
 
 code_db.register(short_name="snac",
                  full_name="SNAC",
-                 repo_url="http://geodynamics.org/svn/cig/long/3D/SNAC/trunk",
-                 repo_type="svn",
+                 repo_url="https://github.com/geodynamics/snac.git",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/snac/SNAC-1.2.0.tar.gz",
                  release_version="1.2.0",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
@@ -235,7 +235,7 @@ code_db.register(short_name="citcoms",
 
 code_db.register(short_name="conman",
                  full_name="ConMan",
-                 repo_url="https://github.com/geodynamics/conman",
+                 repo_url="https://github.com/geodynamics/conman.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/conman/ConMan-2.0.0.tar.gz",
                  release_version="2.0.0",
@@ -245,7 +245,7 @@ code_db.register(short_name="conman",
 
 code_db.register(short_name="ellipsis3d",
                  full_name="Ellipsis3D",
-                 repo_url="https://github.com/geodynamics/ellipsis3d",
+                 repo_url="https://github.com/geodynamics/ellipsis3d.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/ellipsis3d/Ellipsis3D-1.0.2.tar.gz",
                  release_version="1.0.2",
@@ -346,7 +346,7 @@ code_db.register(short_name="specfem1d",
 
 code_db.register(short_name="mineos",
                  full_name="Mineos",
-                 repo_url="https://github.com/geodynamics/mineos",
+                 repo_url="https://github.com/geodynamics/mineos.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mineos/mineos-1.0.2.tgz",
                  release_version="1.0.2",
@@ -387,7 +387,7 @@ code_db.register(short_name="seismic_cpml",
 #############
 code_db.register(short_name="mag",
                  full_name="MAG",
-                 repo_url="https://github.com/geodynamics/mag",
+                 repo_url="https://github.com/geodynamics/mag.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/mag/MAG-1.0.2.tar.gz",
                  release_version="1.0.2",
@@ -400,7 +400,7 @@ code_db.register(short_name="mag",
 
 code_db.register(short_name="calypso",
                  full_name="Calypso",
-                 repo_url="https://github.com/geodynamics/calypso",
+                 repo_url="https://github.com/geodynamics/calypso.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/calypso/calypso-1.0.0.tar.gz",
                  release_version="1.0.0",
@@ -413,7 +413,7 @@ code_db.register(short_name="calypso",
 #########################
 code_db.register(short_name="cigma",
                  full_name="Cigma",
-                 repo_url="https://github.com/geodynamics/cigma",
+                 repo_url="https://github.com/geodynamics/cigma.git",
                  repo_type="git",
                  release_src="http://geodynamics.org/cig/software/cigma/cigma-1.0.0.tar.gz",
                  release_version="1.0.0",
@@ -433,13 +433,67 @@ code_db.register(short_name="exchanger",
 
 code_db.register(short_name="pythia",
                  full_name="Pythia",
-                 repo_url="http://geodynamics.org/svn/cig/cs/pythia/trunk",
-                 repo_type="svn",
+                 repo_url="https://github.com/geodynamics/pythia.git",
+                 repo_type="git",
                  release_src="http://geodynamics.org/cig/software/pythia/pythia-0.8.1.15.tar.gz",
                  release_version="0.8.1.15",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
                  batlab_params=BatlabParameters(),
                  )
+
+###############################
+# Miscellaneous Support Codes #
+###############################
+code_db.register(short_name="autoconf_cig",
+                 full_name="CIG Autoconf Scripts",
+                 repo_url="https://github.com/geodynamics/autoconf_cig.git",
+                 repo_type="git",
+                 release_src="",
+                 release_version="",
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
+                 )
+
+code_db.register(short_name="spatialdata",
+                 full_name="SpatialData",
+                 repo_url="https://github.com/geodynamics/spatialdata.git",
+                 repo_type="git",
+                 release_src="",
+                 release_version="",
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
+                 )
+
+code_db.register(short_name="nemesis",
+                 full_name="Nemesis",
+                 repo_url="https://github.com/geodynamics/nemesis.git",
+                 repo_type="git",
+                 release_src="",
+                 release_version="",
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
+                 )
+
+code_db.register(short_name="pylith_benchmarks",
+                 full_name="PyLith Benchmarks",
+                 repo_url="https://github.com/geodynamics/pylith_benchmarks.git",
+                 repo_type="git",
+                 release_src="",
+                 release_version="",
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
+                 )
+
+code_db.register(short_name="pylith_installer",
+                 full_name="PyLith Installer",
+                 repo_url="https://github.com/geodynamics/pylith_installer.git",
+                 repo_type="git",
+                 release_src="",
+                 release_version="",
+                 doxygen_params=DoxygenParameters(release_dox=False, dev_dox=False),
+                 batlab_params=BatlabParameters(),
+                 )
+
 
 # Provide a way for other programs (especially non-Python programs) to query the code_db
 if __name__ == "__main__":
