@@ -43,12 +43,10 @@ def main():
                 svn_info = subprocess.check_output("svn info {repo_url}".format(**cmd_dict).split())
                 rev_ind = svn_info.find("Last Changed Rev: ")+len("Last Changed Rev: ")
                 cmd_dict["repo_version"] = svn_info[rev_ind:].split()[0]
-            elif code_db.repo_type[code_name] == "hg":
-                cmd_dict["repo_version"] = subprocess.check_output("hg id {repo_url}".format(**cmd_dict).split()).split()[0]
             elif code_db.repo_type[code_name] == "git":
                 cmd_dict["repo_version"] = subprocess.check_output("git ls-remote {repo_url}".format(**cmd_dict).split()).split()[0]
             else:
-                print("Unknown repository type for", code_name, "(must be svn, hg or git)")
+                print("Unknown repository type for", code_name, "(must be svn or git)")
                 exit(1)
             sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh {repo_type} {repo_url} {repo_version} \\\"{full_name}\\\" {code_name}\" &".format(**cmd_dict)
             os.system(sys_cmd)

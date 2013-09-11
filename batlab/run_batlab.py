@@ -41,12 +41,6 @@ def create_source_input_file(cig_code, tmp_dir, use_repo, revision):
             code_url = code_db.repo_url[cig_code]
             if revision: code_url += " -r "+revision
             print("url =", code_url, cig_code, file=src_input_desc)
-        elif code_db.repo_type[cig_code] is "hg":
-            print("method = hg", file=src_input_desc)
-            code_url = code_db.repo_url[cig_code]
-            if revision: code_url += "#"+revision
-            print("url =", code_url, file=src_input_desc)
-            print("path =", cig_code, file=src_input_desc)
         elif code_db.repo_type[cig_code] is "git":
             print("method = git", file=src_input_desc)
             print("git_repo =", code_db.repo_url[cig_code], file=src_input_desc)
