@@ -13,6 +13,10 @@ map/map_plot/.gmtcommands4
 
 doxygen/doxygen
 
+git/git_backend.log
+
+git/trigger.log
+
 queues
 
 repos
