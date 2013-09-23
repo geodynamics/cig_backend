@@ -1,0 +1,267 @@
+Commands to find big blobs
+git rev-list --objects --all | sort -k 2 > allfileshas.txt
+git gc && git verify-pack -v .git/objects/pack/pack-*.idx | egrep "^\w+ blob\W+[0-9]+ [0-9]+ [0-9]+$" | sort -k 3 -n -r > bigobjects.txt
+for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt) $(grep $SHA allfileshas.txt) | awk '{print $3,$7}' >> bigtosmall.txt; done;
+
+
+
+------------------------------------------------------------------------------------------------
+
+Gale (DONE)
+git clone git://repo.or.cz/fast-export.git
+hg clone http://geodynamics.org/hg/long/3D/gale old_gale
+git init gale
+cd gale
+../fast-export/hg-fast-export.sh -r ../old_gale/
+git checkout HEAD
+cp doc/gale_cover.xcf doc/old_gale_cover.xcf
+cp doc/gale_cover.png doc/old_gale_cover.png
+../../gitscrub.sh doc/gale.pdf doc/gale_cover.psd doc/gale_cover.xcf doc/gale_cover.pdf doc/gale_cover.png doc/images/Shortening_comparison.png doc/images/Geomod2008* doc/images/Paraview* doc/images/Geomod2008_wedge_setup.eps boost/status/expected_results.xml boost/libs/asio/doc/reference.qbk boost/*.pdf boost/*html boost/*exe
+mv doc/old_gale_cover.xcf doc/gale_cover.xcf
+mv doc/old_gale_cover.png doc/gale_cover.png
+git add doc/*
+git commit -m "Readd covers"
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/gale.git
+(should be ~59 MB in repo form)
+
+------------------------------------------------------------------------------------------------
+
+SNAC (DONE)
+mkdir snac
+cd snac
+svn2git http://geodynamics.org/svn/cig/long/3D/SNAC/
+(no scrub)
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/snac.git
+
+------------------------------------------------------------------------------------------------
+
+Relax (DONE)
+git clone git://repo.or.cz/fast-export.git
+hg clone http://geodynamics.org/hg/short/3D/relax old_relax
+git init relax
+cd relax
+../fast-export/hg-fast-export.sh -r ../old_relax/
+git checkout HEAD
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/relax.git
+
+------------------------------------------------------------------------------------------------
+
+LithoMop (DONE)
+mkdir lithomop
+cd lithomop
+svn2git http://geodynamics.org/svn/cig/short/3D/lithomop
+(no scrub)
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit
+git push --mirror https://github.com/geodynamics/lithomop.git
+
+------------------------------------------------------------------------------------------------
+
+Autoconf (DONE)
+mkdir autoconf_cig
+cd autoconf_cig
+svn2git http://geodynamics.org/svn/cig/cs/autoconf/
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/autoconf_cig.git
+
+------------------------------------------------------------------------------------------------
+
+Nemesis (DONE)
+mkdir nemesis
+cd nemesis
+svn2git http://geodynamics.org/svn/cig/cs/nemesis/
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/nemesis.git
+
+------------------------------------------------------------------------------------------------
+
+Pythia (DONE)
+mkdir pythia
+cd pythia
+svn2git http://geodynamics.org/svn/cig/cs/pythia/
+../../gitscrub.sh cig/web/seismo/stations/sql/station_comma_list.asc opal/conf/*
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit
+git push --mirror https://github.com/geodynamics/pythia.git
+
+------------------------------------------------------------------------------------------------
+
+Pylith Benchmark Repo (DONE)
+mkdir pylith_benchmarks
+cd pylith_benchmarks
+svn2git http://geodynamics.org/svn/cig/short/3D/PyLith/benchmarks/
+../../gitscrub.sh quasistatic/reversenog/meshes/reverseslip_hex8_0250m.exo.gz quasistatic/strikeslipnog/meshes/strikeslip_hex8_0250m.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/tet4_graded_4km.inp.gz dynamic/performance/halfspace_strikeslip/meshes/halfspace_tet4_lagrit.gmv.gz dynamic/scecdynrup/tpv210-2d/tri3_100m_refine.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/tet4_graded_4km.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/tet4_4km.exo.gz
+dynamic/scecdynrup/tpv205-2d/tri3_100m.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/spbm_tet4_graded_20km.inp.gz dynamic/scecdynrup/tpv102/friction.spatialdb quasistatic/sceccrustdeform/savageprescott/meshes/spbm_tet4_unif_20km.inp.gz quasistatic/sceccrustdeform/savageprescott/meshes/spbm_tet4_graded_20km.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/tet4_graded_6.7km.exo.gz
+quasistatic/sceccrustdeform/savageprescott/meshes/spbm_tet4_unif_20km.exo.gz dynamic/scecdynrup/tpv205-2d/tri3_100m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_100m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_100m_refine.exo.gz dynamic/scecdynrup/tpv10-2d/tri3_100m.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_100m.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_100m.exo.gz dynamic/scecdynrup/tpv205-2d/quad4_100m.exo.gz
+dynamic/scecdynrup/tpv210-2d/quad4_100m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_100m_refine.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/spbm_hex8_graded_20km.inp.gz quasistatic/sceccrustdeform/savageprescott/meshes/hex8_refined_20km.inp.gz quasistatic/sceccrustdeform/savageprescott/analytical/savpres_vel.csv dynamic/performance/halfspace_strikeslip/meshes/halfspace_hex8_cubit.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_200m_refine.exo.gz
+dynamic/scecdynrup/tpv205-2d/tri3_100m.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_100m_refine.exo.gz quasistatic/sceccrustdeform/savageprescott/utils/savpres_vel.csv quasistatic/sceccrustdeform/savageprescott/analytical/savpres_displ.csv quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ.csv dynamic/scecdynrup/tpv205-2d/tri3_200m.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/spbm_hex8_unif_20km.inp.gz
+quasistatic/sceccrustdeform/savageprescott/meshes/hex8_refined_20km.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_100m.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_100m.exo.gz dynamic/scecdynrup/tpv10-2d/quad4_100m.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/hex8_refined_20km.exo.gz quasistatic/sceccrustdeform/savageprescott/meshes/spbm_hex8_graded_20km.exo.gz quasistatic/reversenog/meshes/reverseslip_hex8_0500m.exo.gz dynamic/scecdynrup/tpv10-2d/tri3_100m.exo.gz
+dynamic/scecdynrup/tpv10-2d/tri3_100m.exo.gz dynamic/scecdynrup/tpv205-2d/tri3_200m_refine.exo.gz dynamic/scecdynrup/tpv205-2d/quad4_100m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_200m_refine.exo.gz quasistatic/strikeslipnog/meshes/strikeslip_hex8_0500m.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_200m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_200m_refine.exo.gz static/performance/solvertest/meshes/tet4.exo dynamic/scecdynrup/tpv10-2d/tri3_100m.exo.gz
+quasistatic/sceccrustdeform/savageprescott/analytical/analytic_disp.txt quasistatic/sceccrustdeform/savageprescott/analytical/analytic_vel.txt quasistatic/sceccrustdeform/savageprescott/meshes/spbm_hex8_unif_20km.exo.gz dynamic/scecdynrup/tpv205/test.exo.gz dynamic/scecdynrup/tpv10-2d/quad4_100m.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_200m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_200m_refine.exo.gz dynamic/scecdynrup/tpv10-2d/quad4_100m.exo.gz
+dynamic/scecdynrup/tpv210-2d/tri3_200m.exo.gz dynamic/scecdynrup/tpv210-2d/tri3_200m.exo.gz dynamic/scecdynrup/tpv205-2d/TPV5_2D.exo dynamic/scecdynrup/tpv205-2d/quad4_200m.exo.gz dynamic/scecdynrup/tpv10-2d/quad4_100m.exo.gz dynamic/scecdynrup/tpv205-2d/tri3_200m.exo.gz dynamic/scecdynrup/tpv205-2d/quad4_200m_refine.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_200m.exo.gz dynamic/scecdynrup/tpv210-2d/quad4_200m.exo.gz quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c1.txt
+quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c3.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c4.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c0.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c5.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c7.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c6.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c9.txt
+quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c8.txt quasistatic/sceccrustdeform/savageprescott/utils/savpres_displ_c2.txt dynamic/scecdynrup/tpv205-2d/quad4_200m.exo.gz quasistatic/strikeslipnog/parameters/fixeddisp_analytic_xneg.spatialdb.gz quasistatic/strikeslipnog/parameters/fixeddisp_analytic_xpos.spatialdb.gz quasistatic/strikeslipnog/parameters/fixeddisp_analytic_ypos.spatialdb.gz
+quasistatic/strikeslipnog/parameters/fixeddisp_analytic_zneg.spatialdb.gz quasistatic/reversenog/meshes/reverseslip_hex8_1000m.exo.gz quasistatic/strikeslipnog/meshes/strikeslip_hex8_1000m.exo.gz quasistatic/sceccrustdeform/savageprescott/results/spbm_hex8_graded_20km/spbm_hex8_graded_20km-groundsurf.txt quasistatic/sceccrustdeform/savageprescott/results/spbm_tet4_graded_20km/spbm_tet4_graded_20km-groundsurf.txt
+quasistatic/sceccrustdeform/savageprescott/results/spbm_tet4_unif_20km/spbm_tet4_unif_20km-groundsurf.txt quasistatic/sceccrustdeform/savageprescott/results/spbm_hex8_unif_20km/spbm_hex8_unif_20km-groundsurf.txt quasistatic/sceccrustdeform/savageprescott/results/spbm_tet4_unif_20km/spbm_tet4_unif_20km-groundsurf-diff.txt quasistatic/sceccrustdeform/savageprescott/results/spbm_hex8_graded_20km/spbm_hex8_graded_20km-groundsurf-diff.txt
+quasistatic/sceccrustdeform/savageprescott/results/spbm_hex8_unif_20km/spbm_hex8_unif_20km-groundsurf-diff.txt quasistatic/sceccrustdeform/savageprescott/results/spbm_tet4_graded_20km/spbm_tet4_graded_20km-groundsurf-diff.txt static/nondimensional/slice_quad4.exo.gz static/nondimensional/slice_quad4_norm.exo.gz 
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/pylith_benchmarks.git
+
+------------------------------------------------------------------------------------------------
+
+Spatialdata (DONE)
+mkdir spatialdata
+cd spatialdata
+svn2git http://geodynamics.org/svn/cig/cs/spatialdata/
+../../gitscrub.sh pkgs/geocoords/lib/data/corrcoef.dat pkgs/geocoords/lib/data/egm96.dat
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/spatialdata.git
+
+------------------------------------------------------------------------------------------------
+
+Pylith Installer (DONE)
+mkdir pylith_installer
+cd pylith_installer
+svn2git http://geodynamics.org/svn/cig/short/3D/PyLith/pylith_installer/
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit
+git push --mirror https://github.com/geodynamics/pylith_installer.git
+
+------------------------------------------------------------------------------------------------
+
+Pylith (DONE)
+mkdir pylith
+cd pylith
+svn2git http://geodynamics.org/svn/cig/short/3D/PyLith
+../../gitscrub.sh doc/userguide/pylith_cover.psd examples/meshing/surfaces/nurbs/dem/ruapehu_topo.sab doc/userguide/pylith_book-1.1.pdf playpen/friction/SCEC_benchmarks/SCEC2004.exo doc/userguide/pylith_cover.pdf doc/userguide/tutorials/twotri3/figs/sheardisp.eps doc/userguide/tutorials/reversenog/figs/xdisp_t10.eps doc/userguide/tutorials/splitcube/figs/ydisp_t0.eps doc/userguide/pylith_cover.pdf doc/userguide/pylith_book-1.0.pdf doc/userguide/pylith_book-0.82.pdf
+doc/userguide/pylith_book.pdf examples/meshing/surfaces/nurbs/contours/hikurangi_sub_geom.sab doc/presentations/pylith1.3/figs/example-freed.pdf.BAK pylith3d/examples/quadtet/bm1a/bm1a-old.coord doc/userguide/materials/figs/pylith-materials.ai tutorials/reversenog/archive/bmrsnog.netgen pylith3d/examples/quadtet/bm1a/bm1a.connect pylith3d/examples/bm1/bm1.connect pylith3d/examples/lintet/bm5/bm5.connect tutorials/reversenog/archive/bmrsnog.connect
+pylith3d/examples/quadtet/bm1a/bm1a-old.connect doc/presentations/pylith1.3/figs/example-buck.pdf.BAK examples/meshing/surfaces/nurbs/contours/hikurangi_shiftrot_fill.txt tutorials/reversenog/archive/bmrsnog.1.fbc pylith3d/examples/lintet/bm1a/bm1a.connect doc/userguide/materials/figs/ml*
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git submodule add https://github.com/geodynamics/autoconf_cig.git templates/materials/m4
+git submodule add https://github.com/geodynamics/autoconf_cig.git templates/friction/m4
+git submodule add https://github.com/geodynamics/autoconf_cig.git playpen/memcheck/m4
+git commit
+git push --mirror https://github.com/geodynamics/pylith.git
+
+------------------------------------------------------------------------------------------------
+
+MAG (DONE)
+mkdir mag
+cd mag
+svn2git http://geodynamics.org/svn/cig/geodyn/3D/MAG
+# Save the current cover, scrub the old ones, and retrieve the current
+cd doc
+cp mag-cover.pdf old_mag-cover.pdf
+cp mag_book.pdf old_mag_book.pdf
+cp mag-cover.psd old_mag-cover.psd
+cd ..
+../../gitscrub.sh doc/*.pdf doc/*.psd bench-data/data* rev-data/*rev*
+cd doc
+mv old_mag-cover.pdf mag-cover.pdf
+mv old_mag_book.pdf mag_book.pdf
+mv old_mag-cover.psd mag-cover.psd
+cd ..
+git tag
+git branch
+(make changes to notes and README)
+git push --mirror https://github.com/geodynamics/mag.git
+
+Add to bench-data/notes
+NOTE: the data-bench folders have been moved. They are now available at:
+
+http://geodynamics.org/cig/software/mag/data_bench.tar.gz
+
+Add to rev-data/README
+The contents of this directory are now available at:
+
+http://geodynamics.org/cig/software/mag/rev-data.tar.gz
+
+------------------------------------------------------------------------------------------------
+
+Mineos (DONE)
+mkdir mineos
+cd mineos
+svn2git http://geodynamics.org/svn/cig/seismo/1D/mineos
+../../gitscrub.sh doc/sio227b.tar.gz doc/mineos_cover.psd doc/mineos.pdf doc/UserManual.pdf DEMO/DEMO.tar.gz DEMO/DEMO1 DEMO/DEMO2 DEMO/DEMO3 LIST.STA
+git tag
+git branch
+(make changes to README files)
+git commit DEMO/README doc/README
+git push --mirror https://github.com/geodynamics/mineos.git
+
+Add to DEMO/README
+The DEMO* directories have been removed from the repository and are now available at:
+ 
+http://geodynamics.org/cig/software/mineos/DEMO.tar.gz
+
+Add to doc/README
+This file is now available at the website:
+
+http://geodynamics.org/cig/software/mineos/sio227b.tar.gz
+
+------------------------------------------------------------------------------------------------
+
+Plasti (DONE)
+mkdir plasti
+cd plasti
+svn2git http://geodynamics.org/svn/cig/long/2D/plasti
+(no scrub)
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/plasti.git
+
+------------------------------------------------------------------------------------------------
+
+Cigma (DONE)
+mkdir cigma
+cd cigma
+svn2git http://geodynamics.org/svn/cig/cs/benchmark/cigma
+../../gitscrub.sh src/tests/strikeslip_tet4_0500m_t0.vtk src/tests/strikeslip_hex8_0500m_t0.vtk src/tests/strikeslip_tet4_0500m_t0.vtk.gz src/tests/strikeslip_hex8_0500m_t0.vtk.gz src/tests/strikeslip_tet4_1000m_t0.vtk.gz src/tests/strikeslip_hex8_1000m_t0.vtk.gz
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit
+git push --mirror https://github.com/geodynamics/cigma.git
+
+------------------------------------------------------------------------------------------------
+
+Conman (DONE)
+mkdir conman
+cd conman
+svn2git http://geodynamics.org/svn/cig/mc/2D/ConMan
+../../gitscrub.sh src.p/src.p.tar.gz src/temp.12 src/blankenbach
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/conman.git
+
+------------------------------------------------------------------------------------------------
+
+Ellipsis3D (DONE)
+mkdir ellipsis3d
+cd ellipsis3d
+svn2git http://geodynamics.org/svn/cig/mc/3D/ellipsis3d
+(no scrub)
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/ellipsis3d.git
+
+------------------------------------------------------------------------------------------------
+
