@@ -1,0 +1,50 @@
+DESCRIPTION OF GIT RELATED CODE
+
+Written by Eric Heien on September 23, 2013
+
+This directory contains files and submodules pertaining to the Git code
+repositories at CIG. There are three main purposes for the contents of this
+directory:
+
+1) provide history of the conversion from SVN to Git (svn_conversion folder)
+
+    In summer and fall of 2013 the CIG codes were moved from local SVN
+    repositories to Github. As part of this move certain large unused files
+    were removed from repository history to save space and some other minor
+    edits were made. The details of this process are in the file
+    conversion_process.txt. A simple script to permanently remove files from a
+    Git repository is in gitscrub.sh. The list of author remappings used in the
+    conversion process is in authors.txt.
+
+2) provide functionality for automated commit emails when changes are made to a
+repository (gitdub and git-notifier submodules, config.yml)
+
+    gitdub and git-notifier are submodules pointing to
+    https://github.com/mavam/gitdub and git://git.icir.org/git-notifier
+    respectively. These are used for commit email notification. The
+    configuration file for gitdub is config.yml. This is set up to send emails
+    to the cig-commit mailing list when there is a checkin to one of the Github
+    repositories.
+    
+    git-notifier is called from gitdub and should not need to be called by the
+    user. gitdub also keeps local copies of all repositories in the hidden
+    directory .gitdub - this is normal behavior. Gitdub is started hourly using
+    crontab in case the machine goes down. In case the system is moved to
+    another machine, gitdub has certain Ruby requirements specified in the
+    README.md file which must be installed.
+
+3) provide tools for mass manipulation of Github repositories (setup_github.py)
+
+    When new repositories are added the hook to report commits must be
+    installed. setup_github.py provides an easy way to ensure hooks are
+    installed on all repositories. To use this script you need an OAuth token
+    from Github. The calling format is as follows:
+
+    ./setup_github.py <oauth token> <cmd>
+
+    where cmd is either "check" (see which repositories have backend hooks
+    installed), "install" (install backend hooks for repositories without
+    hooks), or "trigger" (trigger the installed hooks for all repositories).
+    The trigger command is run periodically by crontab to ensure any commits
+    which occurred during backend downtime are eventaully reported.
+
