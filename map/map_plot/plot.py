@@ -3,7 +3,7 @@
 from __future__ import print_function
 import sys
 sys.path.append("../..")
-from cig_codes import code_db
+import cig_codes
 import math
 import os
 import sqlite3
@@ -164,11 +164,14 @@ def main():
 
     # For the command "all" generate maps for all codes listed in the code_db
     if PACKAGE_NAME == "all":
-        for code_name in code_db.codes():
+        for code_name in cig_codes.code_db.codes():
             generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, code_name, START_TIME, END_TIME)
     else:
         generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, PACKAGE_NAME, START_TIME, END_TIME)
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        cig_codes.send_cig_error_email("Map generation error", str(e))
 

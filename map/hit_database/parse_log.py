@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
+import sys
+sys.path.append("../..")
+import cig_codes
 import apachelog
 import glob
 import gzip
@@ -8,7 +11,6 @@ import sqlite3
 import datetime
 import time
 import socket
-import sys
 
 def ip_addr_to_ip_num(ip_addr):
     ip_split = ip_addr.split(".")
@@ -114,10 +116,15 @@ def main():
     logfile_path = sys.argv[2]
     conn = sqlite3.connect(db_name)
     max_time = get_max_time(conn)
+    log_file_list = glob.glob(logfile_path)
+    if len(log_file_list) == 0: raise Exception("No log files found in %s." % (logfile_path,))
     for logfile_name in glob.glob(logfile_path):
         read_log_file(conn, logfile_name, max_time)
     conn.close()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        cig_codes.send_cig_error_email("Map log parsing error", str(e))
 

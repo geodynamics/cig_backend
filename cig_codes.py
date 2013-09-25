@@ -2,6 +2,22 @@
 
 from __future__ import print_function
 import sys
+import smtplib
+from email.mime.text import MIMEText
+
+# Where to send emails when an error occurs
+CIG_ERROR_EMAIL = "emheien@ucdavis.edu"
+CIG_ERROR_EMAIL_SENDER = "backend@shell.geodynamics.org"
+
+def send_cig_error_email(subject, content):
+    msg = MIMEText(str(content))
+    msg['Subject'] = subject
+    msg['From'] = CIG_ERROR_EMAIL_SENDER
+    msg['To'] = CIG_ERROR_EMAIL
+    s = smtplib.SMTP('localhost')
+    #s.set_debuglevel(True)
+    s.sendmail(CIG_ERROR_EMAIL_SENDER, [CIG_ERROR_EMAIL], msg.as_string())
+    s.quit()
 
 #test_batlab_platforms = ["x86_64_Debian6"]
 test_batlab_platforms = ["x86_64_RedHat5"]
@@ -498,10 +514,16 @@ code_db.register(short_name="pylith_installer",
 # Provide a way for other programs (especially non-Python programs) to query the code_db
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("syntax:", sys.argv[0], "[--list]")
+        print("syntax:", sys.argv[0], "[--list | --email]")
         exit()
 
+    # Print a list of the CIG code names in the code_db
     if sys.argv[1] == "--list":
         for cig_code in code_db.full_name.keys():
             print(cig_code)
+
+    # Test the email sending functionality
+    if sys.argv[1] == "--email":
+        send_cig_error_email("Test email", "This is a test email")
+
 
