@@ -1,37 +1,87 @@
 DESCRIPTION OF BACKEND DATA
 
 Written by Eric Heien on Apr 15, 2013
+Updated Sep. 25, 2013
 
-This directory contains scripts and data related to the backend management of the
-CIG website. This includes things such as download hit records and map generation,
-bibliography list data and generation, automated documentation generation, and
-automated build testing for the CIG codes.
+This directory contains scripts and data related to the backend management of
+the CIG website. This includes things such as download hit records and map
+generation, bibliography list data and generation, automated documentation
+generation, and automated build testing for the CIG codes.
 
 Each directory contains a README file describing the contents and function in
 detail. Here is a brief overview of the directories:
 
+batlab/
+    Contains scripts, support files, and libraries to perform build and test
+    operations on CIG codes using the BaTLab system.
+    Relevant URL as of Sep 25, 2013
+    http://submit-1.batlab.org/cig/
+
 doxygen/
-    Contains scripts to generate doxygen based documentation of the different CIG
-    codes based either on released source or a repository checkout.  Relevant URL
-    as of Apr 15, 2013
-        http://geodynamics.org/~emheien/doxygen/
+    Contains scripts to generate doxygen based documentation of the different
+    CIG codes based either on released source or a repository checkout.
+    Relevant URL as of Sep 25, 2013
+    http://geodynamics.org/cig/doxygen/
+
+git/
+    Contains scripts and submodules related to the SVN to Git conversion in
+    2013, automated diff email for Git commits, and Github manipulation
+    scripts.
 
 map/
-    Contains databases, scripts and related files for tracking downloads of software
-    distributions from the website, and creating maps to display downloads.  Relevant
-    URL as of Apr 15, 2013
-	    http://geodynamics.org/~buildbot/maps/
+    Contains databases, scripts and related files for tracking downloads of
+    software distributions from the website, and creating maps to display
+    downloads.  Relevant URL as of Sep 25, 2013
+    http://geodynamics.org/cig/maps/
 
 queue/
-     Contains script to allow queueing of commands. This is primarily used for the
-     doxygen documentation where we want to avoid possible overwriting and
-     misordering.
+    Contains script to allow queueing of commands. This is primarily used for
+    the doxygen documentation where we want to avoid possible overwriting and
+    misordering.
 
 ref_list/
-    Contains databases and scripts to record references to papers which used CIG
-    codes, and generate a publicly viewable (and eventually searchable) web page
-    of these papers.  Relevant URL as of Apr 15, 2013
-	    http://geodynamics.org/cig/community/documents/reference
+    Contains databases and scripts to record references to papers which used
+    CIG codes, and generate a publicly viewable (and eventually searchable) web
+    page of these papers.  Relevant URL as of Sep 25, 2013
+    http://geodynamics.org/cig/community/documents/reference
 
-TODO: add BaTLab directory
+
+NOTES
+To ensure necessary processes are run periodically, several entries were
+installed into crontab. The commands are run from a specific directory to
+ensure relative file access is correct, particularly to cig_codes.py. These are
+described below:
+
+0 1 * * * cd /home/backend/cig_backend/map/hit_database ; /home/backend/cig_backend/map/hit_database/parse_log.py /home/backend/cig_backend/map/hit_database/hit_database "/var/log/from_geo/access.log*"
+
+Run the log analysis script nightly and adds the results to the SQLite3
+database in map/hit_database/hit_database. The logs analyzed are in
+/var/log/from_geo/access.log*. Note that this directory is remotely mounted and
+the script will fail if the directory isn't mounted at execution time.
+
+0 2 * * * cd /home/backend/cig_backend/map/map_plot ; /home/backend/cig_backend/map/map_plot/plot.py /home/backend/cig_backend/map/hit_database/hit_database /home/backend/cig_backend/map/ip_database/ip_lookup_db /home/backend/public_html/maps/ all `date --date="1 year ago" +'\%s'`
+
+Nightly generates maps based on the IP lookup database and the hits garnered
+from the logs. This generates maps for all codes based on all hits in the past
+year. Basic IP filtering is available in the plot.py script.
+
+0 4 * * 1 cd /home/backend/cig_backend/doxygen/ ; ./queue_doxygen.py all release
+0 5 * * * cd /home/backend/cig_backend/doxygen/ ; ./queue_doxygen.py all dev
+
+Periodically regenerate the doxygen documentation for code releases (every
+Monday) and development repositories (every night). Note that these scripts do
+not actually generate the doxygen, but rather queue up commands for it to be
+generated. Errors from these commands will be put in the file
+queues/backend_queue/queue.log.
+
+0 0 * * * cd /home/backend/cig_backend/git/gitdub ; PATH=$PATH:/home/backend/cig_backend/git/git-notifier ./gitdub ../config.yml >> /home/backend/cig_backend/git/git_backend.log 2>&1
+
+Nightly attempt to start the gitdub server to receive hook notifications from
+Github about new commits. If the server is already running this simply aborts
+and leaves the previous process running.
+
+0 3 * * * cd /home/backend/cig_backend/git ; ./setup_github.py OAUTH_TOKEN trigger >> /home/backend/cig_backend/git/trigger.log 2>&1
+
+Nightly trigger all Github hooks to ensure we didn't miss any commits in the
+past day to send emails for.
 

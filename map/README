@@ -39,8 +39,8 @@ ip_database/
     DATABASE. ONLY RUN IT IF YOU KNOW WHAT YOU ARE DOING.
     *******************************************************
     ARE YOU SURE YOU WANT TO CONTINUE? (y/n) y
-    Read 409857 entries from file and added 409857 entries to location table.
-    Read 2244372 entries from file and added 2244372 entries to block table.
+    Read 438386 entries from file and added 438386 entries to location table.
+    Read 1790461 entries from file and added 1790461 entries to block table.
 
     (Optional: ip_lookup_db or another database name) SQLite3 database containing
     the converted CSV file contents.
