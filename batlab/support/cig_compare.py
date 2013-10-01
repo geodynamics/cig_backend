@@ -3,6 +3,7 @@
 import numpy
 
 class ResultData:
+    """The ResultData class represents a data file with values stored in columns."""
     def __init__(self, num_header_lines, file_format):
         self.num_header_lines = num_header_lines
         self.file_format = file_format
@@ -34,9 +35,9 @@ def L2NormRenormed(ds):
     max_mag_val = MaxMagnitude(ds)
     return numpy.sqrt(numpy.sum([x.dot(x) for x in ds[0]-ds[1]]))/max_mag_val
 
-# Calculate the maximum difference in vector magnitudes between the data sets,
-# normalized by the maximum vector magnitude in the set
 def MaxMagDiffRenormed(ds):
+    """Calculate the maximum difference in vector magnitudes between
+    the data sets, normalized by the maximum vector magnitude in the set."""
     if len(ds) != 2:
         raise Exception("Expected 2 data sets, got "+str(len(ds)))
     max_mag_diff = numpy.max(numpy.sqrt([x.dot(x) for x in ds[0]-ds[1]]))
@@ -50,8 +51,8 @@ def TimeSeriesCorrelationCoeff(ds):
     ds1 = numpy.array([x[0] for x in ds[1]])
     return numpy.corrcoef(ds0, ds1)
 
-# Calculate the mean angle difference between corresponding values of the data sets
 def AngleDegDiff(ds):
+    """Calculate the mean angle difference between corresponding values of the data sets."""
     if len(ds) != 2:
         raise Exception("Expected 2 data sets, got "+str(len(ds)))
     # Take the dot product between the two datasets
@@ -65,11 +66,14 @@ def AngleDegDiff(ds):
     return (180.0/numpy.pi)*angle_stats
 
 def check_set(compare_set):
+    """Check that the column format for each element in compare_set is identical.
+    If any columns are non-identical, raise an exception."""
     for i in xrange(1, len(compare_set)):
         if compare_set[i-1].file_format != compare_set[i].file_format:
             raise Exception("File formats do not match")
 
-def compare(compare_set, compare_functions):
+def compare(compare_set, compare_function, tolerances):
+    """Compare all sets in compare_set with each other using all the provided functions."""
     check_set(compare_set)
     pos = 0
     result = {}
@@ -81,9 +85,21 @@ def compare(compare_set, compare_functions):
             ds = [data_subset[t[i]] for i in range(2)]
             # Record the results
             if not result.has_key(t): result[t] = []
-            for comp_func in compare_functions:
-                result[t].append(comp_func(ds))
+            result[t].append(compare_function(ds))
         pos += w
 
     return result
+
+def check_tolerances(compare_results, tolerances):
+    for result_key in compare_results.keys():
+        for i, tolerance in enumerate(tolerances):
+            val = compare_result[result_key][i]
+            total_tests += 1
+            if val <= tolerance:
+                num_passed += 1
+                pass_fail = "PASS"
+            else:
+                all_passed = False
+                pass_fail = "FAIL"
+            print("%s %d %.10f %.10f %s" % (desc[0] % (t,), i, val, tolerance, pass_fail))
 
