@@ -56,27 +56,31 @@ class FileComparison:
     def __init__(self, directories, file_name_template, file_type, num_header_lines, column_layout, compare_function, error_tolerances, step_iter, proc_iter):
         if len(error_tolerances) != len(column_layout):
             raise Exception("Tolerance specification does not match file format.")
-        file_name_list = [file_name_template % {'proc': proc, 'step': step}
+        file_name_list = [file_name_template.format({'proc': proc, 'step': step})
                           for proc in proc_iter for step in step_iter]
         self.result = {}
+        self.directories = directories
+
+        # Go through each file
         for file_name in file_name_list:
+            # Load in the data
             if file_type == "ascii":
                 data = [self.read_ascii_file("%s/%s" % (dir, file_name), num_header_lines) for dir in directories]
             else:
                 raise Exception("Unknown file type %s." % (file_type,))
-            self.result[file_name] = {}
 
+            # And check the tolerance for comparison between corresponding columns
             pos = 0
-            for i, w in enumerate(column_layout):
+            for col, w in enumerate(column_layout):
                 data_cols = [d[:,pos:pos+w] for d in data]
                 combos = [(i, n) for i in range(len(directories)) for n in range(i+1,len(directories))]
                 for t in combos:
                     # Get the two datasets to compare
                     ds = [data_cols[t[i]] for i in range(2)]
-                    print(ds[0], ds[1])
                     # Record the results
                     compare_result = compare_function(ds)
-                    self.result[file_name][t] = []
+                    res_key = (file_name, col, t)
+                    self.result[res_key] = [compare_result, error_tolerances[col]]
                 pos += w
 
     def read_ascii_file(self, file_name, num_header_lines):
@@ -90,42 +94,25 @@ class FileComparison:
 
     def print_summary(self):
         print("FILE VAR ORIG TOL")
+        key_sort = self.result.keys()
+        key_sort.sort()
+        for res_key in key_sort:
+            val = self.result[res_key][0]
+            tol = self.result[res_key][1]
+            if val <= tol: pass_fail = "PASS"
+            else: pass_fail = "FAIL"
+            print("%s %d %f %f %s" % (res_key[0], res_key[1], val, tol, pass_fail))
 
-    def num_tests_failed(self):
-        return 0
+        num_tests, num_fail = self.test_statistics()
+        print("%d/%d tests passed." % (num_tests-num_fail, num_tests))
 
-def compare(compare_set, compare_function, tolerances, compare_results):
-    """Compare all sets in compare_set with each other using all the provided functions."""
-    pos = 0
-    result = {}
-    for i, w in enumerate(compare_set[0].file_format):
-        data_subset = [compare_set[i].data[:,pos:pos+w] for i in xrange(len(compare_set))]
-        combos = [(i, n) for i in range(len(compare_set)) for n in range(i+1,len(compare_set))]
-        for t in combos:
-            # Get the two datasets to compare
-            ds = [data_subset[t[i]] for i in range(2)]
-            # Record the results
-            if not result.has_key(t): result[t] = []
-            compare_result = compare_function(ds)
+    def test_statistics(self):
+        num_tests = len(self.result)
+        num_fail = 0
+        for res_key in self.result.keys():
+            val = self.result[res_key][0]
+            tol = self.result[res_key][1]
+            if val > tol: num_fail += 1
 
-        pos += w
-
-    return result
-
-def print_comparison_results(compare_results):
-    for res in compare_results.results:
-        print("%s %d %.10f %.10f %s" % (desc[0] % (t,), i, val, tolerance, pass_fail))
-
-def check_tolerances(compare_results, tolerances):
-    for result_key in compare_results.keys():
-        for i, tolerance in enumerate(tolerances):
-            val = compare_result[result_key][i]
-            total_tests += 1
-            if val <= tolerance:
-                num_passed += 1
-                pass_fail = "PASS"
-            else:
-                all_passed = False
-                pass_fail = "FAIL"
-            print("%s %d %.10f %.10f %s" % (desc[0] % (t,), i, val, tolerance, pass_fail))
+        return num_tests, num_fail
 

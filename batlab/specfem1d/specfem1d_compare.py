@@ -39,7 +39,8 @@ comparisons = [
 passed_all = True
 for comp in comparisons:
     comp.print_summary()
-    if comp.num_tests_failed > 0: passed_all = False
+    num_tests, num_failed = comp.test_statistics()
+    if num_failed > 0: passed_all = False
 
 if passed_all:
     sys.exit(0)
