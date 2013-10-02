@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import cig_compare
-import numpy
 import sys
-import string
 
 if len(sys.argv) < 4:
     print "args: dir_1 dir_2 nprocs max_step"
