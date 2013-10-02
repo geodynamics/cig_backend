@@ -5,12 +5,6 @@ import numpy
 import sys
 import string
 
-file_descs = [
-        # file name pattern, number of header lines, column layout, maximum error tolerances
-        ["S{[step]:04d}.AA.BXX.semd", 0, [1, 1], [1e-6, 1e-6]],
-        ["S{[step]:04d}.AA.BXZ.semd", 0, [1, 1], [1e-6, 1e-6]],
-        ]
-
 if len(sys.argv) < 4:
     print("args: dir_1 dir_2 max_step")
     sys.exit(1)
