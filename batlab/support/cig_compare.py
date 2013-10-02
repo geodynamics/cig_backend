@@ -56,8 +56,8 @@ class FileComparison:
     def __init__(self, directories, file_name_template, file_type, num_header_lines, column_layout, compare_function, error_tolerances, step_iter, proc_iter):
         if len(error_tolerances) != len(column_layout):
             raise Exception("Tolerance specification does not match file format.")
-        file_name_list = [file_name_template.format({'proc': proc, 'step': step})
-                          for proc in proc_iter for step in step_iter]
+        file_name_list = [file_name_template.format(proc=p, step=s)
+                          for p in proc_iter for s in step_iter]
         self.result = {}
         self.directories = directories
 
@@ -65,7 +65,7 @@ class FileComparison:
         for file_name in file_name_list:
             # Load in the data
             if file_type == "ascii":
-                data = [self.read_ascii_file("%s/%s" % (dir, file_name), num_header_lines) for dir in directories]
+                data = [self.read_ascii_file("%s/%s" % (d, file_name), num_header_lines) for d in directories]
             else:
                 raise Exception("Unknown file type %s." % (file_type,))
 

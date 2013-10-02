@@ -25,7 +25,7 @@ comparisons = [
         proc_iter=[0]),
     cig_compare.FileComparison(
         directories=dirs,
-        file_name_template="S{[step]:04d}.AA.BXZ.semd",
+        file_name_template="S{step:04d}.AA.BXZ.semd",
         file_type="ascii",
         num_header_lines=0,
         column_layout=[1, 1],
