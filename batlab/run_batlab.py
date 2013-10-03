@@ -76,7 +76,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
     build_error = False
 
     # Check that this code supports BaTLab testing first
-    if len(code_db.batlab_platforms[cig_code]) == 0: return
+    if len(code_db.batlab_params[cig_code].platforms) == 0: return
 
     # Create a temporary directory to store the files in
     tmp_dir = tempfile.mkdtemp()
@@ -89,7 +89,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
     build_input_desc = open(build_input_file_name, 'w')
     print("method = scp", file=build_input_desc)
     local_build_files = BASE_DIR+"/"+cig_code+"/build.sh"
-    for extra_file in code_db.batlab_extra_files[cig_code]:
+    for extra_file in code_db.batlab_params[cig_code].extra_files:
         local_build_files += " "+BASE_DIR+"/"+cig_code+"/"+extra_file
     print("scp_file =", local_build_files, file=build_input_desc)
     build_input_desc.close()
@@ -122,8 +122,8 @@ def test_code(cig_code, revision, dry_run, use_repo):
     #print("use_grid_resource = gt5 login5.stampede.tacc.utexas.edu:2119/jobmanager-fork", file=build_run_spec)
 
     # Set up the script to copy precompiled libraries over
-    if code_db.batlab_support_bundles[cig_code] is not None:
-        bundle_names = " ".join(code_db.batlab_support_bundles[cig_code])
+    if code_db.batlab_params[cig_code].support_bundles is not None:
+        bundle_names = " ".join(code_db.batlab_params[cig_code].support_bundles)
         print("platform_pre = build_setup_bundle.sh", file=build_run_spec)
         print("platform_pre_args =", bundle_names, file=build_run_spec)
         print(file=build_run_spec)
@@ -137,7 +137,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
     print(file=build_run_spec)
 
     platform_list = ""
-    for i, platform in enumerate(code_db.batlab_platforms[cig_code]):
+    for i, platform in enumerate(code_db.batlab_params[cig_code].platforms):
         if i is not 0: platform_list += ", "
         platform_list += platform
 
@@ -154,7 +154,7 @@ def test_code(cig_code, revision, dry_run, use_repo):
         gid = "dry_run_gid"
 
     # Now that we have the build running, set up the test(s) if necessary
-    if not build_error and len(code_db.batlab_tests[cig_code]) > 0:
+    if not build_error and len(code_db.batlab_params[cig_code].tests) > 0:
         # Set up the input file
         test_input_desc_filename = tmp_dir+"/test_input"
         test_input_desc = open(test_input_desc_filename, "w")
@@ -169,19 +169,19 @@ def test_code(cig_code, revision, dry_run, use_repo):
         test_input_desc = open(test_script_file_name, 'w')
         print("method = scp", file=test_input_desc)
         local_build_files = BASE_DIR+"/"+cig_code+"/test.sh"
-        for extra_file in code_db.batlab_extra_files[cig_code]:
+        for extra_file in code_db.batlab_params[cig_code].extra_files:
             local_build_files += " "+BASE_DIR+"/"+cig_code+"/"+extra_file
         print("scp_file =", local_build_files, file=test_input_desc)
         test_input_desc.close()
 
         # Set up a test run description file for each test
-        test_run_spec_file_names = [tmp_dir+"/test_"+test_name+"_run_spec" for test_name in code_db.batlab_tests[cig_code]]
+        test_run_spec_file_names = [tmp_dir+"/test_"+test_name+"_run_spec" for test_name in code_db.batlab_params[cig_code].tests]
         for i in range(len(test_run_spec_file_names)):
             test_run_spec = open(test_run_spec_file_names[i], 'w')
             print("project = CIG", file=test_run_spec)
             print("component =", cig_code, file=test_run_spec)
             print("component_version =", revision, file=test_run_spec)
-            print("description =", rev_desc, "test", code_db.batlab_tests[cig_code][i], file=test_run_spec)
+            print("description =", rev_desc, "test", code_db.batlab_params[cig_code].tests[i], file=test_run_spec)
             print("run_type = test", file=test_run_spec)
             print("platform_job_timeout = 30", file=test_run_spec)
 
@@ -195,11 +195,11 @@ def test_code(cig_code, revision, dry_run, use_repo):
 
             # To test the code, use the test.sh script
             print("remote_task = test.sh", file=test_run_spec)
-            print("remote_task_args =", code_db.batlab_tests[cig_code][i], file=test_run_spec)
+            print("remote_task_args =", code_db.batlab_params[cig_code].tests[i], file=test_run_spec)
             print(file=test_run_spec)
 
             platform_list = ""
-            for n, platform in enumerate(code_db.batlab_platforms[cig_code]):
+            for n, platform in enumerate(code_db.batlab_params[cig_code].platforms):
                 if n is not 0: platform_list += ", "
                 platform_list += platform
 

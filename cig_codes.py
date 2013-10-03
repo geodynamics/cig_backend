@@ -341,7 +341,7 @@ code_db.register(short_name="specfem2d",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
                  batlab_params=BatlabParameters(
                      platforms=standard_batlab_platforms,
-                     extra_files=["baseline.tar.gz", "check_diff.py"],
+                     extra_files=["baseline.tar.gz", "specfem2d_compare.py"],
                      tests=["null"],
                      ),
                  )
@@ -355,7 +355,7 @@ code_db.register(short_name="specfem1d",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
                  batlab_params=BatlabParameters(
                      platforms=standard_batlab_platforms,
-                     extra_files=["baseline.tar.gz", "check_diff.py"],
+                     extra_files=["baseline.tar.gz", "specfem1d_compare.py"],
                      tests=["null"],
                      ),
                  )
@@ -368,7 +368,6 @@ code_db.register(short_name="mineos",
                  release_version="1.0.2",
                  doxygen_params=DoxygenParameters(release_dox=True, dev_dox=True),
                  batlab_params=BatlabParameters(
-                     extra_files=["check_diff.py"],
                      platforms=standard_batlab_platforms,
                      tests=["null"],
                      ),
