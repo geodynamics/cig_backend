@@ -5,6 +5,18 @@ for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt)
 
 
 
+------------------------------------------------------------------------------------------------
+
+Exchanger (DONE)
+mkdir exchanger
+cd exchanger
+svn2git http://geodynamics.org/svn/cig/cs/Exchanger/
+(no scrub)
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit -m "m4 submodule"
+git push --mirror https://github.com/geodynamics/exchanger.git
 
 ------------------------------------------------------------------------------------------------
 
