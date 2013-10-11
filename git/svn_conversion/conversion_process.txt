@@ -5,6 +5,55 @@ for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt)
 
 
 
+
+------------------------------------------------------------------------------------------------
+
+CitcomS (DONE)
+mkdir citcoms
+cd citcoms
+svn2git http://geodynamics.org/svn/cig/mc/3D/CitcomS/
+../../gitscrub.sh doc/*
+(copy anisotropic_viscosity/* to lib)
+git add Anisotropic_viscosity.c anisotropic_viscosity.h
+git commit -m "Readd anisotropic code"
+(copy archimedes from merlin to .)
+git add archimedes
+git commit -m "Readd archimedes"
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit -m "m4 submodule"
+git push --mirror https://github.com/geodynamics/citcoms.git
+
+------------------------------------------------------------------------------------------------
+
+CitcomCU (DONE)
+mkdir citcomcu
+cd citcomcu
+svn2git http://geodynamics.org/svn/cig/mc/3D/CitcomCU/
+(no scrub)
+(copy anisotropic_viscosity/* to src)
+git add Anisotropic_viscosity.c anisotropic_viscosity.h
+git commit -m "Readd anisotropic code"
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/citcomcu.git
+
+------------------------------------------------------------------------------------------------
+
+HC (DONE)
+mkdir hc
+cd hc
+svn2git http://geodynamics.org/svn/cig/mc/1D/hc/
+cp cig_bench.tgz tmp_cig_bench.tgz
+../../gitscrub.sh bench/* cig_bench.tgz syn.compare.vec.ps *.grd objects/* bin/* vsol.*.bin ./*.ps.gz sol.bin vp.35.grd.ps new.ps new sh.mreexpanded.pt simple_test testn.*.data binaries.linux.x86_64.1.0.2.092211.tar.gz
+mv tmp_cig_bench.tgz cig_bench.tgz
+git add cig_bench.tgz
+git commit -m "Readd benchmark file"
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/hc.git
+
 ------------------------------------------------------------------------------------------------
 
 Gale (DONE)
