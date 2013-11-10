@@ -39,7 +39,7 @@ def check_install_hooks(code, github_oauth_token, install):
     json_data = get_hooks_json(code, github_oauth_token)
     data = get_cig_hook(json_data)
     if data is None:
-        print("hook not found", end="")
+        print("hook not found... ", end="")
         if not install:
             print(".")
         else:
