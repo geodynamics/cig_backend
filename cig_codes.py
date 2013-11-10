@@ -304,7 +304,7 @@ code_db.register(short_name="specfem3d",
                      ),
                  )
 
-code_db.register(short_name="specfem3d-globe",
+code_db.register(short_name="specfem3d_globe",
                  full_name="SPECFEM3D GLOBE",
                  repo_url="http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GLOBE/trunk",
                  repo_type="svn",
@@ -318,7 +318,7 @@ code_db.register(short_name="specfem3d-globe",
                      ),
                  )
 
-code_db.register(short_name="specfem3d-geotech",
+code_db.register(short_name="specfem3d_geotech",
                  full_name="SPECFEM3D GEOTECH",
                  repo_url="http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GEOTECH/trunk",
                  repo_type="svn",
