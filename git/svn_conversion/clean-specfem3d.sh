@@ -149,7 +149,7 @@ fi
 
 export GIT_AUTHOR_NAME="$an"
 export GIT_COMMITTER_NAME="$cn"
-' 0f81c7350882a5fb27007f191c7551de0e8cb268..master
+' df1333d4833f46358edd3256fe9c9378348b7fd9..master
 rm -rf .git/refs/original/
 
 # Reset QA and devel to match master (easier than re-writing)
