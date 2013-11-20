@@ -5,6 +5,106 @@ for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt)
 
 
 
+
+
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM3D (DONE)
+mkdir specfem3d
+cd specfem3d
+svn2git http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D
+cp doc/USER_MANUAL/figures/specfem_3d_Cartesian-cover.ai doc/USER_MANUAL/figures/tmp_specfem_3d_Cartesian-cover.ai
+../../gitscrub.sh DATA/la_3D_block_harvard/* obsolete_old_SPECFEM3D_SUNFLOWER.old/* doc/USER_MANUAL/figures/specfem_3d-cover.* USER_MANUAL/* decimate_mesh/* USER_MANUAL_BASIN/* doc/paper_draft/* examples/* examples/CPML_realistic_mesh_with_topography/* CUBIT_GEOCUBIT/example/data.zip UTILS/* USERS_MANUAL_BASIN/* DATA/m16_model/* basin_static/USER_MANUAL/* USERS_MANUAL/* doc/USER_MANUAL/figures/specfem_3d-cover_with_Emiljana.ai DATA/util/movies_1857/DX_highwayscoast_all_CA_5000m.dx bin/* examples/homogeneous_halfspace_HEX27/DATA/MESH/nodes_coords_file meshfem3D/DATA/interfaces_M2_UPPA_curved_test.dat examples/homogeneous_halfspace_HEX27/DATA/MESH/mesh_file doc/USER_MANUAL/figures/workflow.key.zip examples/mesh_Pieyre/MESH/mesh_file examples/homogeneous_halfspace_HEX8/* doc/USER_MANUAL/figures/specfem_3d_Cartesian-cover.ai
+mv doc/USER_MANUAL/figures/tmp_specfem_3d_Cartesian-cover.ai doc/USER_MANUAL/figures/specfem_3d_Cartesian-cover.ai
+git add doc/USER_MANUAL/figures/specfem_3d_Cartesian-cover.ai
+git tag
+git branch
+git commit -m "readd cover"
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit -m "m4 submodule"
+git submodule add git://vcs.geodynamics.org/specfem3d_examples examples
+git commit -m "examples submodule"
+git push --mirror https://github.com/geodynamics/specfem3d.git
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM3D Examples (DONE)
+mkdir specfem3d_examples
+cd specfem3d_examples
+svn2git --notrunk --nobranches --notags http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D/trunk/examples
+(no branches or tags)
+git push --mirror git@vcs.geodynamics.org:specfem3d_examples
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM2D (DONE)
+mkdir specfem2d
+cd specfem2d
+svn2git http://geodynamics.org/svn/cig/seismo/2D/SPECFEM2D
+../../gitscrub.sh DATA/yangluo_mesh_overthrust/* trunk/* scotch_5.1.10b/* EXAMPLES/* BIOT/* SPECFEM2D/*
+git tag
+git branch
+rm -rf EXAMPLES/
+git submodule add git://vcs.geodynamics.org/specfem2d_examples EXAMPLES
+git commit -m "examples submodule"
+git push --mirror https://github.com/geodynamics/specfem2d.git
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM2D Examples (DONE)
+mkdir specfem2d_examples
+cd specfem2d_examples
+svn2git --notrunk --nobranches --notags http://geodynamics.org/svn/cig/seismo/2D/SPECFEM2D/trunk/EXAMPLES
+(no branches or tags)
+cp BENCHMARK_CLAERBOUT_ADJOINT/DATAs.tar.gz BENCHMARK_CLAERBOUT_ADJOINT/tmp_DATAs.tar.gz
+../../gitscrub.sh BENCHMARK_CLAERBOUT_ADJOINT/DATAs.tar.gz
+mv BENCHMARK_CLAERBOUT_ADJOINT/tmp_DATAs.tar.gz BENCHMARK_CLAERBOUT_ADJOINT/DATAs.tar.gz
+git add BENCHMARK_CLAERBOUT_ADJOINT/DATAs.tar.gz
+git commit -m "readd benchmark data"
+git push --mirror git@vcs.geodynamics.org:specfem2d_examples
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM3D Geotech (DONE)
+mkdir specfem3d_geotech
+cd specfem3d_geotech
+svn2git http://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GEOTECH
+(no scrub)
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/specfem3d_geotech.git
+
+------------------------------------------------------------------------------------------------
+
+SEISMIC_CPML (DONE)
+mkdir cpml
+cd cpml
+svn2git http://geodynamics.org/svn/cig/seismo/3D/CPML
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/seismic_cpml.git
+
+------------------------------------------------------------------------------------------------
+
+Flexwin (DONE)
+mkdir flexwin
+cd flexwin
+svn2git --notrunk --nobranches --notags http://geodynamics.org/svn/cig/seismo/3D/ADJOINT_TOMO/flexwin
+../../gitscrub.sh latex/*
+git push --mirror https://github.com/geodynamics/flexwin.git
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM1D (DONE)
+mkdir specfem1d
+cd specfem1d
+svn2git http://geodynamics.org/svn/cig/seismo/1D/SPECFEM1D
+(no scrub)
+git tag
+git branch
+git push --mirror https://github.com/geodynamics/specfem1d.git
+
 ------------------------------------------------------------------------------------------------
 
 Exchanger (DONE)
