@@ -113,9 +113,6 @@ echo 851c9274132fe13915bec7a09ab1aef1e67c3015 c8f3988974f6bdf8f3efce13618b421ebf
 # Fix parents for "updates gpu branch with revision 20462" commit
 echo 2f6e905b9aa13a68b90811e027a5cdd2f1464008 a45d331439c1c0ab614fed2b4de0cd6011019700 559b7596d3817882fc740a86efe61bbeff9c92aa >> .git/info/grafts
 
-# Fix parents for merge of SPECFEM3D_SUNFLOWER back into master
-echo e94c339b80cb3430b077b7813d3b9b31df591415 559b7596d3817882fc740a86efe61bbeff9c92aa 2f6e905b9aa13a68b90811e027a5cdd2f1464008 >> .git/info/grafts
-
 # Fix parents for merge of master into coupling_vadim.
 echo 082d760b642690f5d678510b5030203ae6f31d93 e63bb26e9c53ca0149439b47e3c79324f7788791 87b5ca989a6df0323d544a1ac4a19d527a19735c >> .git/info/grafts
 
@@ -149,12 +146,30 @@ fi
 
 export GIT_AUTHOR_NAME="$an"
 export GIT_COMMITTER_NAME="$cn"
-' 0f81c7350882a5fb27007f191c7551de0e8cb268..master
+' f2d30460e49ae9a7badd4023512f9a14cff3f51e..master
 rm -rf .git/refs/original/
 
 # Reset QA and devel to match master (easier than re-writing)
 git branch -f QA master
 git branch -f devel master
+
+# Fix parents for merge of SPECFEM3D_SUNFLOWER back into master
+old=b774e3c0bc9c7fca1d79709341638d4ff83add77 # commit that should be a merge
+p1=dd7a574fcb6bdd0602050169cf56fd233a24d5d0  # parent on master branch
+p2=95d18376876d6ccb1f982a532d5a828946d6b360  # parent on sunflower branch
+git checkout $p1
+git merge --no-commit --no-ff $p2
+git rm -rf *
+git checkout $old -- . # Reset to contents of merge commit
+GIT_AUTHOR_DATE="Fri 06 Jul 2012 09:58:19 AM EDT" \
+GIT_AUTHOR_NAME="Daniel Peter" \
+GIT_AUTHOR_EMAIL="peterda@ethz.ch" \
+GIT_COMMITTER_DATE="Fri 06 Jul 2012 09:58:19 AM EDT" \
+GIT_COMMITTER_NAME="Daniel Peter" \
+GIT_COMMITTER_EMAIL="peterda@ethz.ch" \
+git commit -m "adds GPU functionality to SPECFEM3D solver (requires to rerun ./configure); merges GPU branch modifications to main trunk; adds src/cuda directory & files; updates Par_files; renames compute_forces_elastic.F90 and prepare_timerun.F90" # Make commit with same metadata as before
+new=`git rev-parse HEAD`
+git replace $old $new
 
 # Final cleanup
 git reflog expire --all
