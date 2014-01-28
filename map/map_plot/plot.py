@@ -125,6 +125,9 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
     loc_file.close()
 
 def generate_plot(hit_db_name, loc_db_name, output_dir, code_name, start_time, end_time):
+    # Handle old naming scheme for SPECFEM packages
+    if code_name.startswith("specfem"): code_name = code_name.replace("_", "-")
+
     # Get the IP numbers associated with a given package
     ip_nums = lookup_hits(hit_db_name, code_name, start_time, end_time)
     print("Found", len(ip_nums), "hits associated with package", code_name)
@@ -144,7 +147,8 @@ def generate_plot(hit_db_name, loc_db_name, output_dir, code_name, start_time, e
     print("Binned", len(locs), "locations into", len(loc_grid), "unique points.")
 
     # Create GMT plot of binned points
-    plot_loc_grid(loc_grid, output_dir, code_name+".gif")
+    underscore_code_name = code_name.replace("-", "_")
+    plot_loc_grid(loc_grid, output_dir, underscore_code_name+".gif")
 
 def main():
     if len(sys.argv) < 5 or len(sys.argv) > 7:
