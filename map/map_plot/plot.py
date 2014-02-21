@@ -15,6 +15,16 @@ import tempfile
 filter_ips = [
         "2155411043", # shell.geodynamics.org, automatically downloads packages for documentation
         "1368427042", # crawl-81-144-138-34.wotbox.com, crawler
+        "2025873270", # 120.192.95.118, unknown site in China
+        "2026569611", # 120.202.255.139, unknown site in China
+        "2025868405", # 120.192.76.117, unknown site in China
+        "2026569613", # 120.202.255.141, unknown site in China
+        "3548981000", # 211.137.39.8, unknown site in China
+        "1862796174", # 111.8.3.142, unknown site in China
+        "3548981003", # 211.137.39.11, unknown site in China
+        "3548980999", # 211.137.39.7, unknown site in China
+        "3719653427", # 221.181.104.51, unknown site in China
+        "2025868387", # 120.192.76.99, unknown site in China
         ]
 
 def find_ip_lat_lon(db_conn, ip_num):
