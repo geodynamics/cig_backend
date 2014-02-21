@@ -13,18 +13,18 @@ import tempfile
 
 # IP numbers to filter
 filter_ips = [
-        "2155411043", # shell.geodynamics.org, automatically downloads packages for documentation
-        "1368427042", # crawl-81-144-138-34.wotbox.com, crawler
-        "2025873270", # 120.192.95.118, unknown site in China
-        "2026569611", # 120.202.255.139, unknown site in China
-        "2025868405", # 120.192.76.117, unknown site in China
-        "2026569613", # 120.202.255.141, unknown site in China
-        "3548981000", # 211.137.39.8, unknown site in China
-        "1862796174", # 111.8.3.142, unknown site in China
-        "3548981003", # 211.137.39.11, unknown site in China
-        "3548980999", # 211.137.39.7, unknown site in China
-        "3719653427", # 221.181.104.51, unknown site in China
-        "2025868387", # 120.192.76.99, unknown site in China
+        2155411043, # shell.geodynamics.org, automatically downloads packages for documentation
+        1368427042, # crawl-81-144-138-34.wotbox.com, crawler
+        2025873270, # 120.192.95.118, unknown site in China
+        2026569611, # 120.202.255.139, unknown site in China
+        2025868405, # 120.192.76.117, unknown site in China
+        2026569613, # 120.202.255.141, unknown site in China
+        3548981000, # 211.137.39.8, unknown site in China
+        1862796174, # 111.8.3.142, unknown site in China
+        3548981003, # 211.137.39.11, unknown site in China
+        3548980999, # 211.137.39.7, unknown site in China
+        3719653427, # 221.181.104.51, unknown site in China
+        2025868387, # 120.192.76.99, unknown site in China
         ]
 
 def find_ip_lat_lon(db_conn, ip_num):
@@ -49,13 +49,14 @@ def lookup_hits(db_name, package_name, start_time, end_time):
     db_conn = sqlite3.connect(db_name)
     curs = db_conn.cursor()
     result = []
-    ip_filter_clause = ",".join(filter_ips)
-    if package_name == "comprehensive": curs.execute("SELECT hit.ip_num FROM hit WHERE hit.time >= ? AND hit.time <= ? AND hit.ip_num NOT IN (?);", (start_time, end_time, ip_filter_clause,))
-    else: curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ? AND hit.ip_num NOT IN (?);", (start_time, end_time, package_name, ip_filter_clause,))
+    if package_name == "comprehensive": curs.execute("SELECT hit.ip_num FROM hit WHERE hit.time >= ? AND hit.time <= ?;", (start_time, end_time,))
+    else: curs.execute("SELECT hit.ip_num FROM hit, dist_file, package WHERE hit.time >= ? AND hit.time <= ? AND hit.file_id = dist_file.id AND dist_file.package_id = package.id AND package.package_name = ?;", (start_time, end_time, package_name,))
     while True:
         next_val = curs.fetchone()
         if next_val is None: break
-        result.append(int(next_val[0]))
+        ip_int_val = int(next_val[0])
+        if ip_int_val not in filter_ips:
+            result.append(ip_int_val)
     db_conn.close()
     return result
 
