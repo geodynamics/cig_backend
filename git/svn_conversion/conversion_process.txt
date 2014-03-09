@@ -6,7 +6,75 @@ for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt)
 
 
 
+------------------------------------------------------------------------------------------------
 
+SPECFEM3D Globe (DONE)
+mkdir specfem3d_globe
+cd specfem3d_globe
+svn2git https://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GLOBE
+cp doc/USER_MANUAL/figures/specfem_3d_globe-cover.ai doc/USER_MANUAL/figures/tmp_specfem_3d_globe-cover.ai
+cp doc/USER_MANUAL/manual_SPECFEM3D_GLOBE.pdf doc/USER_MANUAL/tmp_manual_SPECFEM3D_GLOBE.pdf
+../../gitscrub.sh EXAMPLES/* DATA/* DATA/util/manual/figures/* DATA/util/chunk_notes_scanned/* USER_MANUAL/* USERS_MANUAL_GLOBE/* USERS_MANUAL/* MODELS/* doc/USER_MANUAL/figures/specfem_3d_globe-cover_with_Emiljana.ai EXAMPLES/NEX_480/no_Q/SEISMO/SEISMO.NEX480.noQ.tar.gz EXAMPLES/NEX_480/Q/SEISMO/SEISMO.NEX480.Q.tar.gz EXAMPLES/NEX_480/SEISMO/SEISMO.NEX480.Q.tar.gz EXAMPLES/NEX_240/Q/SEISMO/SEISMO.NEX240.Q.tar.gz EXAMPLES/NEX_240/no_Q/SEISMO/SEISMO.NEX240.noQ.tar.gz EXAMPLES/NEX_480/no_Q/* EXAMPLES/NEX_480/Q/* version41_beta/DATA/topo_bathy/topo_bathy_etopo4_smoothed_window_11_minmax_3500.dat v3.6/DATA/topo_bathy/topo_bathy_etopo4_from_etopo2_subsampled.dat v3.6/DATA/topo_bathy/topo_bathy_etopo5_smoothed_Harvard.dat version41_beta/DATA/topo_bathy/topo_bathy_etopo4_from_etopo2_subsampled.dat version41_beta/DATA/crust2.0/smoothed_crust2.0.dat doc/USER_MANUAL/manual_SPECFEM3D_GLOBE.pdf NOISE_TOMOGRAPHY/* NEX_480/* version41_beta/* EXAMPLES/NEX_240/* EXAMPLES_NEX_240_with_Q/* doc/USER_MANUAL/figures/specfem_3d_globe-cover.ai NEX_240/* Q/* v3.6/* UTILS/chunk_notes_scanned/chunk_notes_scanned_2.jpg EXAMPLES/prem_ani_noocean_Q_Cowling_Vanuatu/prem_ani_noocean_Q_Cowling_Vanuatu_pdf/* EXAMPLES/prem_ani_noocean_Q_Cowling_Vanuatu/SEMD/* EXAMPLES/prem_iso_noocean_Q_Cowling_Vanuatu/SEMD/* EXAMPLES/prem_iso_noocean_Q_Cowling_Vanuatu/prem_iso_noocean_Q_Cowling_Vanuatu_pdf/* EXAMPLES/small_benchmark_run_to_test_a_new_machine/OUTPUT_FILES_reference_OK/* EXAMPLES/prem_ani_noocean_Q_Cowling_Bolivia_9s/* EXAMPLES/prem_iso_noocean_Q_Cowling_Vanuatu/* EXAMPLES/prem_ani_noocean_Q_Cowling_Vanuatu/* EXAMPLES/NEX_480/OUTPUT_FILES/output_solver.txt EXAMPLES/PDF/* EXAMPLES/small_benchmark_run_to_test_very_simple_Earth/* EXAMPLES/small_benchmark_run_to_test_more_complex_Earth/*
+mv doc/USER_MANUAL/figures/tmp_specfem_3d_globe-cover.ai doc/USER_MANUAL/figures/specfem_3d_globe-cover.ai
+mv doc/USER_MANUAL/tmp_manual_SPECFEM3D_GLOBE.pdf  doc/USER_MANUAL/manual_SPECFEM3D_GLOBE.pdf
+git add doc/USER_MANUAL/figures/specfem_3d_globe-cover.ai
+git add doc/USER_MANUAL/manual_SPECFEM3D_GLOBE.pdf
+git commit -m "readd cover, manual"
+rm -rf EXAMPLES
+git tag
+git branch
+git submodule add https://github.com/geodynamics/autoconf_cig.git m4
+git commit -m "m4 submodule"
+git submodule add git://vcs.geodynamics.org/specfem3d_globe_examples EXAMPLES
+git commit -m "examples submodule"
+git submodule add git://vcs.geodynamics.org/specfem3d_globe_data DATA
+git commit -m "data submodule"
+git push --mirror https://github.com/geodynamics/specfem3d_globe.git
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM3D_Globe Examples (DONE)
+mkdir specfem3d_globe_examples
+cd specfem3d_globe_examples
+svn2git --notrunk --nobranches --notags https://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GLOBE/trunk/EXAMPLES
+../../gitscrub.sh NEX_480/* NEX_240/* prem_iso_noocean_Q_Cowling_Vanuatu/* prem_ani_noocean_Q_Cowling_Vanuatu/* prem_ani_noocean_Q_Cowling_Bolivia_9s/* small_benchmark_run_to_test_a_new_machine/* noise_examples/global_long/A0.II.LHZ.adj noise_examples/global_short/A0.II.LHZ.adj
+(no branches or tags)
+git push --mirror git@vcs.geodynamics.org:specfem3d_globe_examples
+
+------------------------------------------------------------------------------------------------
+
+SPECFEM3D_Globe Data (DONE)
+mkdir specfem3d_globe_data
+cd specfem3d_globe_data
+svn2git --notrunk --nobranches --notags https://geodynamics.org/svn/cig/seismo/3D/SPECFEM3D_GLOBE/trunk/DATA
+../../gitscrub.sh util/* topo_bathy/topo_bathy_etopo4_smoothed_window7.dat 
+(no branches or tags)
+git push --mirror git@vcs.geodynamics.org:specfem3d_globe_data
+
+------------------------------------------------------------------------------------------------
+
+AxiSEM (DONE)
+mkdir axisem
+cd axisem
+svn2git https://svn.seismo.ethz.ch/svn/axisem/ --username axisem --trunk / --nobranches --notags --verbose
+cp MANUAL/manual_axisem1.0.pdf MANUAL/tmp_manual.pdf
+../../gitscrub.sh MANUAL/manual_axisem1.0.pdf MANUAL/*.eps MANUAL/*.dvi MANUAL/*.tiff MANUAL/STF/* TESTING/automated/* TESTING/record_section_Z_hd.pdf SOLVER/poo MESHER/xmesh SOLVER/UTILS/xpost_processing
+mv MANUAL/tmp_manual.pdf MANUAL/manual_axisem1.0.pdf
+git add MANUAL/manual_axisem1.0.pdf
+git commit -m "readd manual"
+git submodule add git://vcs.geodynamics.org/axisem_testing TESTING/automated
+git commit -m "automated testing data submodule"
+(no branches or tags)
+git push --mirror git@github.com:geodynamics/axisem.git
+
+------------------------------------------------------------------------------------------------
+
+AxiSEM Testing (DONE)
+mkdir axisem_testing
+cd axisem_testing
+svn2git --notrunk --nobranches --notags https://svn.seismo.ethz.ch/svn/axisem/TESTING/automated --verbose --username axisem
+(no branches or tags)
+git push --mirror git@vcs.geodynamics.org:axisem_testing
 
 ------------------------------------------------------------------------------------------------
 
