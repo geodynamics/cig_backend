@@ -70,7 +70,7 @@ rm -rf .git/refs/original/
 rm .git/info/grafts
 
 # Delete branches that have now been merged correctly
-git branch -D adjoint NOISE_TOMOGRAPHY high_order_time_scheme_for_forward_simulation undo_att
+git branch -d adjoint NOISE_TOMOGRAPHY high_order_time_scheme_for_forward_simulation undo_att SPECFEM3D_GLOBE_SUNFLOWER SUNFLOWER_ADIOS
 
 # Fix author email in last few commits.
 git filter-branch --env-filter '
@@ -100,6 +100,9 @@ export GIT_COMMITTER_NAME="$cn"
 export GIT_COMMITTER_EMAIL="$ce"
 ' a4c38e885a08fd0e6034887d4b3a97994570a0e1..master
 rm -rf .git/refs/original/
+
+# Add devel branch
+git branch devel master
 
 # Final cleanup
 git reflog expire --all
