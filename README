@@ -40,10 +40,9 @@ queue/
     misordering.
 
 ref_list/
-    Contains databases and scripts to record references to papers which used
-    CIG codes, and generate a publicly viewable (and eventually searchable) web
-    page of these papers.  Relevant URL as of Sep 25, 2013
-    http://geodynamics.org/cig/community/documents/reference
+    Information regarding online publication list, database, and editor.
+    Relevant URL as of May 1, 2014
+    http://geodynamics.org/cig/news/publications/
 
 
 NOTES
