@@ -38,7 +38,9 @@ def parse_apache_logfile(db_conn, logfile, start_date):
         # Get the code, if it's not 200 (success) we ignore it
         if code == 200:
             # Break the request URL into / separated pieces
-            request_url = data['%r'].split()[1]
+            request_data = data['%r'].split()
+            if len(request_data) <= 1: continue
+            request_url = request_data[1]
             breakdown = request_url.split('/')
             # If the URL starts with /cig/software
             if len(breakdown) >= 4 and breakdown[1] == 'cig' and breakdown[2] == 'software':

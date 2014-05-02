@@ -77,30 +77,6 @@ then
 	cp -r $SVN_REPO_DIR $CODE_INPUT_DIR
 	REV_TITLE="SVN Revision $REV"
 	SUBDIR="dev"
-elif [ $METHOD = "hg" ]
-then
-	# Check if the repository already exists
-	HG_REPO_DIR="$REPO_DIR/$NAME"
-	set +e
-	(cd $HG_REPO_DIR && hg status) >> /dev/null 2>&1
-	# If not, check it out
-	if [ $? -ne 0 ]
-	then
-		set -e
-		echo -n "Checking out code using Mercurial from $URL ... "
-		hg clone "$URL" $HG_REPO_DIR >> $LOG_FILE 2>&1
-		echo "done."
-	else
-		echo "Already have code using Mercurial from $URL"
-	fi
-	set -e
-        # Change the copy of the code to the appropriate revision
-	echo -n "Changing repository to revision $REV ... "
-	cd $HG_REPO_DIR
-	hg update -r "$REV" >> $LOG_FILE 2>&1
-	cp -r $HG_REPO_DIR $CODE_INPUT_DIR
-	REV_TITLE="Mercurial Revision $REV"
-	SUBDIR="dev"
 elif [ $METHOD = "git" ]
 then
 	GIT_REPO_DIR="$REPO_DIR/$NAME"
@@ -138,7 +114,7 @@ then
 	SUBDIR="release"
 	REV_TITLE="Version $REV"
 else
-	echo "ERROR: method must be one of: svn, hg, git, url"
+	echo "ERROR: method must be one of: svn, git, url"
 	exit 1
 fi
 
