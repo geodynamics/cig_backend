@@ -8,6 +8,9 @@ gitdub:
   # The directory where gitdub keeps its per-repository state.
   directory: .gitdub
 
+  ssl:
+      enable: false
+
   # Only process POST requests from the these IP addresses (optioanl). If empty
   # or not set, gitdub processes requests from all addresses.
   # 
