@@ -5,38 +5,22 @@ BASE_DIR="/home/backend/cig_backend"
 import sys
 sys.path.append(BASE_DIR)
 
-from cig_codes import code_db
+import cig_codes
 import shelve
 import os
 import subprocess
 
-def get_recent_svn_revisions(code_name):
-    # Get the SVN URL
-    code_url = code_db.repo_url[code_name]
-    # Get the log for the URL
-    # Get at most 100 to avoid overloading ourselves
-    svn_proc = subprocess.Popen(["svn", "log", "-l", "100", code_url], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-    #svn_proc = subprocess.Popen(["svn", "log", "-l", "3", code_url], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-    svn_stdout, svn_stderr = svn_proc.communicate()
-    # Filter out the revision lines
-    egrep_proc = subprocess.Popen(["egrep", "^r[0-9]"], stdin=subprocess.PIPE, stdout=subprocess.PIPE,        stderr=subprocess.STDOUT, shell=False)
-    egrep_stdout, egrep_stderr = egrep_proc.communicate(input=svn_stdout)
-    # Filter out the revision numbers
-    sed_proc = subprocess.Popen(["sed", "-e", "s/^r\([0-9]*\) .*$/ \\1/"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-    sed_stdout, sed_stderr = sed_proc.communicate(input=egrep_stdout)
-    # Split the revision numbers into a list
-    return sed_stdout.split()
-
 # TODO: change this to non-shell for improved security
-def get_recent_git_revisions(code_name):
+def get_recent_git_revisions(code_details):
     git_log = subprocess.check_output("cd "+BASE_DIR+"/repos/"+code_name+" ; git pull --quiet; git log --pretty=oneline | awk '{print $1}'", shell=True)
     return git_log.split()
 
-def process_code_revisions(cig_code, revs):
+def process_code_revisions(code_details, revs):
     # Open the shelve containing a record of all previously processed revisions
     # This ensures that commited but unpushed changes will still be processed eventually,
     # whereas if we evaluated them by timestamp we could miss some
 
+    cig_code = code_details["short_name"]
     batlab_rev_shelve = shelve.open("revs_batlab", writeback=True)
     doxygen_rev_shelve = shelve.open("revs_doxygen", writeback=True)
 
@@ -45,7 +29,7 @@ def process_code_revisions(cig_code, revs):
     if not doxygen_rev_shelve.has_key(cig_code): doxygen_rev_shelve[cig_code] = []
 
     # Determine the final commit in the sequence, since there's no reason to generate the intermediate documentation
-    rep_url = code_db.repo_url[cig_code]
+    rep_url = code_details["repo_url"]
 
     # Find the new revisions that aren't already in the shelve
     revs.reverse()
@@ -53,14 +37,14 @@ def process_code_revisions(cig_code, revs):
     new_batlab_revs = [rev for rev in revs if rev not in batlab_rev_shelve[cig_code]]
 
     # Generate doxygen for the latest revision
-    if code_db.code_doxygen_dev(cig_code) and len(new_doxygen_revs) > 0:
+    if code_details["dev_dox"] == 'y' and len(new_doxygen_revs) > 0:
         for rev in new_doxygen_revs: doxygen_rev_shelve[cig_code].append(rev)
         doxy_dict = {}
         doxy_dict["url"] = rep_url
         doxy_dict["revid"] = new_doxygen_revs[-1]
-        doxy_dict["full_name"] = code_db.full_name[cig_code]
+        doxy_dict["full_name"] = code_details["package_title"]
         doxy_dict["code"] = cig_code
-        doxy_dict["repo_type"] = code_db.repo_type[cig_code]
+        doxy_dict["repo_type"] = code_details["repo_type"]
         doxy_dict["base_dir"] = BASE_DIR
         doxy_cmd = "\"cd {base_dir}/doxygen/ ; ./generate_doxygen.sh {repo_type} {url} {revid} \\\"{full_name}\\\" {code}\"".format(**doxy_dict)
         #print("cd "+BASE_DIR+" ; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue "+doxy_cmd+" &")
@@ -72,9 +56,9 @@ def process_code_revisions(cig_code, revs):
         if len(code_db.batlab_platforms[cig_code]) > 0:
             batlab_login = "eheien@submit-1.batlab.org"
             batlab_cmd = "cd /home/eheien/cig_backend/batlab/ ; ./run_batlab.py "+cig_code+" "+rev
-            rcp_cmd = "ssh "+batlab_login+" \\\""+batlab_cmd+"\\\""
-            #print("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue "+rcp_cmd+" &")
-            #os.system("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue \""+rcp_cmd+"\" &")
+            rpc_cmd = "ssh "+batlab_login+" \\\""+batlab_cmd+"\\\""
+            #print("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue "+rpc_cmd+" &")
+            #os.system("cd "+BASE_DIR+"; "+BASE_DIR+"/queue/queue_daemon.sh backend_queue \""+rpc_cmd+"\" &")
             #batlab_rev_shelve[cig_code].append(rev)
 
     # Add the revisions to the shelve and close it
@@ -88,19 +72,19 @@ def main():
 
     cig_code = sys.argv[1]
 
-    if cig_code not in code_db.codes() and cig_code != "all":
+    all_cig_codes = cig_codes.list_cig_codes()
+    if cig_code not in all_cig_codes and cig_code != "all":
         print("Unknown code:", cig_code)
         exit(-1)
 
-    if cig_code == "all": code_list = code_db.codes()
+    if cig_code == "all": code_list = all_cig_codes
     else: code_list = [cig_code]
 
     for code in code_list:
-        if code_db.repo_type[code] is "svn":
-            revs = get_recent_svn_revisions(code)
-        elif code_db.repo_type[code] is "git":
-            revs = get_recent_git_revisions(code)
-        elif code_db.repo_type[code] is "hg":
+        code_details = cig_codes.query_cig_code(code)
+        if code_details["repo_type"] is "git":
+            revs = get_recent_git_revisions(code_details)
+        else:
             print("unsupported repo type")
             revs = []
 

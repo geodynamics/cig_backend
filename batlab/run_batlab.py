@@ -3,7 +3,7 @@
 from __future__ import print_function
 import sys
 sys.path.append("..")
-from cig_codes import code_db
+import cig_codes
 
 import tempfile
 import shutil
@@ -31,29 +31,24 @@ def submit_run(run_name, code_name, run_spec_loc):
         print (submit_stdout, submit_stderr)
         return None
 
-def create_source_input_file(cig_code, tmp_dir, use_repo, revision):
+def create_source_input_file(code_details, cig_code, tmp_dir, use_repo, revision):
     # Create the input source specification
     src_input_file_name = tmp_dir+"/source_input_desc"
     src_input_desc = open(src_input_file_name, 'w')
     if use_repo:
-        if code_db.repo_type[cig_code] is "svn":
-            print("method = svn", file=src_input_desc)
-            code_url = code_db.repo_url[cig_code]
-            if revision: code_url += " -r "+revision
-            print("url =", code_url, cig_code, file=src_input_desc)
-        elif code_db.repo_type[cig_code] is "git":
+        if code_details["repo_type"] is "git":
             print("method = git", file=src_input_desc)
-            print("git_repo =", code_db.repo_url[cig_code], file=src_input_desc)
+            print("git_repo =", code_details["repo_url"], file=src_input_desc)
             # TODO: specify revision for Git
         else:
-            print("Error: unknown repository type", code_db.repo_type[cig_code])
+            print("Error: unknown repository type", code_details["repo_type"])
             exit(1)
         print(file=src_input_desc)
     else:
         #print("method = url", file=src_input_desc)
-        #print("url =", code_db.release_src[cig_code], file=src_input_desc)
+        #print("url =", code_details["release_src_url"], file=src_input_desc)
         print("method = scp", file=src_input_desc)
-        code_file_name = code_db.release_src[cig_code].split("/")[-1]
+        code_file_name = code_details["release_src_url"].split("/")[-1]
         print("scp_file = /home/eheien/cig_backend/batlab/distributions/"+code_file_name, file=src_input_desc)
         print("untar = true", file=src_input_desc)
         print(file=src_input_desc)
@@ -76,13 +71,14 @@ def test_code(cig_code, revision, dry_run, use_repo):
     build_error = False
 
     # Check that this code supports BaTLab testing first
+    code_details = cig_codes.query_cig_code(cig_code)
     if len(code_db.batlab_params[cig_code].platforms) == 0: return
 
     # Create a temporary directory to store the files in
     tmp_dir = tempfile.mkdtemp()
 
     # Create a source input file for this code
-    src_input_file_name = create_source_input_file(cig_code, tmp_dir, use_repo, revision)
+    src_input_file_name = create_source_input_file(code_details, cig_code, tmp_dir, use_repo, revision)
 
     # Create the input build files specification
     build_input_file_name = tmp_dir+"/build_input_desc"
@@ -97,11 +93,11 @@ def test_code(cig_code, revision, dry_run, use_repo):
     # Create a text string describing the revision
     if use_repo:
         if revision:
-            rev_desc = code_db.repo_type[cig_code]+" revision "+revision
+            rev_desc = code_details["repo_type"]+" revision "+revision
         else:
-            rev_desc = code_db.repo_type[cig_code]+" latest revision"
+            rev_desc = code_details["repo_type"]+" latest revision"
     else:
-        rev_desc = code_db.repo_type[cig_code]+" release"
+        rev_desc = code_details["repo_type"]+" release"
 
     # Create the run specification
     build_run_spec_file_name = tmp_dir+"/build_run_spec"
@@ -239,11 +235,12 @@ def main():
         print("syntax:", sys.argv[0], "<code_name> [--revision rev_num] [--dry_run]")
         exit(1)
 
-    if cig_code == "all": code_list = code_db.codes()
+    all_cig_codes = cig_codes.list_cig_codes()
+    if cig_code == "all": code_list = all_cig_codes
     else: code_list = [cig_code]
 
     for check_code in code_list:
-        if check_code not in code_db.codes():
+        if check_code not in all_cig_codes
             print("unknown code:", check_code)
             exit(1)
 
