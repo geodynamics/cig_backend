@@ -42,10 +42,13 @@ def parse_apache_logfile(db_conn, logfile, start_date):
             if len(request_data) <= 1: continue
             request_url = request_data[1]
             breakdown = request_url.split('/')
-            # If the URL starts with /cig/software
+            # If the URL starts with /cig/software or /cig/software/github
             if len(breakdown) >= 4 and breakdown[1] == 'cig' and breakdown[2] == 'software':
-                # Then the third subpath is the code name
-                cig_code = breakdown[3]
+                # Then the third subpath is the code name (fourth if it's a github redirect)
+                if breakdown[3] == 'github':
+                    cig_code = breakdown[4]
+                else:
+                    cig_code = breakdown[3]
                 # Assume the file name is the final path element
                 url_end = breakdown[-1]
                 valid = False
