@@ -459,6 +459,14 @@ git push --mirror https://github.com/geodynamics/plasti.git
 
 ------------------------------------------------------------------------------------------------
 
+Cigma Doc (DONE, merged into Cigma)
+mkdir cigma_doc
+cd cigma_doc
+svn2git http://geodynamics.org/svn/cig/doc/cigma/manual --rootistrunk
+../../gitscrub.sh figures3/bm3/fields_512.png figures2/* figures3/*
+
+------------------------------------------------------------------------------------------------
+
 Cigma (DONE)
 mkdir cigma
 cd cigma
