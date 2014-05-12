@@ -7,7 +7,7 @@ sys.path.append("..")
 import json
 import urllib2
 import time
-from cig_codes import code_db
+import cig_codes
 
 GITHUB_API_URL = "https://api.github.com"
 HOOKS_URL = GITHUB_API_URL + "/repos/geodynamics/%s/hooks"
@@ -83,7 +83,7 @@ def main():
     cmd = sys.argv[2]
 
     # Get the list of CIG git codes
-    code_list = [code for code in code_db.codes() if code_db.repo_type[code] == "git"]
+    code_list = [code for code in cig_codes.list_cig_codes() if cig_codes.query_cig_code(code)["repo_type"] == "git"]
     if cmd == "check":
         for code in code_list:
             check_install_hooks(code, github_oauth_token, False)
