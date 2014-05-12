@@ -179,7 +179,7 @@ def main():
 
     # For the command "all" generate maps for all codes listed in the code_db
     if PACKAGE_NAME == "all":
-        for code_name in cig_codes.code_db.codes():
+        for code_name in cig_codes.list_cig_codes():
             generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, code_name, START_TIME, END_TIME)
     else:
         generate_plot(HIT_DB_NAME, LOCATION_DB_NAME, OUTPUT_DIR, PACKAGE_NAME, START_TIME, END_TIME)
