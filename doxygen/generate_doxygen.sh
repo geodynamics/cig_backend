@@ -53,31 +53,7 @@ mkdir -p $DOXY_DIR/dev
 mkdir -p $TMP_DIR
 
 # Get a copy of the code using the user specified method
-if [ $METHOD = "svn" ]
-then
-	# Check if the repository already exists
-	SVN_REPO_DIR="$REPO_DIR/$NAME"
-	set +e
-	(cd $SVN_REPO_DIR && svn info) >> /dev/null 2>&1
-	# If not, check it out
-	if [ $? -ne 0 ]
-	then
-		set -e
-		echo -n "Checking out code using SVN from $URL ... "
-		svn checkout "$URL" $SVN_REPO_DIR >> $LOG_FILE 2>&1
-		echo "done."
-	else
-		echo "Already have code using SVN from $URL "
-	fi
-	set -e
-	# Change the copy of the code to the appropriate revision
-	echo -n "Changing repository to revision $REV ... "
-	cd $SVN_REPO_DIR
-	svn update -r "$REV" >> $LOG_FILE 2>&1
-	cp -r $SVN_REPO_DIR $CODE_INPUT_DIR
-	REV_TITLE="SVN Revision $REV"
-	SUBDIR="dev"
-elif [ $METHOD = "git" ]
+if [ $METHOD = "git" ]
 then
 	GIT_REPO_DIR="$REPO_DIR/$NAME"
 	set +e
@@ -114,7 +90,7 @@ then
 	SUBDIR="release"
 	REV_TITLE="Version $REV"
 else
-	echo "ERROR: method must be one of: svn, git, url"
+	echo "ERROR: method must be one of: git, url"
 	exit 1
 fi
 
