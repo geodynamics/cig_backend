@@ -37,7 +37,7 @@ def process_code_revisions(code_details, revs):
     new_batlab_revs = [rev for rev in revs if rev not in batlab_rev_shelve[cig_code]]
 
     # Generate doxygen for the latest revision
-    if code_details["dev_dox"] == 'y' and len(new_doxygen_revs) > 0:
+    if code_details["dev_doxygen"] == 'y' and len(new_doxygen_revs) > 0:
         for rev in new_doxygen_revs: doxygen_rev_shelve[cig_code].append(rev)
         doxy_dict = {}
         doxy_dict["url"] = rep_url

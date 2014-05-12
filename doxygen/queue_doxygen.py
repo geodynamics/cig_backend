@@ -31,12 +31,12 @@ def main():
         cmd_dict["queue_cmd"] = "../queue/queue_daemon.sh backend_queue"
         cmd_dict["code_name"] = code_name
         cmd_dict["full_name"] = code_details["package_title"]
-        if code_type == "release" and code_details["release_dox"] == "y":
+        if code_type == "release" and code_details["release_doxygen"] == "y":
             cmd_dict["code_url"] = code_details["release_src_url"]
             cmd_dict["code_version"] = code_details["release_src_version"]
             sys_cmd = "{queue_cmd} \"cd `pwd` ; ./generate_doxygen.sh url {code_url} {code_version} \\\"{full_name}\\\" {code_name}\" &".format(**cmd_dict)
             os.system(sys_cmd)
-        elif code_type == "dev" and code_details["dev_dox"] == "y":
+        elif code_type == "dev" and code_details["dev_doxygen"] == "y":
             cmd_dict["repo_url"] = code_details["repo_url"]
             cmd_dict["repo_type"] = code_details["repo_type"]
             # Determine the latest revision number of the repository

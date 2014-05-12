@@ -27,7 +27,7 @@ standard_batlab_platforms = ["x86_64_Debian5", "x86_64_Debian6", "x86_64_Debian7
 unused_platforms = ["x86_64_Solaris11", "x86_64_Windows7", "x86_64_Windows8", "x86_WindowsXP"]
 
 CIG_SERVER="http://geoweb.cse.ucdavis.edu/"
-QUERY_SCRIPT="eric.php"
+QUERY_SCRIPT="query.php"
 
 def list_cig_codes():
     f = urllib.urlopen(CIG_SERVER+QUERY_SCRIPT+"?cmd=list")
