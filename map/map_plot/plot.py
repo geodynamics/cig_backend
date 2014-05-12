@@ -36,11 +36,16 @@ def ip_nums_to_locations(db_name, ip_num_list):
     db_conn = sqlite3.connect(db_name)
     unmapped_ips = 0
 
+    cache = {}
     result = []
     for check_ip in ip_num_list:
-        res = find_ip_lat_lon(db_conn, check_ip)
-        if res is not None:
-            result.append(res)
+        if check_ip in cache:
+            result.append(cache[check_ip])
+        else:
+            res = find_ip_lat_lon(db_conn, check_ip)
+            if res is not None:
+                result.append(res)
+                cache[check_ip] = res
     db_conn.close()
 
     return result
