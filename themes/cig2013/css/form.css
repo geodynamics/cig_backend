@@ -1,0 +1,61 @@
+input:required:valid {
+  background-image: url("images/good.png"); 
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+
+input:required:invalid {
+  background-image: url("images/bad.png"); 
+  background-position: right top;
+  background-repeat: no-repeat;
+}
+
+
+/* Because setting an input messes up the look on some browsers */
+input[type=text], select, textarea {
+    border-top: 1px #acaeb4 solid;
+    border-left: 1px #dde1e7 solid;
+    border-right: 1px #dde1e7 solid;
+    border-bottom: 1px #e3e9ef solid;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    padding: 2px;
+}
+input[type=text]:hover, select:hover, textarea:hover, input[type=text]:focus, select:focus, textarea:focus {
+    border-top: 1px #5794bf solid;
+    border-left: 1px #c5daed solid;
+    border-right: 1px #b7d5ea solid;
+    border-bottom: 1px #c7e2f1 solid;
+}
+select { border: 1px; }
+
+UL.form-section {
+  list-style: none;
+  margin-bottom: 1em;
+  /* I have no idea why this works, but it adds padding correctly */
+  display: table; 
+  padding-left: 0;
+  width: 100%;
+}
+
+form UL.form-section LI {
+  clear: both;
+}
+form UL.form-section LI label, form.form-section UL LI input {
+  float: left; 
+}
+form UL LI.short label, form UL LI.medium label, form UL LI.long label {
+  width: 9em;
+}
+form UL LI.short input { width: 6em; } /* Zip codes, State */
+form UL LI.medium input { width: 15em; } /* Names, City */
+form UL LI.long input { width: 25em; } /* Email */
+form UL LI.full input, form UL LI.full textarea { 
+/*  margin-left: auto; margin-right: auto;  */
+  width: 100%;
+}
+
+
+/* Shouldn't be in use */
+form UL.form-section label { padding-right: 1.5em; }
