@@ -2,8 +2,10 @@
 <!DOCTYPE html>
 <html lang="<?php echo LANGUAGE?>">
 
+<!-- JQuery added 5/15/2014 (we should really already have had this.) -->
+<script type="text/javascript" stc="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <!-- MathJax Plugin added 3/13/2014 -->
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 <head>

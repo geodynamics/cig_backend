@@ -37,4 +37,9 @@ Site Map |
 <?php Loader::element('footer_required'); ?>
 
 </body>
+<!-- footer plugins (depend upon full page being loaded.) -->
+<!-- scrolling sidebar plugin added 5/15/2014 -->
+<script type="text/javascript" src="/cig/js/scroll-sidebar.js"></script>
+
+
 </html>
