@@ -1,0 +1,305 @@
+h1 {
+	font-size: 18pt;
+        font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+/*	color: #666699; */
+/*      color: #194679; */
+	color: #002666;
+}
+
+h2 {
+	font-size: 15pt;
+        font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+/*	color: #666699; */
+/*      color: #194679; */
+	color: #002666;
+}
+
+h3, h4, h5 {
+	font-size: 11pt;
+        font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+/*	color: #666699; */
+/*      color: #194679; */
+	color: #002666;
+	text-transform: uppercase;
+        margin-bottom: 0.25em; 
+}
+
+.header-bolded {
+        display: inline-block;
+/*      border-bottom: 2px solid black; */
+        border-bottom: #BF9900 solid 1px;
+/*      background-color: #ddd; */
+        background-color: #E5D699;
+/*      background: linear-gradient(#fff, #ccc); */
+/*      background: linear-gradient(#ccc, #fff); */
+        padding-left: 6px; 
+        padding-right: 6px;
+        width: 100%;
+}
+
+.news_list .time {
+        display: none;
+}
+
+.content a, .sidebar_left a { 
+/*      color: #295689; */
+        color: #002855;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover {
+        color: #77160B;
+}
+
+td { /* Prevent semi-random resizing of text on software list page on mobile browsers */ 
+        -moz-text-size-adjust: none;    /* Firefox Mobile */
+        -webkit-text-size-adjust: none; /* Safari Mobile */
+        -ms-text-size-adjust: none;     /* IE Mobile */
+}
+
+html {
+        width: 100%; 
+}
+
+body {
+        width: 100%;
+        padding: 0;
+        margin: 0px; 
+        font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+/*      font-size: 90%; */
+        font-size: 0.9em; 
+}
+
+
+
+.header p { 
+  /* Cleaning up p blocks around the header and nav */
+        margin: 0px; 
+}
+
+.header .ccm-block-styles {
+  /* Somewhere, the background is set black on this... */
+/*      background-color: #194679 !important; /* For browsers not CSS3 */
+        background-color: #002666 !important;
+/*      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#194679', endColorstr='#002855'); /* for IE */
+/*      background: -webkit-gradient(linear, left top, left bottom, from(#194679), to(#002855)); /* for webkit browsers */
+/*      background: -moz-linear-gradient(top,  #194679,  #002855); /* for firefox 3.6+ */
+}
+
+.header .ccm-block-styles img { 
+  /* Padding on the CIG logo */
+        padding: 10px;
+}
+
+.footer {
+        text-align: center;
+        padding: 3px;
+        color: #FFFFFF;
+/*      border-top: 2px solid black; */
+
+        font-size: 0.8em;
+
+
+/*      background-color: #194679; /* For browsers not CSS3 */
+        background-color: #002666;
+/*      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#194679', endColorstr='#002855'); /* for IE */
+/*      background: -webkit-gradient(linear, left top, left bottom, from(#194679), to(#002855)); /* for webkit browsers */
+/*      background: -moz-linear-gradient(top,  #194679,  #002855); /* for firefox 3.6+ */
+}
+
+
+
+/* GENERAL CONTENT */
+
+/* Spacing to keep the text content from smacking into the edges. */
+.full_content_area {
+        padding-left: 1em;
+        padding-right: 1em;
+}
+
+.full_content_area .ccm-layout-col-2 .column_spacing {
+        padding-left: 1em;
+}
+
+.content.content_left {
+        max-width: 1024px;
+        margin: 0.5em auto 1em auto;
+}
+
+.ccm-area-styles.no_nav {
+        max-width: 1024px;
+        margin: 0.5em auto 1em auto;
+}
+
+/* LEFT NAV PAGES */
+
+.sidebar_left {
+        float: left;
+        width: 18%;
+        margin-right: 2%;
+	background-color: #E5D699;
+}
+
+.content_left {
+        float: left;
+        width: 80%
+}
+
+.search {
+        float: right;
+        color: #fff;
+        padding: 5px;
+}
+
+.search a {
+        color: #ff9;
+}
+
+.login {
+        text-align: center;
+}
+
+.slider-wrapper img {
+/*      height: 275px;    */
+        overflow: hidden; 
+}
+
+/* START GENERAL USE */
+
+.clear:before, .clear:after {
+        content:"";
+        display:table;
+}
+
+.clear:after { 
+        clear:both; 
+}
+
+.clear { 
+        zoom:1; /* For IE 6/7 (trigger hasLayout) */ 
+}
+
+.content table {
+        border-collapse: collapse;
+/*      border-top: solid 2px #000; */
+/*      border-bottom: solid 2px #000; */
+}
+
+.content table td {
+/*      border-bottom: solid 1px #ccc; */
+        padding-bottom: 1.0em;
+        padding-right: 0.3em;
+        padding-left: 0.3em;
+}
+
+.content table td a {
+        text-decoration: none;
+        font-weight: bold;
+}
+
+.content table tr.section-header {
+        border-top: solid 2px #BF9900;
+}
+
+.content table thead tr td, table tr th {
+/*      border-bottom: solid 2px #000; */
+        background-color: #194679;
+        color: #fff;
+}
+
+.center-content .event_cal {
+        margin: 0em auto 0em auto;
+}
+
+
+/* NEWS & EVENTS FRONT PAGE BLOCK */
+/* DEBUG - I think whoever revamped the news items to ProEvents made these sections obsolete 4/2014 */
+
+/*
+.news, .events {
+        list-style-type: none;
+        padding-left: 0;
+        line-height: 1.25em;
+}
+
+.news li, .events li {
+        padding-bottom: 0.5em;
+}
+
+.news .item-details, .events .item-details {
+        font-size: 0.8em;
+}
+*/
+
+
+/* Used for front page Download list */
+.clean_list {
+        list-style-type: none;
+        padding-left: 0.5em;
+        padding-top: 0em;
+        margin-top: 0em;
+}
+
+/* SOFTWARE PAGES */
+
+.software-release {
+        font-weight: bold;
+        padding-bottom: 0;
+        margin-bottom: 0;
+
+        font-size: 1.05em;
+}
+
+.software-release a {
+	text-decoration: none;
+}
+
+pre.software-description {
+        border: dotted 1px #999;
+        margin-left: 1em;
+        padding: 0.75em;
+        background-color: #eee;
+}
+
+.software-description {
+        padding-top: 0;
+        margin-top: 0;
+        padding-left: 1em;
+}
+
+.software_status {
+        float: right;
+        padding: 0.5em;
+        margin: 0.25em;
+/*      border-top: solid 2px black; */
+/*      border-bottom: solid 2px black; */
+        border-bottom: solid 1px #BF9900;
+/*      background: linear-gradient(#ccc, #fff); */
+        background-color: #E5D699;
+}
+
+.software_status p a {
+	text-decoration: none;
+}
+
+ul a, .software-description a {
+  	text-decoration: none;
+}
+
+/* Not sure why this is being done. Don't see it in software, which is what it's listed under */
+/*
+.content > ul {
+	padding-left: 0px;
+        margin-left: 0px;
+}
+
+.content > ul li {
+	list-style-type: none; 
+	padding-bottom: 0.5em;
+}
+*/
+
+.software_status p {
+        max-width: 250px; /* Make all the blocks the same width as the manual cover */
+}

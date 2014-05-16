@@ -1,0 +1,6 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /cig/software/software_list
+RewriteCond %{REQUEST_FILENAME}/bill !-f
+RewriteRule . index.php [L]
+</ifModule>
