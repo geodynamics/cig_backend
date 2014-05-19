@@ -1,0 +1,255 @@
+.nav_main {
+	font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+	font-size: 11pt;
+
+	text-align: left;
+}
+
+/* START TOP NAVIGATION */
+
+.nav_main .nav
+{
+	text-align: left;
+
+        margin: 0;
+        list-style: none;
+/*      border-top: 2px solid black; */
+        border-top: 1px solid #BF9900;
+/*      border-bottom: 2px solid black; */
+        border-bottom: 1px solid #002666;
+/*	background-color: #ddd; */
+        background-color: #D2B84C;
+/*      background: -webkit-linear-gradient(#999, #666); */
+/*      background: -o-linear-gradient(#999, #666); */
+/*      background: -ms-linear-gradient(#999, #666); */
+/*      background: linear-gradient(#fff, #ccc); */
+}
+
+.nav_main .nav li {
+        float: left;
+        position: relative;
+        border-left: 1px solid #BF9900;
+}
+
+.nav_main .nav li:first-child {
+        border-left: none;
+}
+
+.nav_main .nav a {
+        font-size: 1em;
+        font-weight: bold;
+        
+	height: 20px;
+
+	padding-right:27px;
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left:7px;
+
+        float: left;
+        color: #002666;
+/*      text-transform: uppercase; */
+        text-decoration: none;
+/*      text-shadow: 0 1px 0 #fff; */
+}
+
+.nav_main a {
+        text-decoration: none;
+}
+
+.nav_main .nav li:hover > a {
+        background: #BF9900;
+        color: #77160B;
+}
+
+*html .nav_main .nav li a:hover /* IE6 */ {
+        background: #BF9900;
+}
+
+.nav_main .nav li:hover > ul {
+        display: block;
+}
+
+/* Sub-menu */
+
+.nav_main .nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: none;
+        position: absolute;
+        top: 30px;
+        left: -1px;
+        z-index: 99999;
+        background-color: #D2B84C; /* For browsers not CSS3 */
+/*
+        background: -webkit-linear-gradient(#194679, #002855);
+        background: -o-linear-gradient(#194679, #002855);
+        background: -ms-linear-gradient(#194679, #002855);
+        background: linear-gradient(#194679, #002855);
+        -moz-box-shadow: 0 0 2px rgba(255,255,255,.5);
+        -webkit-box-shadow: 0 0 2px rgba(255,255,255,.5);
+        box-shadow: 0 0 2px rgba(255,255,255,.5);
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+*/
+}
+
+.nav_main .nav > ul {
+        border-top: 1px solid #002666;
+}
+
+.nav_main .nav ul ul {
+        top: -1px;
+        left: 205px; /* this is tied to the (ul a) nav item width below */
+	border-top: 1px solid #D2B84C;
+}
+
+.nav_main .nav ul li
+{
+        float: none;
+        margin: 0;
+        padding: 0;
+        display: block;
+
+        border-bottom: 1px solid #BF9900;
+/*
+        -moz-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+        -webkit-box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+        box-shadow: 0 1px 0 #111111, 0 2px 0 #777777;
+*/
+}
+
+.nav_main .nav ul li a:hover {
+        color: #77160B;
+}
+
+.nav_main .nav ul li:last-child
+{
+/*
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+*/
+}
+
+.nav_main .nav ul a
+{
+        font-size: 0.9em;
+        padding: 10px;
+        height: 10px;
+        width: 185px;
+        height: auto;
+        display: block;
+        white-space: nowrap;
+        float: none;
+        text-transform: none;
+}
+
+*html .nav_main .nav ul a /* IE6 */ { 
+        height: 10px; 
+}
+
+*:first-child+html .nav_main .nav ul a /* IE7 */ {
+        height: 10px; 
+}
+
+.nav_main .nav ul li:first-child > a {
+/*
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+*/
+}
+
+.nav_main .nav ul li:first-child > a:after
+{
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: -8px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #444;
+}
+
+.nav_main .nav ul ul li:first-child a:after
+{
+    left: -8px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-left: 0;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-right: 8px solid #444;
+}
+
+.nav_main .nav ul li:first-child a:hover:after /* Top triangle */
+{
+    border-bottom-color: #77160B;
+}
+
+.nav_main .nav ul ul li:first-child a:hover:after /* Top triangle */
+{
+    border-right-color: #77160B;
+    border-bottom-color: transparent;
+}
+
+
+/* Clear floated elements */
+.nav_main .nav:after
+{
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+}
+
+* html .nav_main .nav { 
+        zoom: 1; 
+} /* IE6 */
+
+*:first-child+html .nav_main .nav { 
+        zoom: 1; 
+} /* IE7 */
+
+.nav_main .nav > li > ul {
+        border-top: 1px solid #002666;
+}
+
+/* SIDE NAV */
+
+.sidebar_left {
+        font-family: 'Lucida Sans Unicode', 'Arial', 'sans-serif';
+        font-weight: bold;
+        line-height: 1.25em;
+
+        padding-top: 1em;
+        padding-bottom: 1.5em; 
+
+        background-color: #E5D699;
+        border-bottom: solid 1px #BF9900;
+}
+
+
+.sidebar_left ul.nav {
+        margin: 0px;
+        padding-top: 0.5em; 
+        padding-right: 1.0em;
+        
+        list-style-type: none;
+
+        font-size: 1.05em;
+}
+
+.sidebar_left ul.nav li {
+  padding-bottom: 0.5em;
+}
+
+.sidebar_left ul.nav li a {
+  text-decoration: none;
+}
