@@ -1,7 +1,7 @@
 DESCRIPTION OF BACKEND DATA
 
 Written by Eric Heien on Apr 15, 2013
-Updated Sep. 25, 2013
+Updated May 20, 2014
 
 This directory contains scripts and data related to the backend management of
 the CIG website. This includes things such as download hit records and map
@@ -14,24 +14,31 @@ detail. Here is a brief overview of the directories:
 batlab/
     Contains scripts, support files, and libraries to perform build and test
     operations on CIG codes using the BaTLab system.
-    Relevant URL as of Sep 25, 2013
+    Relevant URL as of May 20, 2014
     http://submit-1.batlab.org/cig/
+
+c5/
+	Contains PHP, Javascript, etc scripts related to the Concrete5 website.
+	Connected to Concrete5 website folder through symbolic links.
+    Relevant URL as of May 20, 2014
+    http://geodynamics.org/cig/admin/
+    http://geodynamics.org/cig/
 
 doxygen/
     Contains scripts to generate doxygen based documentation of the different
     CIG codes based either on released source or a repository checkout.
-    Relevant URL as of Sep 25, 2013
+    Relevant URL as of May 20, 2014
     http://geodynamics.org/cig/doxygen/
 
 git/
     Contains scripts and submodules related to the SVN to Git conversion in
-    2013, automated diff email for Git commits, and Github manipulation
+    2013/2014, automated diff email for Git commits, and Github manipulation
     scripts.
 
 map/
     Contains databases, scripts and related files for tracking downloads of
     software distributions from the website, and creating maps to display
-    downloads.  Relevant URL as of Sep 25, 2013
+    downloads.  Relevant URL as of May 20, 2014
     http://geodynamics.org/cig/maps/
 
 queue/
@@ -41,8 +48,21 @@ queue/
 
 ref_list/
     Information regarding online publication list, database, and editor.
-    Relevant URL as of May 1, 2014
+    Relevant URL as of May 20, 2014
     http://geodynamics.org/cig/news/publications/
+
+
+Directories which may exist:
+
+queues/
+    Contains queue related files including commands (formed as SUBMISSIONTIME_PID)
+    and lockfiles.
+
+repos/
+    Contains checked out versions of the development source. Since checking out
+    the entire code may take a long time, the doxygen/generate_doxygen.sh
+	script checks out the code once and updates it to the current revision.
+	This drastically improves speeds and avoids wasting bandwidth.
 
 
 NOTES
@@ -73,7 +93,7 @@ not actually generate the doxygen, but rather queue up commands for it to be
 generated. Errors from these commands will be put in the file
 queues/backend_queue/queue.log.
 
-0 0 * * * cd /home/backend/cig_backend/git/gitdub ; PATH=$PATH:/home/backend/cig_backend/git/git-notifier ./gitdub ../config.yml >> /home/backend/cig_backend/git/git_backend.log 2>&1
+0 6 * * * cd /home/backend/cig_backend/git/gitdub ; PATH=$PATH:/home/backend/cig_backend/git/git-notifier ./gitdub ../config.yml >> /home/backend/cig_backend/git/git_backend.log 2>&1
 
 Nightly attempt to start the gitdub server to receive hook notifications from
 Github about new commits. If the server is already running this simply aborts
@@ -82,5 +102,11 @@ and leaves the previous process running.
 0 3 * * * cd /home/backend/cig_backend/git ; ./setup_github.py OAUTH_TOKEN trigger >> /home/backend/cig_backend/git/trigger.log 2>&1
 
 Nightly trigger all Github hooks to ensure we didn't miss any commits in the
-past day to send emails for.
+past day to send emails for. The OAUTH_TOKEN is generated and stored on the
+CIG Github account "geodynamics".
+
+* * * * * cd /home/backend/cig_backend ; python -c "import cig_codes; codes = ['geodynamics/'+code for code in cig_codes.list_cig_codes()]; codes.append('eheien/cig_backend'); print('\n'.join(codes));" > /home/backend/repo_list.txt
+
+Creates a list of current CIG code repositories (along with the backend repository).
+This is used to do local backups of all repositories.
 
