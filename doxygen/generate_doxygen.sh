@@ -52,6 +52,9 @@ mkdir -p $DOXY_DIR/release
 mkdir -p $DOXY_DIR/dev
 mkdir -p $TMP_DIR
 
+# Set up the fortran preprocessor script
+cp $TOP_DIR/fpp.sh $TMP_DIR
+
 # Get a copy of the code using the user specified method
 if [ $METHOD = "git" ]
 then
