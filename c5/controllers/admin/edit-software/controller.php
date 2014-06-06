@@ -16,7 +16,8 @@ class AdminEditSoftwareController extends Controller {
 	"select 
 	  software.id,
 	  package_title, short_name, domain_id, license,
-	  mail_lists, wiki, repo_type, dev_branch, bug_reports, has_manual,
+	  mail_lists, wiki, repo_type, dev_branch, bug_reports,
+          has_manual, manual_url,
 	  dev_doxygen, release_doxygen,
 	  user_map, hidden, date_format( updated, '%b %e, %Y' ) as updated,
 	  domain_abbr, domain_name
@@ -50,6 +51,7 @@ class AdminEditSoftwareController extends Controller {
       		'license' =>		$this->post('license'),
       		'mail_lists' =>		$this->post('mail_lists'),
       		'has_manual' =>		$this->post('has_manual'),
+      		'manual_url' =>		$this->post('manual_url'),
       		'wiki' =>		$this->post('wiki'),
       		'wiki_desc' =>		$this->post('wiki_desc'),
       		'repo_type' =>		$this->post('repo_type'),

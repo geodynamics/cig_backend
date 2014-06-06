@@ -96,7 +96,7 @@
 ?>
     <div class="sidebar_left">
       <ul class="nav">
-        <li><a href="/cig/software/">Return to Software Page</a></li>
+        <li><a href="/cig/software/">Software Package List</a></li>
         <li><h3><?php print $details[package_title]; ?></h3></li>
         <li><a href="#release">Current Release</a></li>
         <li><a href="#users">User Resources</a></li>
@@ -109,8 +109,12 @@
   
     <div class="content content_left">
       <div class="software_status">
-        <?php if ($details[has_manual] == 'y') { ?>
+        <?php if ($details[has_manual] == 'y' && $details[manual_url] == NULL) { ?>
           <a href="/cig/software/<?php print $details[short_name]; ?>/<?php print $details[short_name]; ?>-manual.pdf">
+            <img border="0" class="ccm-image-block" alt src="/cig/software/<?php print $details[short_name]; ?>/cover-small" width="250px">
+          </a>
+        <?php } else if ($details[has_manual] == 'y' && $details[manual_url] != NULL) { ?>
+          <a href="<?php print $details[manual_url]; ?>">
             <img border="0" class="ccm-image-block" alt src="/cig/software/<?php print $details[short_name]; ?>/cover-small" width="250px">
           </a>
         <?php }; ?>

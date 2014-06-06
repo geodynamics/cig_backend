@@ -55,6 +55,10 @@ print "<LI class=medium> ";
 print $form->label      ('has_manual',   'Has Manual?');
 print $form->select	('has_manual',   array('y' => 'Yes', 'n' => 'No'), $software_edit['has_manual']);
 
+print "<LI class=medium> ";
+print $form->label      ('manual_url',   'Manual URL');
+print $form->text	('manual_url',   $software_edit['manual_url'], array('maxlength' => '255'));
+
 print "</UL>\n";
 print "<UL class=form-section>";
 

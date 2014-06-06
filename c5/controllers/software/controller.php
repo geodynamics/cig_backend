@@ -75,6 +75,7 @@ class SoftwareController extends Controller {
            software.mail_lists, 
            software.repo_type, 
            software.has_manual, 
+           software.manual_url,
            software.user_map,
            software.dev_branch,
            software_desc.desc_revision_num,
