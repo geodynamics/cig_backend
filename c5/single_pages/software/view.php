@@ -269,9 +269,12 @@
 
     <a name="users"><h2>User Resources</h2></a>
 
-    <?php if ($details[has_manual]=="y") { ?>
+    <?php if ($details[has_manual] == 'y' && $details[manual_url] == NULL) { ?>
       <p class="software-release">User Manual</p>
       <p class="software-description">The <?php print $details[package_title]; ?> user manual is <a href="/cig/software/<?php print $details[short_name]; ?>/<?php print $details[short_name]; ?>-manual.pdf">available online</a>.</p>
+    <?php } else if ($details[has_manual] == 'y' && $details[manual_url] != NULL) { ?>
+      <p class="software-release">User Manual</p>
+      <p class="software-description">The <?php print $details[package_title]; ?> user manual is <a href="<?php print $details[manual_url];?>">available online</a>.</p>
     <?php }; ?>
             
       <p class="software-release">Community Wiki</p>
