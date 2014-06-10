@@ -1,4 +1,4 @@
-<?php $pub_base_url = View::url('/') . 'admin/ted/'; ?>
+<?php $pub_base_url = View::url('/') . 'admin/edit-publications/'; ?>
 
 <div class='sidebar_left'>
   <ul class='nav'>
