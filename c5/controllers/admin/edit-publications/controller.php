@@ -171,7 +171,7 @@ class AdminEditPublicationsController extends Controller {
     $ih = Loader::helper ('cigSoftwareW');
     $db = $ih->cigSoftwareWDB();
 
-    $code_query = "SELECT id AS code_id, package_title AS title FROM software WHERE hidden='n'";
+    $code_query = "SELECT id AS code_id, package_title AS title FROM software WHERE hidden='n' ORDER BY package_title";
     $result = $db->Query ($code_query);
 
     foreach ($result as $row) {
