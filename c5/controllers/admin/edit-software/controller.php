@@ -49,6 +49,7 @@ class AdminEditSoftwareController extends Controller {
       		'short_name' =>		$this->post('short_name'),
       		'domain_id' =>		$this->post('domain_id'),
       		'license' =>		$this->post('license'),
+      		'hidden' =>		$this->post('hidden'),
       		'mail_lists' =>		$this->post('mail_lists'),
       		'has_manual' =>		$this->post('has_manual'),
       		'manual_url' =>		$this->post('manual_url'),
@@ -76,7 +77,7 @@ class AdminEditSoftwareController extends Controller {
       $db->AutoExecute('software', $data, 'INSERT');
     }
 
-    print_r ($data);
+    #print_r ($data);
 
 
     # close the db connection and load the c5 db, or chaos ensues
