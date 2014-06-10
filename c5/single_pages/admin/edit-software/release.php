@@ -95,6 +95,7 @@ else {
   <TH>Ver</TH>
   <TH>Date</TH>
   <TH>Active</TH>
+  <TH>Hidden</TH>
   <TH>Source</TH>
   <TH>List First</TH>
 </TR>
@@ -118,6 +119,7 @@ else {
     print "<TD>" . $mh->mTxt( $row[revision_num] ) . "</TD>";
     print "<TD>" . $mh->mTxt( $row[release_date] ) . "</TD>";
     print "<TD align=center>" . $mh->mTxt( $row[active] ) . "</TD>";
+    print "<TD align=center>" . $mh->mTxt( $row[hidden] ) . "</TD>";
     print "<TD align=center>" . $mh->mTxt( $row[source] ) . "</TD>";
     print "<TD align=center>" . $mh->mTxt( $row[list_first] ) . "</TD>";
 

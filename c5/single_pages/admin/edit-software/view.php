@@ -38,6 +38,10 @@ print "<LI class=medium> ";
 print $form->label      ('domain_id',   'Domain');
 print $form->select	('domain_id',   $softwareDomainList, $software_edit['domain_id']);
 
+print "<LI class=short> ";
+print $form->label      ('hidden',   'Hidden?');
+print $form->select	('hidden',   array('n' => 'No', 'y' => 'Yes'), $software_edit['hidden']);
+
 print "</UL>\n";
 print "<UL class=form-section>";
 
