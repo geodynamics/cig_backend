@@ -34,7 +34,7 @@
       # Go through each code and print publications
       foreach ($codes as $code_name) {
         # Create the anchor and print the package name
-        print "<h2><a name='" . $code_name["short_name"] . "'>" . $code_name["package_title"] . "</a></h2>";
+        print "<h2><a name='" . $code_name["short_name"] . "'><a href='/cig/software/".$code_name["short_name"] . "'>" . $code_name["package_title"] . "</a></a></h2>";
  
         # print the number of publications just for this code
         $num_pubs = $this->controller->getCodePublicationCount($code_name["id"]);
