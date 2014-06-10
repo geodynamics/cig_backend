@@ -1,6 +1,7 @@
 DESCRIPTION OF HIT MAPPING TOOLS
 
 Written by Eric Heien on Apr 15, 2013
+Updated on May 20, 2014
 
 This directory contains scripts and data related to recording downloads of CIG
 software and creating maps of the download activity. This directory contains three
@@ -48,10 +49,20 @@ ip_database/
 hit_database/
 
     apachelog.py
+	External Python script for parsing Apache access logs.
 
     reset_hit_db.py
+	Python script to reset/create the database recording software hits.
+	Also contains the SQLite DB schema for this database.
+	Only run if you absolutely know what you are doing.
 
     parse_log.py
+	Python script to parse Apache logs and insert relevant hits into the
+	SQLite database. Runs nightly as a cron job.
 
 map_plot/
 
+    plot.py
+	Python script to create hit maps using GMT in combination with the recorded
+	hit database (hit_database/) and IP-geolocation database (ip_database).
+	Runs nightly as a cron job.

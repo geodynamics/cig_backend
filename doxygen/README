@@ -1,6 +1,6 @@
 DESCRIPTION OF AUTOMATED DOXYGEN DOCUMENT GENERATION
 
-Written by Eric Heien on May 1, 2013
+Written by Eric Heien on May 20, 2014
 
 This directory contains scripts to generate documentation for CIG codes using the
 Doxygen documentation system.
@@ -44,12 +44,6 @@ template.doxyfile
 
 Directories which may exist:
 
-repos/
-    Contains checked out versions of the development source. Since checking out
-    the entire code may take a long time, the generate_doxygen.sh script checks
-    out the code once and updates it to the current revision. This drastically
-    improves speeds and avoids wasting bandwidth.
-
 tmp/####
     Temporary directories (number specified by process ID) where the magic happens.
     Used to hold temporary files, logs, etc. These should be deleted automatically
@@ -57,8 +51,4 @@ tmp/####
 
 doxygen/
     Contains copies of the generated doxygen documentation.
-
-queue/
-    Contains queue related files including commands (formed as SUBMISSIONTIME_PID)
-    and lockfiles.
 

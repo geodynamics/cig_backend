@@ -5,6 +5,23 @@ for SHA in `cut -f 1 -d\  < bigobjects.txt`; do echo $(grep $SHA bigobjects.txt)
 
 
 
+------------------------------------------------------------------------------------------------
+
+SNAC Docs (DONE, merged with SNAC repo)
+mkdir snac_doc
+cd snac_doc
+svn2git https://geodynamics.org/svn/cig/doc/snac/ --trunk / --nobranches --notags
+cp figures/snac_cover.psd figures/tmp_cover.psd
+cp figures/snac_cover.pdf figures/tmp_cover.pdf
+cp snac.pdf tmp_snac.pdf
+../gitscrub.sh figures/snac_cover.* snac.pdf
+mv figures/tmp_cover.psd figures/snac_cover.psd
+mv figures/tmp_cover.pdf figures/snac_cover.pdf
+mv tmp_snac.pdf snac.pdf
+git add figures/snac_cover.psd figures/snac_cover.pdf snac.pdf
+git commit -m “Readd manual, covers"
+git push --mirror https://github.com/eheien/snac_doc.git
+
 
 ------------------------------------------------------------------------------------------------
 
