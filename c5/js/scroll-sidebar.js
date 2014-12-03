@@ -4,7 +4,7 @@ $(document).ready (function() {
   var $sidebar   = $ ('.sidebar_left:not(.noscroll)'),
       $window    = $ (window)
       offset     = $sidebar.offset(),
-      topPadding = 75;
+      topPadding = -10;
 
   $window.scroll (function () {
     if ($window.scrollTop() > offset.top) {
