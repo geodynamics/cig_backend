@@ -1,0 +1,76 @@
+git clone https://github.com/geodynamics/specfem2d
+cd specfem2d
+git fetch --tags
+git submodule deinit EXAMPLES
+git rm EXAMPLES
+git commit -m "Remove submodule" .gitmodules EXAMPLES
+git checkout --track origin/devel
+git checkout master
+git subtree add --prefix=EXAMPLES ../specfem2d_examples master
+git checkout devel
+git submodule deinit EXAMPLES
+git rm EXAMPLES
+git commit -m "Remove submodule" .gitmodules EXAMPLES
+git merge master
+git push --mirror git@github.com:eheien/specfem2d.git
+
+
+git clone https://github.com/geodynamics/specfem3d
+cd specfem3d
+git submodule deinit examples
+git rm examples
+git commit -m "Remove submodule" .gitmodules examples
+git checkout --track origin/devel
+git checkout master
+git subtree add --prefix=EXAMPLES ../specfem3d_examples master
+git checkout devel
+git submodule deinit examples
+git rm examples
+git commit -m "Remove submodule" .gitmodules examples
+git merge master
+git push --mirror git@github.com:eheien/specfem3d.git
+
+
+git clone https://github.com/geodynamics/specfem3d_globe
+cd specfem3d_globe
+git submodule deinit EXAMPLES
+git rm EXAMPLES
+git submodule deinit DATA
+git rm DATA
+git commit -m "Remove submodule" .gitmodules EXAMPLES DATA
+git checkout --track origin/devel
+git checkout master
+git subtree add --prefix=EXAMPLES ../specfem3d_globe_examples master
+git subtree add --prefix=DATA ../specfem3d_globe_data master
+git checkout devel
+git submodule deinit EXAMPLES
+git rm EXAMPLES
+git submodule deinit DATA
+git rm DATA
+git commit -m "Remove submodule" .gitmodules EXAMPLES DATA
+git merge master
+git push --mirror git@github.com:eheien/specfem3d_globe.git
+git push --mirror git@github.com:geodynamics/specfem3d_globe.git
+
+
+
+
+
+git clone git://vcs.geodynamics.org/specfem2d_examples
+../gitscrub.sh ZZZ_currently_broken_or_obsolete_examples_but_do_not_remove/BENCHMARK_CLAERBOUT_ADJOINT*
+
+
+git clone git://vcs.geodynamics.org/specfem3d_examples
+git subtree add --prefix=EXAMPLES ../specfem3d_examples master
+
+
+
+
+
+git clone git://vcs.geodynamics.org/specfem3d_globe_examples
+
+
+git clone git://vcs.geodynamics.org/specfem3d_globe_data
+../gitscrub.sh topo_bathy/*bz2 topo_bathy/*grd topo_bathy/topo_bathy_etopo2_smoothed_window_3.dat topo_bathy/topo_bathy_etopo2_original_unmodified_unsmoothed.dat topo_bathy/topo_bathy_etopo4_from_etopo2_subsampled.dat topo_bathy/topo_bathy_etopo4_ori_from_etopo2_subsampled.dat topo_bathy/topo_bathy_etopo5_smoothed_Harvard.dat topo_bathy/topo_bathy_etopo4_smoothed_window_7.dat topo_bathy/topo_bathy_etopo2_original_unmodified_unsmoothed.dat.bz2 topo_bathy/etopo2.grd.bz2 topo_bathy/topo_bathy_etopo2_smoothed_window_3.dat.bz2 topo_bathy/topo_bathy_etopo5.dat
+
+
