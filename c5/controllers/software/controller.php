@@ -87,7 +87,9 @@ class SoftwareController extends Controller {
            software_desc.general_binary_desc,
            software_desc.general_source_desc,
            software.release_doxygen,
-           software.dev_doxygen
+           software.dev_doxygen,
+           software.jenkins_build,
+           software.jenkins_test
          from
            software,
            software_desc,

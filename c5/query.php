@@ -13,13 +13,19 @@ if ($cmd == "list" || $cmd == "detail") {
     $statement = $db->prepare("SELECT short_name FROM software ORDER BY short_name");
   } else {
     $short_name = filter_input(INPUT_GET, 'code', FILTER_SANITIZE_SPECIAL_CHARS);
-    $statement = $db->prepare("SELECT software.short_name, software.package_title, software.repo_type, ".
-                              "CONCAT('https://github.com/geodynamics/', software.short_name, '.git'), ".
-                              "software.dev_doxygen, software.release_doxygen, ".
-                              "CONCAT('http://geodynamics.org/cig/software/', software.short_name, '/', software_tarball.filename), ".
-                              "software_tarball.revision_num FROM software, software_tarball ".
-                              "WHERE software.short_name = ? AND software_tarball.software_id = software.id ".
-                              "AND software_tarball.source = 'y' ORDER BY release_date DESC LIMIT 1");
+    $statement = $db->prepare("SELECT software.short_name, software.package_title, software.repo_type, 
+                              CONCAT('https://github.com/geodynamics/', software.short_name, '.git'), 
+                              software.dev_doxygen, software.release_doxygen, 
+                              CONCAT('http://geodynamics.org/cig/software/', software.short_name, '/', software_tarball.filename), 
+                              software_tarball.revision_num, software.has_manual, 
+                              (CASE
+                                  WHEN LOCATE('/', software.manual_url ) <> 0 THEN
+                                  CONCAT('http://geodynamics.org', software.manual_url) ELSE
+                                  CONCAT('http://geodynamics.org/cig/software/', software.short_name, '/', software.short_name, '-manual.pdf')
+                              END) AS software_manual_url
+                              FROM software, software_tarball 
+                              WHERE software.short_name = ? AND software_tarball.software_id = software.id 
+                              AND software_tarball.source = 'y' ORDER BY release_date DESC LIMIT 1");
     $statement->bind_param('s', $short_name);
   }
 
@@ -35,12 +41,13 @@ if ($cmd == "list" || $cmd == "detail") {
     }
     print json_encode($rows);
   } else if ($cmd == "detail") {
-    $statement->bind_result($short_name, $package_title, $repo_type, $repo_url, $dev_doxygen, $release_doxygen, $src_url, $revision_num);
+    $statement->bind_result($short_name, $package_title, $repo_type, $repo_url, $dev_doxygen, $release_doxygen, $src_url, $revision_num, $has_manual, $manual_url);
     $statement->fetch();
     $rows = array("short_name" => $short_name, "package_title" => $package_title,
                   "repo_type" => $repo_type, "repo_url" => $repo_url,
                   "dev_doxygen" => $dev_doxygen, "release_doxygen" => $release_doxygen,
-                  "release_src_url" => $src_url, "release_src_version" => $revision_num);
+                  "release_src_url" => $src_url, "release_src_version" => $revision_num,
+                  "has_manual" => $has_manual, "manual_url" => $manual_url);
     print json_encode($rows);
   }
 

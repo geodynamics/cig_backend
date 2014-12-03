@@ -99,6 +99,14 @@ print "<LI class=short> ";
 print $form->label      ('release_doxygen',   'Release Doxygen?');
 print $form->select	('release_doxygen',   array('y' => 'Yes', 'n' => 'No'), $software_edit['release_doxygen']);
 
+print "<LI class=short> ";
+print $form->label      ('jenkins_build',   'Checking builds with Jenkins?');
+print $form->select	('jenkins_build',   array('y' => 'Yes', 'n' => 'No'), $software_edit['jenkins_build']);
+
+print "<LI class=short> ";
+print $form->label      ('jenkins_test',   'Testing with Jenkins?');
+print $form->select	('jenkins_test',   array('y' => 'Yes', 'n' => 'No'), $software_edit['jenkins_test']);
+
 print "</UL>\n";
 print "<UL class=form-section>";
 

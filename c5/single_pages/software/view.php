@@ -121,6 +121,10 @@
         <p>
           <strong>Status:</strong><br>
           <?php print $details[status_long];?>
+
+        </p>
+        <p>
+          <strong>Code changes:</strong>
           <?php $this->controller->getGithubStats ($package); ?>
         </p>
         <p>
@@ -323,6 +327,37 @@
           <p class="software-release">Doxygen Documentation</p>
           <p class="software-description">Auto-generated Doxygen documentation is available for the <?php if ($details[dev_doxygen] == 'y') {?><a href="//www.geodynamics.org/cig/doxygen/dev/<?php print $details[short_name]; ?>/">Development</a><?php }; if ($details[dev_doxygen] == 'y' and $details[release_doxygen] == 'y') { ?> and <?php }; if ($details[release_doxygen] == 'y') { ?><a href="//www.geodynamics.org/cig/doxygen/release/<?php print $details[short_name]; ?>/">Release</a><?php }; ?> codebase<?php if ($details[dev_doxygen] =='y' and $details[release_doxygen] == 'y') { ?>s<?php }; ?>.</p>
      <?php }; ?> 
+
+     <?php if ($details[jenkins_build] == 'y') { ?>
+         <p class="software-release"><a href="http://blofeld.geodynamics.org:8080/job/<?php print $details[short_name] ?>">Jenkins Testing</a></p>
+         <table border=3 cellpadding=3>
+           <tr>
+             <th>Ubuntu14 64 bit</th><th>Ubuntu14 32 bit</th><th>CentOS7 64 bit</th><th>CentOS7 32 bit</th>
+           </tr>
+           <tr>
+             <td>
+               <a href="http://blofeld.geodynamics.org:8080/job/<?php print $details[short_name] ?>/label=goldfinger.geodynamics.org">
+               <img src="http://blofeld.geodynamics.org:8080/buildStatus/icon?job=<?php print $details[short_name] ?>/label=goldfinger.geodynamics.org">
+               </a>
+               </td>
+             <td>
+               <a href="http://blofeld.geodynamics.org:8080/job/<?php print $details[short_name] ?>/label=largo.geodynamics.org">
+               <img src="http://blofeld.geodynamics.org:8080/buildStatus/icon?job=<?php print $details[short_name] ?>/label=largo.geodynamics.org">
+               </a>
+               </td>
+             <td>
+               <a href="http://blofeld.geodynamics.org:8080/job/<?php print $details[short_name] ?>/label=kananga.geodynamics.org">
+               <img src="http://blofeld.geodynamics.org:8080/buildStatus/icon?job=<?php print $details[short_name] ?>/label=kananga.geodynamics.org">
+               </a>
+               </td>
+             <td>
+               <a href="http://blofeld.geodynamics.org:8080/job/<?php print $details[short_name] ?>/label=big.geodynamics.org">
+               <img src="http://blofeld.geodynamics.org:8080/buildStatus/icon?job=<?php print $details[short_name] ?>/label=big.geodynamics.org">
+               </a>
+               </td>
+           </tr>
+         </table>
+     <?php } ?>
 
        <?php if ($details[user_map] == 'y') { ?>
          <a name="usermap"><h2><?php print $details[package_title]; ?> Users Map</h2></a>

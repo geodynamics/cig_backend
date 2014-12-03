@@ -19,6 +19,7 @@ class AdminEditSoftwareController extends Controller {
 	  mail_lists, wiki, repo_type, dev_branch, bug_reports,
           has_manual, manual_url,
 	  dev_doxygen, release_doxygen,
+	  jenkins_build, jenkins_test,
 	  user_map, hidden, date_format( updated, '%b %e, %Y' ) as updated,
 	  domain_abbr, domain_name
 	from software 
@@ -57,8 +58,10 @@ class AdminEditSoftwareController extends Controller {
       		'wiki_desc' =>		$this->post('wiki_desc'),
       		'repo_type' =>		$this->post('repo_type'),
       		'dev_branch' =>		$this->post('dev_branch'),
-      		'dev_doxygen' =>		$this->post('dev_doxygen'),
-      		'release_doxygen' =>		$this->post('release_doxygen'),
+      		'dev_doxygen' =>	$this->post('dev_doxygen'),
+      		'release_doxygen' =>	$this->post('release_doxygen'),
+      		'jenkins_build' =>	$this->post('jenkins_build'),
+      		'jenkins_test' =>	$this->post('jenkins_test'),
       		'bug_reports' =>	$this->post('bug_reports'),
       		'user_map' =>		$this->post('user_map')
       );
