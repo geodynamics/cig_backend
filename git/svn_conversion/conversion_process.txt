@@ -255,14 +255,59 @@ git push --mirror https://github.com/geodynamics/hc.git
 
 Gale (DONE)
 git clone git://repo.or.cz/fast-export.git
-hg clone http://geodynamics.org/hg/long/3D/gale old_gale
-git init gale
-cd gale
-../fast-export/hg-fast-export.sh -r ../old_gale/
+hg clone gale repo_gale
+hg clone gale/PICellerator repo_gale/PICellerator
+hg clone gale/StGermain repo_gale/StGermain
+hg clone gale/StgDomain repo_gale/StgDomain
+hg clone gale/StgFEM repo_gale/StgFEM
+hg clone gale/Underworld repo_gale/Underworld
+hg clone gale/config repo_gale/config
+hg clone gale/gLucifer repo_gale/gLucifer
+git init new_gale
+git init PICellerator
+git init StGermain
+git init StgDomain
+git init StgFEM
+git init Underworld
+git init config
+git init gLucifer
+cd new_gale
+../fast-export/hg-fast-export.sh -r ../repo_gale/
 git checkout HEAD
+cd ../PICellerator
+../fast-export/hg-fast-export.sh -r ../repo_gale/PICellerator
+git checkout HEAD
+cd ../StGermain
+../fast-export/hg-fast-export.sh -r ../repo_gale/StGermain
+git checkout HEAD
+cd ../StgDomain
+../fast-export/hg-fast-export.sh -r ../repo_gale/StgDomain
+git checkout HEAD
+cd ../StgFEM
+../fast-export/hg-fast-export.sh -r ../repo_gale/StgFEM
+git checkout HEAD
+cd ../Underworld
+../fast-export/hg-fast-export.sh -r ../repo_gale/Underworld
+git checkout HEAD
+cd ../config
+../fast-export/hg-fast-export.sh -r ../repo_gale/config
+git checkout HEAD
+cd ../gLucifer
+../fast-export/hg-fast-export.sh -r ../repo_gale/gLucifer
+git checkout HEAD
+cd ..
+cd new_gale
+git subtree add --prefix=PICellerator ../PICellerator master
+git subtree add --prefix=StGermain ../StGermain master
+git subtree add --prefix=StgDomain ../StgDomain master
+git subtree add --prefix=StgFEM ../StgFEM master
+git subtree add --prefix=Underworld ../Underworld master
+git subtree add --prefix=config ../config master
+git subtree add --prefix=gLucifer ../gLucifer master
+
 cp doc/gale_cover.xcf doc/old_gale_cover.xcf
 cp doc/gale_cover.png doc/old_gale_cover.png
-../../gitscrub.sh doc/gale.pdf doc/gale_cover.psd doc/gale_cover.xcf doc/gale_cover.pdf doc/gale_cover.png doc/images/Shortening_comparison.png doc/images/Geomod2008* doc/images/Paraview* doc/images/Geomod2008_wedge_setup.eps boost/status/expected_results.xml boost/libs/asio/doc/reference.qbk boost/*.pdf boost/*html boost/*exe
+../../gitscrub.sh doc/gale.pdf doc/gale_cover.psd doc/gale_cover.xcf doc/gale_cover.pdf doc/gale_cover.png doc/images/Shortening_comparison.png doc/images/Geomod2008* doc/images/Paraview* doc/images/Geomod2008_wedge_setup.eps boost/status/ expected_results.xml boost/libs/asio/doc/reference.qbk boost/*.pdf boost/*html boost/*exe
 mv doc/old_gale_cover.xcf doc/gale_cover.xcf
 mv doc/old_gale_cover.png doc/gale_cover.png
 git add doc/*
@@ -270,7 +315,8 @@ git commit -m "Readd covers"
 git tag
 git branch
 git push --mirror https://github.com/geodynamics/gale.git
-(should be ~59 MB in repo form)
+(should be ~96 MB in repo form)
+
 
 ------------------------------------------------------------------------------------------------
 
