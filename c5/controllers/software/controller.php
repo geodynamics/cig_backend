@@ -168,6 +168,7 @@ class SoftwareController extends Controller {
            software_tarball.software_id = software.id and
            software_tarball.active = '".$is_active."' and
            software_tarball.source = '".$source."' and
+           software_tarball.hidden != 'y' and
            software.short_name = '".$package."'
          order by
            software_tarball.release_date desc;"
