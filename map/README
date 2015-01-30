@@ -1,0 +1,68 @@
+DESCRIPTION OF HIT MAPPING TOOLS
+
+Written by Eric Heien on Apr 15, 2013
+Updated on May 20, 2014
+
+This directory contains scripts and data related to recording downloads of CIG
+software and creating maps of the download activity. This directory contains three
+subdirectories (described below) with files pertaining to the three steps of this
+functionality:
+
+    1) analyze Apache logs and record hits in a SQLite database (hit_database/)
+
+    2) generate SQLite database mapping IP addresses to latitude/longitude locations
+    (ip_database/)
+
+    3) use the two aforementioned databases with GMT to create maps of download
+    activity (map_plot/)
+
+Descriptions of the subdirectories and their files
+
+ip_database/
+
+    generate_ip_database.py
+    Requires at least Python 2.6, compatible with Python 3.3.
+
+    Simple Python script to read csv files and convert them to a SQLite
+    database. Usage is:
+
+        generate_ip_database.py DB_NAME LOCATION_CSV_FILE BLOCK_CSV_FILE
+
+    GeoLiteCity-Blocks.csv, GeoLiteCity-Location.csv
+	CSV files downloaded from http://dev.maxmind.com/geoip/geolite with
+	information for mapping IP addresses to latitude/longitude coordinates.
+	These are parsed by the generate_ip_database.py script to create a SQLite3
+	database. An example of running these through the script:
+
+    ./generate_ip_database.py ip_lookup_db GeoLiteCity-Location.csv GeoLiteCity-Blocks.csv
+    *******************************************************
+    WARNING: THIS WILL COMPLETELY DESTROY THE IP LOOKUP
+    DATABASE. ONLY RUN IT IF YOU KNOW WHAT YOU ARE DOING.
+    *******************************************************
+    ARE YOU SURE YOU WANT TO CONTINUE? (y/n) y
+    Read 438386 entries from file and added 438386 entries to location table.
+    Read 1790461 entries from file and added 1790461 entries to block table.
+
+    (Optional: ip_lookup_db or another database name) SQLite3 database containing
+    the converted CSV file contents.
+
+hit_database/
+
+    apachelog.py
+	External Python script for parsing Apache access logs.
+
+    reset_hit_db.py
+	Python script to reset/create the database recording software hits.
+	Also contains the SQLite DB schema for this database.
+	Only run if you absolutely know what you are doing.
+
+    parse_log.py
+	Python script to parse Apache logs and insert relevant hits into the
+	SQLite database. Runs nightly as a cron job.
+
+map_plot/
+
+    plot.py
+	Python script to create hit maps using GMT in combination with the recorded
+	hit database (hit_database/) and IP-geolocation database (ip_database).
+	Runs nightly as a cron job.

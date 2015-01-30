@@ -1,0 +1,12 @@
+H3.header-bolded {
+  background: #c0c0c0;
+}
+
+.software-release {
+  font-weight: bold;
+  padding-bottom: none;
+}
+.software-description {
+  padding-top: none;
+  padding-left: 0.5em;
+}

@@ -1,0 +1,24 @@
+# $Id: repo_check.run-spec 21320 2013-02-01 21:42:12Z ericheien $
+
+project = CIG
+component = Aspect
+description = Build test of Aspect SVN
+run_type = build
+inputs = build_files.scp, repo_checkout.svn, ../support/trilinos-11.0.3-Source.scp, ../support/dealii.svn, ../support/lib_scripts.scp
+#inputs = repo_checkout.svn, build_files.scp, ../support/openmpi-1.6.3.scp, ../support/trilinos-11.0.3-Source.scp ../support/lib_scripts.scp
+
+remote_pre = build_support.sh
+remote_pre_args = build_trilinos-11.0.3.sh build_dealii_svn.sh
+#remote_pre_args = build_openmpi-1.6.3.sh
+
+remote_task = build.sh
+
+# These platforms mostly work (still some minor tweaks needed)
+platforms = x86_64_Debian6
+#platforms = x86_64_Debian5, x86_64_Debian6, x86_64_Ubuntu10, x86_64_Ubuntu12, x86_Debian6, x86_64_Fedora16, x86_64_Fedora17, x86_64_MacOSX7, x86_64_RedHat5, x86_64_RedHat6, x86_64_SL6, x86_64_Solaris11, x86_64_macos_10.7, x86_RedHat5, x86_RedHat6, x86_SL5
+
+# These platforms fail
+#platforms = x86_64_Windows7, x86_WindowsXP
+
+notify = emheien@geodynamics.org
+

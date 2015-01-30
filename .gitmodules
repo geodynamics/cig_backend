@@ -1,0 +1,6 @@
+[submodule "git/git-notifier"]
+	path = git/git-notifier
+	url = git://git.icir.org/git-notifier
+[submodule "git/gitdub"]
+	path = git/gitdub
+	url = https://github.com/mavam/gitdub
