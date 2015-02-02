@@ -103,6 +103,8 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
     num_dls = float(max_hits_in_grid)
     num_steps = min(4, max_hits_in_grid)
     step_size = math.pow(max_hits_in_grid, 1.0/num_steps)
+    small_scale = False
+    prev_round_hits = 0
     if max_hits_in_grid > 1:
         max_circle_size = (max_pt_size-min_pt_size)*math.log(max_hits_in_grid)/math.log(max_hits_in_grid) + min_pt_size
     else:
@@ -112,7 +114,18 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
             circle_size = (max_pt_size-min_pt_size)*math.log(num_dls)/math.log(max_hits_in_grid) + min_pt_size
         else:
             circle_size = min_pt_size
-        print("S "+str(max_circle_size/2)+" c "+str(circle_size)+" yellow black "+str(1.3*max_circle_size)+" "+str(int(num_dls))+" downloads", file=legend_file)
+        rounded_hits = int(10**(math.ceil(math.log10(num_dls))-1))
+        
+        if rounded_hits < 10**(3-i) or small_scale == True:
+        	rounded_hits = int(num_dls)
+        	small_scale = True
+        else:
+        	rounded_hits = int(10**(3-i))
+        if prev_round_hits != rounded_hits:
+        	print("S "+str(max_circle_size/2)+" c "+str(circle_size)+" yellow black "+str(1.3*max_circle_size)+" "+str(rounded_hits)+" downloads", file=legend_file)
+        else:
+        	pass
+        prev_round_hits = rounded_hits
         num_dls /= step_size
     legend_file.flush()
 
@@ -125,17 +138,35 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
         legend_file_name = legend_file.name,
         gif_file = output_dir+"/"+out_file_name,
         out_dir = output_dir,
-        dpi = 72
+        dpi = 144
     )
 
     #os.system("{gmt_bin}gmtset PAPER_MEDIA=letter".format(**c))
-    os.system("{gmt_bin}psbasemap -R-179/179/-60/70 -JM6i -Ba60/a30/wesn -P -K > {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pscoast -R -JM  -Dl -A10000  -G0/150/0 -S0/0/150 -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pslegend -R -JM -F -Gwhite -Dx0i/0i/1.65i/0.95i/BL -UBR/6i/0 -K -O {legend_file_name} >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psxy -R -JM -Sc -O -Gyellow -Wthin {loc_file_name} >> {ps_file_name}".format(**c))
+    # Create gradient (for color) using elevation data http://iridl.ldeo.columbia.edu/SOURCES/ colorscheme: afrikakarte.cpt
+    os.system("{gmt_bin}grdgradient data.nc -Ne0.6 -A45 -Gdata_i.nc=nb/a ".format(**c))
+    
+    os.system("{gmt_bin}pscoast   -R200/340/-90/90 -Ji0.0175i -A10000 -Gblack -Dh -P -K > {ps_file_name}".format(**c))
+    os.system("{gmt_bin}grdimage  -R200/340/-90/90 -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -K -O  >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast   -R200/340/-90/90 -Ji0.0175i -A10000 -Dh -P -Slightblue -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psbasemap -R200/340/-90/90 -Ji0.0175i -Bag10/ag20/wesn  -P -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psxy      -R200/340/-90/90 -Ji0.0175i -Sc  -Gyellow -Wthin -K -O {loc_file_name} >> {ps_file_name}".format(**c))
+    
+    os.system("{gmt_bin}pslegend  -F+gwhite -Dx.10i/-1i/1.65i/0.95i/BL -UBR/6.25i/-.65i -K -O {legend_file_name} >> {ps_file_name}".format(**c))
+
+    os.system("{gmt_bin}pscoast   -R-20/60/-90/90  -Ji0.0175i -Dh -A10000 -Gblack -X2.45i -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}grdimage  -R-20/60/-90/90  -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -O -K >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast   -R-20/60/-90/90  -Ji0.0175i -Dh -A10000 -Slightblue  -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psbasemap -R-20/60/-90/90  -Ji0.0175i -Bag10/ag20/wesn  -P -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psxy      -R-20/60/-90/90  -Ji0.0175i -Sc -Gyellow -Wthin -K -O {loc_file_name} >> {ps_file_name}".format(**c))
+    
+    os.system("{gmt_bin}pscoast   -R60/200/-90/90  -Ji0.0175i -Dh -A10000 -Gblack -Dc -X1.4i -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}grdimage  -R60/200/-90/90  -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -O -K >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast   -R60/200/-90/90  -Ji0.0175i -Dh -A10000 -Slightblue -Dc -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psbasemap -R60/200/-90/90  -Ji0.0175i -Bag10/ag20/wesn   -P -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psxy      -R60/200/-90/90  -Ji0.0175i -Sc -Gyellow -Wthin -O {loc_file_name} >> {ps_file_name}".format(**c))
+    
     os.system("mkdir -p {out_dir}".format(**c))
     os.system("convert -trim +repage -density {dpi} {ps_file_name} {gif_file}".format(**c))
-
     legend_file.close()
     ps_file.close()
     loc_file.close()
