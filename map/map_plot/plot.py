@@ -145,25 +145,14 @@ def plot_loc_grid(loc_grid, output_dir, out_file_name):
     # Create gradient (for color) using elevation data http://iridl.ldeo.columbia.edu/SOURCES/ colorscheme: afrikakarte.cpt
     os.system("{gmt_bin}grdgradient data.nc -Ne0.6 -A45 -Gdata_i.nc=nb/a ".format(**c))
     
-    os.system("{gmt_bin}pscoast   -R200/340/-90/90 -Ji0.0175i -A10000 -Gblack -Dh -P -K > {ps_file_name}".format(**c))
-    os.system("{gmt_bin}grdimage  -R200/340/-90/90 -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -K -O  >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pscoast   -R200/340/-90/90 -Ji0.0175i -A10000 -Dh -P -Slightblue -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psbasemap -R200/340/-90/90 -Ji0.0175i -Bag10/ag20/wesn  -P -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psxy      -R200/340/-90/90 -Ji0.0175i -Sc  -Gyellow -Wthin -K -O {loc_file_name} >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast   -R-180/180/-70/70 -Jm1.2e-2i -A5000 -Gblack -Dh -P -K > {ps_file_name}".format(**c))
+    os.system("{gmt_bin}grdimage  -R-180/180/-70/70 -Jm1.2e-2i data.nc -Idata_i.nc -Cafrikakarte.cpt -K -O  >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pscoast   -R-180/180/-70/70 -Jm1.2e-2i -A5000 -Dh -P -Slightblue -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psbasemap -R-180/180/-70/70 -Jm1.2e-2i -Bag0/ag0/wesn  -P -K -O >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}psxy      -R-180/180/-70/70 -Jm1.2e-2i -Sc  -Gyellow -Wthin -K -O {loc_file_name} >> {ps_file_name}".format(**c))
     
-    os.system("{gmt_bin}pslegend  -F+gwhite -Dx.10i/-1i/1.65i/0.95i/BL -UBR/6.25i/-.65i -K -O {legend_file_name} >> {ps_file_name}".format(**c))
-
-    os.system("{gmt_bin}pscoast   -R-20/60/-90/90  -Ji0.0175i -Dh -A10000 -Gblack -X2.45i -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}grdimage  -R-20/60/-90/90  -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -O -K >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pscoast   -R-20/60/-90/90  -Ji0.0175i -Dh -A10000 -Slightblue  -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psbasemap -R-20/60/-90/90  -Ji0.0175i -Bag10/ag20/wesn  -P -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psxy      -R-20/60/-90/90  -Ji0.0175i -Sc -Gyellow -Wthin -K -O {loc_file_name} >> {ps_file_name}".format(**c))
+    os.system("{gmt_bin}pslegend  -F+gwhite -Dx.10i/-3i/1.65i/02.85i/BL -UBR/4.25i/-.955i -O {legend_file_name} >> {ps_file_name}".format(**c))
     
-    os.system("{gmt_bin}pscoast   -R60/200/-90/90  -Ji0.0175i -Dh -A10000 -Gblack -Dc -X1.4i -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}grdimage  -R60/200/-90/90  -Ji0.0175i data.nc -Idata_i.nc -Cafrikakarte.cpt -O -K >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}pscoast   -R60/200/-90/90  -Ji0.0175i -Dh -A10000 -Slightblue -Dc -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psbasemap -R60/200/-90/90  -Ji0.0175i -Bag10/ag20/wesn   -P -K -O >> {ps_file_name}".format(**c))
-    os.system("{gmt_bin}psxy      -R60/200/-90/90  -Ji0.0175i -Sc -Gyellow -Wthin -O {loc_file_name} >> {ps_file_name}".format(**c))
     
     os.system("mkdir -p {out_dir}".format(**c))
     os.system("convert -trim +repage -density {dpi} {ps_file_name} {gif_file}".format(**c))
