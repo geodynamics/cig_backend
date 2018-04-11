@@ -1,6 +1,6 @@
 <?php
 if (isset ($_POST['from_doi'])) {
-  # Request the DOI from dx.doi.org (IP used because of strange throttling
+  # Request the DOI from doi.org (IP used because of strange throttling
   # issues with the URL, possibly something wonky with the DNS.)
   $url = "http://38.100.138.162/" . $_POST['doi_curl'];
 

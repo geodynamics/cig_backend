@@ -88,7 +88,7 @@
         print " ".$this->fields["pages"];
       }
       if (!is_null ($this->fields["doi"])) {
-        print " DOI: <a href=\"http://www.dx.doi.org/".$this->fields["doi"]."\">".$this->fields["doi"]."</a>";
+        print " DOI: <a href=\"https://doi.org/".$this->fields["doi"]."\">".$this->fields["doi"]."</a>";
       }
       print "<br>";
     }
