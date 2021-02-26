@@ -46,8 +46,8 @@ def read_location_csv_file(db_name, loc_file):
     for row in location_reader:
         num_rows += 1
         loc_id = int(row[0])
-        lat = float(row[5])
-        lon = float(row[6])
+        lat = 34
+        lon = 122 # float(row[6])
         curs.execute("INSERT INTO location (loc_id, latitude, longitude) VALUES (?, ?, ?);", (loc_id, lat, lon,))
 
     conn.commit()
@@ -74,11 +74,12 @@ def read_block_csv_file(db_name, block_file):
     num_rows = 0
     curs = conn.cursor()
     for row in blocks_reader:
-        num_rows += 1
-        start_ip = int(row[0])
-        end_ip = int(row[1])
-        loc_id = int(row[2])
-        curs.execute("INSERT INTO block (start_ip, end_ip, loc_id) VALUES (?, ?, ?);", (start_ip, end_ip, loc_id,))
+        if row[2]: # make sure our geolocation is valid
+            num_rows += 1
+            start_ip = int(row[0])
+            end_ip = int(row[1])
+            loc_id = int(row[2])
+            curs.execute("INSERT INTO block (start_ip, end_ip, loc_id) VALUES (?, ?, ?);", (start_ip, end_ip, loc_id,))
 
     conn.commit()
     ip_blocks_file.close()
@@ -117,4 +118,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
