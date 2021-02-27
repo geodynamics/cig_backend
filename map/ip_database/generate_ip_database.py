@@ -11,6 +11,8 @@ CREATE TABLE `block` (
     `start_ip` INT default NULL,    -- Starting IP number of this block
     `end_ip` INT default NULL,      -- Ending IP number of this block
     `loc_id` INT default NULL       -- Corresponding location ID
+    `latitude` FLOAT default NULL,              -- Latitude
+    `longitude` FLOAT default NULL,             -- Longitude
 );
 CREATE INDEX start_ip_loc_ind ON `block` (`start_ip`);
 CREATE INDEX end_ip_loc_ind ON `block` (`end_ip`);
@@ -46,8 +48,8 @@ def read_location_csv_file(db_name, loc_file):
     for row in location_reader:
         num_rows += 1
         loc_id = int(row[0])
-        lat = 34
-        lon = 122 # float(row[6])
+        lat = 34 # defaults that will be overwritten
+        lon = 122 # defaults that will be overwritten
         curs.execute("INSERT INTO location (loc_id, latitude, longitude) VALUES (?, ?, ?);", (loc_id, lat, lon,))
 
     conn.commit()
@@ -79,7 +81,9 @@ def read_block_csv_file(db_name, block_file):
             start_ip = int(row[0])
             end_ip = int(row[1])
             loc_id = int(row[2])
-            curs.execute("INSERT INTO block (start_ip, end_ip, loc_id) VALUES (?, ?, ?);", (start_ip, end_ip, loc_id,))
+            lat = float(row[8])
+            lon = float(row[9])
+            curs.execute("INSERT INTO block (start_ip, end_ip, loc_id, latitude, longitude) VALUES (?, ?, ?, ?, ?);", (start_ip, end_ip, loc_id, lat, lon))
 
     conn.commit()
     ip_blocks_file.close()
@@ -89,6 +93,14 @@ def read_block_csv_file(db_name, block_file):
     num_blocks = curs.fetchone()[0]
     print("Read", num_rows, "entries from file and added", num_blocks, "entries to block table.")
 
+    conn.close()
+
+# lat/lon is now stored on the block, but we want it on the location table.  Let's do some SQL UPDATE statements to correlate the two
+def update_lat_lon(db_name):
+    conn = sqlite3.connect(db_name)
+    conn.executescript("update location set latitude = (select latitude from block where block.loc_id = location.loc_id);")
+    conn.executescript("update location set longitude = (select longitude from block where block.loc_id = location.loc_id);")
+    conn.commit()
     conn.close()
 
 def main():
@@ -113,6 +125,7 @@ def main():
         wipe_database(DB_NAME)
         read_location_csv_file(DB_NAME, LOCATION_CSV_FILE)
         read_block_csv_file(DB_NAME, BLOCK_CSV_FILE)
+        update_lat_lon(DB_NAME)
     else:
         print("CANCELLED")
 
