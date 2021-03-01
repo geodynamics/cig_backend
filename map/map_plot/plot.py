@@ -29,7 +29,7 @@ filter_ips = [
 
 def find_ip_lat_lon(db_conn, ip_num):
     curs = db_conn.cursor()
-    curs.execute("SELECT location.latitude, location.longitude FROM location, block WHERE block.loc_id = location.loc_id AND ? BETWEEN block.start_ip AND block.end_ip limit 1;", (ip_num,))
+    curs.execute("SELECT block.latitude, block.longitude FROM block WHERE ? BETWEEN block.start_ip AND block.end_ip limit 1;", (ip_num,))
     return curs.fetchone()
 
 def ip_nums_to_locations(db_name, ip_num_list):

@@ -6,60 +6,23 @@ import csv
 import sys
 
 db_schema = """
+DROP TABLE IF EXISTS `location`;
 DROP TABLE IF EXISTS `block`;
 CREATE TABLE `block` (
     `start_ip` INT default NULL,    -- Starting IP number of this block
     `end_ip` INT default NULL,      -- Ending IP number of this block
-    `loc_id` INT default NULL       -- Corresponding location ID
+    `loc_id` INT default NULL,       -- Corresponding location ID (unused)
     `latitude` FLOAT default NULL,              -- Latitude
-    `longitude` FLOAT default NULL,             -- Longitude
+    `longitude` FLOAT default NULL             -- Longitude
 );
 CREATE INDEX start_ip_loc_ind ON `block` (`start_ip`);
 CREATE INDEX end_ip_loc_ind ON `block` (`end_ip`);
-
-DROP TABLE IF EXISTS `location`;
-CREATE TABLE `location` (
-    `loc_id` INT default NULL,                  -- ID of this location
-    `latitude` FLOAT default NULL,              -- Latitude
-    `longitude` FLOAT default NULL,             -- Longitude
-    PRIMARY KEY (`loc_id`)
-);
 """
 
 def wipe_database(db_name):
     conn = sqlite3.connect(db_name)
     conn.executescript(db_schema)
     conn.commit()
-    conn.close()
-
-def read_location_csv_file(db_name, loc_file):
-    conn = sqlite3.connect(db_name)
-    # Read the location details (currently only store lat/lon)
-    if sys.version > '3':
-        location_file = open(loc_file, 'r', encoding='iso-8859-1')
-    else:
-        location_file = open(loc_file, 'r')
-    location_file.readline()
-    location_file.readline()
-    location_reader = csv.reader(location_file, delimiter=',', quotechar="\"")
-
-    num_rows = 0
-    curs = conn.cursor()
-    for row in location_reader:
-        num_rows += 1
-        loc_id = int(row[0])
-        lat = 34 # defaults that will be overwritten
-        lon = 122 # defaults that will be overwritten
-        curs.execute("INSERT INTO location (loc_id, latitude, longitude) VALUES (?, ?, ?);", (loc_id, lat, lon,))
-
-    conn.commit()
-    location_file.close()
-
-    # Count the number of adds as a sanity check
-    curs.execute("SELECT COUNT(*) FROM location;")
-    num_locs = curs.fetchone()[0]
-    print("Read", num_rows, "entries from file and added", num_locs, "entries to location table.")
-
     conn.close()
 
 def read_block_csv_file(db_name, block_file):
@@ -95,14 +58,6 @@ def read_block_csv_file(db_name, block_file):
 
     conn.close()
 
-# lat/lon is now stored on the block, but we want it on the location table.  Let's do some SQL UPDATE statements to correlate the two
-def update_lat_lon(db_name):
-    conn = sqlite3.connect(db_name)
-    conn.executescript("update location set latitude = (select latitude from block where block.loc_id = location.loc_id);")
-    conn.executescript("update location set longitude = (select longitude from block where block.loc_id = location.loc_id);")
-    conn.commit()
-    conn.close()
-
 def main():
     if len(sys.argv) != 4:
         print("syntax:", sys.argv[0], "DB_NAME LOCATION_CSV_FILE BLOCK_CSV_FILE")
@@ -120,12 +75,10 @@ def main():
 
     if wipe_db == "y":
         DB_NAME = sys.argv[1]
-        LOCATION_CSV_FILE = sys.argv[2]
+        LOCATION_CSV_FILE = sys.argv[2] #unused
         BLOCK_CSV_FILE = sys.argv[3]
         wipe_database(DB_NAME)
-        read_location_csv_file(DB_NAME, LOCATION_CSV_FILE)
         read_block_csv_file(DB_NAME, BLOCK_CSV_FILE)
-        update_lat_lon(DB_NAME)
     else:
         print("CANCELLED")
 
