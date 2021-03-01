@@ -7,4 +7,4 @@ mv GeoLite2-City-CSV*/GeoLite2-City-Locations-en.csv .
 mv GeoLite2-City-CSV*/GeoLite2-City-Blocks-IPv4.csv .
 rm -rf GeoLite2-City-CSV*/
 ./geoip2-csv-converter -block-file GeoLite2-City-Blocks-IPv4.csv -output-file GeoLite2-Blocks-Range.csv -include-integer-range
-./generate_ip_database.py ip_lookup_db GeoLite2-City-Locations-en.csv GeoLite2-Blocks-Range.csv
+./generate_ip_database.py ip_lookup_db GeoLite2-Blocks-Range.csv
