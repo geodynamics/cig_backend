@@ -59,7 +59,7 @@ def read_block_csv_file(db_name, block_file):
     conn.close()
 
 def main():
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 3:
         print("syntax:", sys.argv[0], "DB_NAME BLOCK_CSV_FILE")
         exit(1)
 
@@ -75,7 +75,7 @@ def main():
 
     if wipe_db == "y":
         DB_NAME = sys.argv[1]
-        BLOCK_CSV_FILE = sys.argv[3]
+        BLOCK_CSV_FILE = sys.argv[2]
         wipe_database(DB_NAME)
         read_block_csv_file(DB_NAME, BLOCK_CSV_FILE)
     else:
