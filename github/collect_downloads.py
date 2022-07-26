@@ -28,12 +28,19 @@ import json
 import ssl
 import urllib.request
 
-packages = ["pylith", "pylith_installer", "spatialdata"]
-baseurl = "https://api.github.com/repos/geodynamics/%s/releases"
-
 ssl._create_default_https_context = ssl._create_unverified_context
 
+package_names = []
+package_command = "https://api.github.com/users/geodynamics/repos?page=0&per_page=100"
+raw_packages = urllib.request.urlopen(package_command).read()
+packages = json.loads(raw_packages)
 for package in packages:
+    package_names.append(package['name'])
+
+baseurl = "https://api.github.com/repos/geodynamics/%s/releases"
+
+print (package_names)
+for package in package_names:
     raw = urllib.request.urlopen(baseurl % package).read()
 
     data = json.loads(raw)
