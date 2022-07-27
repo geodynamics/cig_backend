@@ -8,7 +8,7 @@ import urllib
 import json
 
 # Where to send emails when an error occurs
-CIG_ERROR_EMAIL = "emheien@ucdavis.edu"
+CIG_ERROR_EMAIL = "noone"
 CIG_ERROR_EMAIL_SENDER = "backend@shell.geodynamics.org"
 
 def send_cig_error_email(subject, content):

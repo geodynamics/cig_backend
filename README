@@ -35,6 +35,10 @@ git/
     2013/2014, automated diff email for Git commits, and Github manipulation
     scripts.
 
+github/
+    Contains scripts that access GitHub to collect stats about CIG
+    repositories.
+
 map/
     Contains databases, scripts and related files for tracking downloads of
     software distributions from the website, and creating maps to display
